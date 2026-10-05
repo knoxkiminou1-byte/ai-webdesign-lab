@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClipLine Barbershop | Sharp Looks. Zero Wait. (Template Demo)</title>
+<meta name="description" content="ClipLine is a premium barbershop website template with online booking, service menu, and local SEO built in. Demo content. Replace with your shop's details.">
+<meta property="og:title" content="ClipLine Barbershop Template">
+<meta property="og:description" content="A booking-first barbershop website template. Dark luxury design, online scheduling, built for local search.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/hero2.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.hero h1 .line>span{transform:none!important}</style></noscript>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BarberShop",
+  "name": "ClipLine Barbershop (Template Demo)",
+  "description": "Premium barbershop website template with online booking.",
+  "telephone": "+1-555-010-2030",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "123 Demo Street",
+    "addressLocality": "Demo City",
+    "addressRegion": "DC",
+    "postalCode": "00000"
+  },
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "19:00"},
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "17:00"},
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "10:00", "closes": "15:00"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How much does a haircut cost?", "acceptedAnswer": {"@type": "Answer", "text": "Demo pricing in this template runs $30 for a classic cut, $45 for cut plus beard, and $55 for the full hot towel service. Your shop sets its own prices."}},
+    {"@type": "Question", "name": "Do I need an appointment or can I walk in?", "acceptedAnswer": {"@type": "Answer", "text": "Both work in this demo. Book online to lock your time, or walk in and take the next open chair."}},
+    {"@type": "Question", "name": "How long does a cut take?", "acceptedAnswer": {"@type": "Answer", "text": "Plan on 30 minutes for a classic cut, 45 for cut plus beard, and a full hour for the hot towel shave service."}},
+    {"@type": "Question", "name": "What forms of payment do you take?", "acceptedAnswer": {"@type": "Answer", "text": "This template assumes cards, cash, and mobile pay. Update the FAQ with what your shop accepts."}},
+    {"@type": "Question", "name": "Do you cut kids hair?", "acceptedAnswer": {"@type": "Answer", "text": "The demo service menu includes a junior cut for ages 12 and under."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --ink:#0d0b09;
+  --smoke:#171310;
+  --cream:#f4eee1;
+  --muted:#b8ab93;
+  --gold:#d9a441;
+  --gold-deep:#9c7326;
+  --line:rgba(244,238,225,.14);
+  --font-display:'Anton',Impact,sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+::selection{background:var(--gold);color:var(--ink)}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--gold);color:var(--ink);padding:.75rem 1.25rem;font-weight:700;z-index:200}
+.skip-link:focus{left:0}
+.mono{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+section{padding:5.5rem 0}
+h1,h2,h3{font-family:var(--font-display);font-weight:400;line-height:.95;letter-spacing:.01em;text-transform:uppercase}
+.section-head{margin-bottom:3rem}
+.section-head h2{font-size:clamp(2.5rem,6vw,4.5rem)}
+.section-head h2 .hollow{color:transparent;-webkit-text-stroke:1.5px var(--gold)}
+.section-head p{color:var(--muted);max-width:34rem;margin-top:1rem}
+
+/* header */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,11,9,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;height:4.25rem;padding-top:0;padding-bottom:0}
+.brand{font-family:var(--font-display);font-size:1.5rem;letter-spacing:.06em;text-decoration:none}
+.brand span{color:var(--gold)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{text-decoration:none;font-size:.9rem;font-weight:500;color:var(--cream);opacity:.85}
+.nav-links a:hover{opacity:1;color:var(--gold)}
+.btn{display:inline-block;background:var(--gold);color:var(--ink);font-weight:700;text-decoration:none;padding:.9rem 1.75rem;border:none;cursor:pointer;font-size:.95rem;letter-spacing:.02em;transition:transform .25s ease,background .25s ease}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.btn:hover{background:var(--cream);transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--cream);border:1px solid var(--gold)}
+.btn.ghost:hover{background:var(--gold);color:var(--ink)}
+.btn.small{padding:.6rem 1.1rem;font-size:.85rem}
+.nav-cta{display:inline-block}
+.menu-toggle{display:none;background:none;border:1px solid var(--line);color:var(--cream);padding:.5rem .8rem;cursor:pointer;font-family:var(--font-mono);font-size:.8rem;letter-spacing:.1em}
+
+/* hero */
+.hero{min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;position:relative;padding:7rem 0 4rem;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,11,9,.55) 0%,rgba(13,11,9,.25) 40%,rgba(13,11,9,.92) 100%)}
+.hero-content{max-width:1200px}
+.hero h1{font-size:clamp(3.5rem,11vw,9rem);margin:1rem 0 1.5rem}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line>span{display:block;transform:translateY(110%);animation:riseIn .9s cubic-bezier(.22,1,.36,1) forwards}
+.hero h1 .line:nth-child(2)>span{animation-delay:.12s}
+.hero h1 .hollow{color:transparent;-webkit-text-stroke:2px var(--cream)}
+@keyframes riseIn{to{transform:translateY(0)}}
+.hero-sub{max-width:32rem;color:var(--cream);opacity:.9;font-size:1.1rem;margin-bottom:2rem}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.hero-trust{display:flex;gap:2.5rem;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:1.5rem;list-style:none}
+.hero-trust li{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hero-trust li strong{display:block;color:var(--gold);font-size:1rem;margin-bottom:.25rem}
+
+/* ticker */
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:1.1rem 0;background:var(--smoke)}
+.ticker-track{display:flex;gap:3rem;width:max-content;animation:tick 28s linear infinite}
+.ticker-track span{font-family:var(--font-display);font-size:1.4rem;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;color:var(--cream)}
+.ticker-track span i{font-style:normal;color:var(--gold);margin-right:3rem}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-delay="1"]{transition-delay:.15s}
+.reveal[data-delay="2"]{transition-delay:.3s}
+.reveal[data-delay="3"]{transition-delay:.45s}
+
+/* services */
+.service-list{border-top:1px solid var(--line)}
+.service-row{display:grid;grid-template-columns:1fr auto auto;gap:1.5rem;align-items:center;padding:1.75rem .5rem;border-bottom:1px solid var(--line);transition:background .25s ease}
+.service-row:hover{background:rgba(217,164,65,.05)}
+.service-row h3{font-size:clamp(1.4rem,3vw,2rem)}
+.service-row .meta{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.1em;color:var(--muted);margin-top:.35rem}
+.service-row .price{font-family:var(--font-display);font-size:1.75rem;color:var(--gold)}
+
+/* editorial split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.split img{width:100%;height:34rem;object-fit:cover}
+.split .frame{position:relative}
+.split .frame::before{content:"";position:absolute;inset:1.25rem -1.25rem -1.25rem 1.25rem;border:1px solid var(--gold);z-index:-1}
+.split h2{font-size:clamp(2.2rem,5vw,3.75rem);margin:1rem 0 1.5rem}
+.split h2 .hollow{color:transparent;-webkit-text-stroke:1.5px var(--gold)}
+.split p{color:var(--muted);margin-bottom:1.25rem}
+.stat-row{display:flex;gap:3rem;margin-top:2rem}
+.stat-row div strong{display:block;font-family:var(--font-display);font-size:2.25rem;color:var(--gold);font-weight:400}
+.stat-row div span{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* barbers */
+.barber-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.barber-card{background:var(--smoke);border:1px solid var(--line);overflow:hidden}
+.barber-card img{width:100%;height:22rem;object-fit:cover;filter:grayscale(35%) contrast(1.05);transition:filter .4s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+.barber-card:hover img{filter:grayscale(0);transform:scale(1.03)}
+.barber-card .info{padding:1.5rem}
+.barber-card h3{font-size:1.5rem;margin-bottom:.25rem}
+.barber-card .tag{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.demo-note{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;color:var(--muted);margin-top:2rem;text-transform:uppercase}
+
+/* booking */
+.booking{background:var(--smoke);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.demo-line{font-size:.85rem;color:var(--muted)}
+/* booking step indicator (animated, mobile-first) */
+.bs{position:relative;max-width:46rem;margin-bottom:2.5rem}
+.bs-readout{display:none;margin:0 0 .75rem;font-family:var(--font-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream)}
+.bs-steps{position:relative}
+.bs-list{list-style:none;display:flex;margin:0;padding:0}
+.bs-list li{flex:1;min-width:0}
+.bs-list button{appearance:none;background:none;border:0;color:inherit;width:100%;min-height:44px;padding:0;display:flex;flex-direction:column;align-items:center;gap:.5rem;cursor:pointer;font:inherit;position:relative;z-index:1}
+.bs-list button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.bs .dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--line);background:var(--smoke);color:var(--muted);transition:background .3s ease,border-color .3s ease,color .3s ease}
+.bs .num,.bs .check{grid-area:1/1;line-height:1}
+.bs .num{font-family:var(--font-mono);font-size:.75rem;font-weight:600}
+.bs .check{display:none}
+.bs .check svg{display:block}
+.bs .name{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .3s ease}
+.bs .is-done .dot{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.bs .is-done .num{display:none}
+.bs .is-done .check{display:block}
+.bs .is-done .name{color:var(--cream)}
+.bs .is-current .dot{border-color:var(--gold);color:var(--gold);animation:bsPulse 1.8s ease-in-out infinite}
+.bs .is-current .name{color:var(--cream)}
+@keyframes bsPulse{0%,100%{box-shadow:0 0 0 0 rgba(217,164,65,.45)}50%{box-shadow:0 0 0 7px rgba(217,164,65,0)}}
+.bs-track{position:absolute;top:11px;left:38px;right:38px;height:6px;background:#241f1b;border-radius:3px;z-index:0;pointer-events:none}
+.bs-bar{display:block;height:100%;width:0;background:var(--gold);border-radius:3px;transition:width .45s cubic-bezier(.22,.8,.3,1)}
+@media(max-width:560px){
+  .bs-readout{display:block}
+  .bs .name{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .bs-bar{transition:none}
+  .bs .is-current .dot{animation:none;box-shadow:0 0 0 3px rgba(217,164,65,.35)}
+}
+/* branded booking receipt */
+.confirm-card{background:var(--cream);color:var(--ink);border:none;padding:0;max-width:27rem;margin:0 auto;overflow:hidden}
+.receipt-head{background:var(--ink);color:var(--cream);padding:2.25rem 2rem 2rem;text-align:center}
+.receipt-head .mono{color:var(--gold)}
+.receipt-head h3{font-size:2rem;margin:.75rem 0 0;color:var(--cream)}
+.receipt-perf{height:14px;background:radial-gradient(circle at 8px 7px,var(--ink) 7px,transparent 7.5px);background-size:20px 14px;background-repeat:repeat-x}
+.receipt-body{padding:1.75rem 2rem 2.25rem;color:var(--ink)}
+.receipt-body .summary-list{margin-bottom:1.5rem}
+.receipt-body .summary-list li{border-bottom:1px dashed rgba(13,11,9,.25)}
+.receipt-body .summary-list li span:first-child{color:#6b6257}
+.receipt-body .ref{font-family:var(--font-mono);font-size:1.1rem;letter-spacing:.2em;margin:1.25rem 0;text-align:center;color:var(--ink)}
+.receipt-actions{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-top:1.25rem}
+.receipt-actions .btn{padding:.75rem 1.25rem;font-size:.85rem}
+.receipt-note{color:#6b6257;font-size:.85rem;text-align:center;margin-top:1.25rem}
+.bigcheck{width:4.5rem;height:4.5rem;margin:0 auto 1rem;display:block}
+.bigcheck circle{fill:none;stroke:var(--gold);stroke-width:3;stroke-dasharray:183;stroke-dashoffset:183}
+.bigcheck path{fill:none;stroke:var(--gold);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40}
+.book-panel.active .bigcheck circle{animation:draw 1s ease forwards}
+.book-panel.active .bigcheck path{animation:draw .6s ease .7s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.book-panel{display:none}
+.book-panel.active{display:block;animation:fadeSlide .4s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.opt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:1rem}
+.opt{background:var(--ink);border:1px solid var(--line);padding:1.5rem;cursor:pointer;text-align:left;color:var(--cream);font-family:var(--font-body);transition:border-color .2s ease,transform .2s ease;width:100%}
+.opt:hover{border-color:var(--gold);transform:translateY(-2px)}
+.opt.selected{border-color:var(--gold);background:rgba(217,164,65,.08);position:relative}
+.opt.selected::after{content:"";position:absolute;top:.9rem;right:.9rem;width:1.5rem;height:1.5rem;border-radius:50%;
+  background:var(--gold) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M3 7.2 5.7 10 11 4' stroke='%230d0b09' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/60% no-repeat}
+.opt.dim{opacity:.6}
+.opt strong{display:block;font-size:1.1rem;margin-bottom:.25rem}
+.opt .meta{font-family:var(--font-mono);font-size:.75rem;color:var(--muted);letter-spacing:.08em}
+.opt .thumb{width:100%;height:9rem;object-fit:cover;margin-bottom:1rem;filter:grayscale(40%)}
+.day-row,.slot-row{display:flex;gap:.75rem;flex-wrap:wrap}
+.day-btn,.slot-btn{background:var(--ink);border:1px solid var(--line);color:var(--cream);padding:.9rem 1.1rem;cursor:pointer;font-family:var(--font-mono);font-size:.85rem;min-width:4.5rem;transition:border-color .2s ease}
+.day-btn:hover,.slot-btn:hover{border-color:var(--gold)}
+.day-btn.selected,.slot-btn.selected{background:var(--gold);color:var(--ink);border-color:var(--gold);font-weight:700}
+.day-btn small{display:block;font-size:.65rem;letter-spacing:.1em;opacity:.7}
+.book-nav{display:flex;gap:1rem;margin-top:2.5rem}
+.field{margin-bottom:1.25rem}
+.field label{display:block;font-family:var(--font-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.field input{background:var(--ink);border:1px solid var(--line);color:var(--cream);padding:.9rem 1rem;width:100%;font-size:1rem;font-family:var(--font-body)}
+.field input:focus{outline:2px solid var(--gold);outline-offset:2px;border-color:var(--gold)}
+.field .error{color:#e08080;font-size:.85rem;margin-top:.35rem;display:none}
+.confirm-card{max-width:27rem}
+.confirm-card h3{font-size:2.5rem;margin-bottom:1rem;color:var(--gold)}
+.confirm-card .ref{font-family:var(--font-mono);font-size:1.25rem;letter-spacing:.2em;margin:1.5rem 0}
+.summary-list{list-style:none;text-align:left;max-width:26rem;margin:0 auto 2rem}
+.summary-list li{display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.summary-list li span:first-child{color:var(--muted)}
+
+/* visit */
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+.hours-table{width:100%;border-collapse:collapse;margin-top:1.5rem}
+.hours-table td{padding:.9rem .25rem;border-bottom:1px solid var(--line)}
+.hours-table td:last-child{text-align:right;font-family:var(--font-mono);font-size:.85rem;color:var(--gold)}
+.visit-info p{color:var(--muted);margin-bottom:1rem}
+.visit-info .big-tel{display:inline-block;font-family:var(--font-display);font-size:2rem;color:var(--gold);text-decoration:none;margin:1rem 0}
+.visit-info .big-tel:hover{color:var(--cream)}
+.visit-img img{width:100%;height:100%;min-height:24rem;object-fit:cover}
+
+/* faq */
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{width:100%;background:none;border:none;color:var(--cream);text-align:left;padding:1.5rem .5rem;cursor:pointer;font-size:1.1rem;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--font-body)}
+.faq-q .plus{font-family:var(--font-mono);color:var(--gold);font-size:1.5rem;flex-shrink:0;transition:transform .3s ease}
+.faq-q[aria-expanded="true"] .plus{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-a p{padding:0 .5rem 1.5rem;color:var(--muted);max-width:44rem}
+.faq-a a{color:var(--gold)}
+
+/* footer */
+footer{padding:4rem 0 7rem;border-top:1px solid var(--line)}
+.foot-grid{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+footer .demo{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);display:inline-block;padding:.6rem 1rem;margin-bottom:1.5rem}
+footer p{color:var(--muted);font-size:.9rem;max-width:36rem}
+footer .credit{margin-top:1.5rem;font-size:.8rem}
+
+/* sticky mobile bar */
+.sticky-book{position:fixed;bottom:0;left:0;right:0;z-index:100;display:none;background:rgba(13,11,9,.94);backdrop-filter:blur(10px);border-top:1px solid var(--gold);padding:.8rem 1rem;gap:.75rem}
+.sticky-book .btn{flex:1;text-align:center;padding:.85rem .5rem}
+.sticky-book .tel{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:3.25rem;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:1.3rem}
+
+/* ---------- motion pass 2: Kiminou review (livelier, iPhone-first) ---------- */
+#scrollbar{position:fixed;top:0;left:0;height:3px;width:100%;z-index:120;background:linear-gradient(90deg,var(--gold-deep),var(--gold));transform-origin:0 50%;transform:scaleX(0)}
+.hero-bg img{transform:scale(1.02)}
+.hero .mono,.hero-sub,.hero-ctas,.hero-trust{animation:heroFade .9s cubic-bezier(.22,1,.36,1) both}
+.hero-sub{animation-delay:.35s}.hero-ctas{animation-delay:.5s}.hero-trust{animation-delay:.65s}
+@keyframes heroFade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.k-line{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.k-inner{display:block;transform:translateY(112%);transition:transform .85s cubic-bezier(.22,1,.36,1)}
+.in .k-inner{transform:none}
+.btn{position:relative}
+.service-row:hover .price{animation:pricePop .45s ease}
+@keyframes pricePop{40%{transform:scale(1.14)}}
+.barber-card{transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease}
+.barber-card:hover{transform:translateY(-6px);box-shadow:0 24px 48px -24px rgba(0,0,0,.65)}
+.barber-card:active{transform:scale(.98)}
+.opt{transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+.opt:active{transform:scale(.97)}
+.day-btn:active,.slot-btn:active{transform:scale(.94)}
+.sticky-book{transform:translateY(110%);transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.sticky-book.show{transform:none}
+.stat-row strong{font-variant-numeric:tabular-nums}
+/* (receipt styles live with the booking section above) */
+.faq-q .plus{transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.service-row{transition:background .25s ease,padding-left .3s cubic-bezier(.22,1,.36,1)}
+.service-row:hover{padding-left:1rem}
+
+@media(max-width:900px){
+  .service-row{grid-template-columns:1fr auto}
+  .service-row .book-service{grid-column:1/-1;justify-self:start;margin-top:.25rem}
+  .nav-links{display:none;position:absolute;top:4.25rem;left:0;right:0;background:var(--smoke);flex-direction:column;padding:1.5rem;gap:1.25rem;border-bottom:1px solid var(--line)}
+  .nav-links.open{display:flex}
+  .menu-toggle{display:block}
+  .nav-cta{display:none}
+  .split{grid-template-columns:1fr;gap:2.5rem}
+  .split img{height:24rem}
+  .barber-grid{grid-template-columns:1fr}
+  .barber-card img{height:18rem}
+  .visit-grid{grid-template-columns:1fr;gap:2.5rem}
+  .sticky-book{display:flex}
+  .hero-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .hero-trust li strong{font-size:.85rem}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+  .stat-row div strong{font-size:1.4rem}
+  .stat-row div span{font-size:.62rem}
+  footer{padding-bottom:9rem}
+  section{padding:4rem 0}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .hero h1 .line>span{transform:none}
+  .reveal{opacity:1;transform:none}
+  .ticker-track{animation:none;flex-wrap:wrap;width:auto}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#booking">Skip to booking</a>
+<div id="scrollbar" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top">CLIP<span>LINE</span></a>
+    <nav aria-label="Main navigation">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#barbers">Barbers</a></li>
+        <li><a href="#visit">Visit</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <a class="btn small nav-cta" href="#booking">Book a Chair</a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">MENU</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-label="Welcome">
+    <div class="hero-bg"><img src="assets/hero2.jpg" alt="Barber finishing a precision fade in a dark luxury barbershop" fetchpriority="high"></div>
+    <div class="wrap hero-content">
+      <p class="mono">Walk-ins welcome &middot; Book online</p>
+      <h1>
+        <span class="line"><span>Sharp looks.</span></span>
+        <span class="line"><span class="hollow">Zero wait.</span></span>
+      </h1>
+      <p class="hero-sub">Precision cuts, hot towel shaves, and beard sculpting. Book your chair online in under a minute, walk in sharp.</p>
+      <div class="hero-ctas">
+        <a class="btn" href="#booking">Book a Chair</a>
+        <a class="btn ghost" href="tel:+15550102030">Call (555) 010-2030</a>
+      </div>
+      <ul class="hero-trust">
+        <li><strong>Licensed</strong>Master barbers</li>
+        <li><strong>Walk-ins</strong>Welcome daily</li>
+        <li><strong>6 days</strong>Open Tue to Sun</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="tickerTrack">
+      <span><i>&#9670;</i>Skin Fades</span><span><i>&#9670;</i>Beard Sculpting</span><span><i>&#9670;</i>Hot Towel Shaves</span><span><i>&#9670;</i>Classic Cuts</span><span><i>&#9670;</i>Junior Cuts</span><span><i>&#9670;</i>Line Ups</span>
+    </div>
+  </div>
+
+  <section id="services" aria-labelledby="services-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="mono">The menu</p>
+        <h2 id="services-h">Services <span class="hollow">&amp; prices</span></h2>
+        <p>Straight pricing, no surprises. Every service ends with a hot lather neckline cleanup and style finish.</p>
+      </div>
+      <div class="service-list">
+        <div class="service-row reveal">
+          <div><h3>Classic Cut</h3><p class="meta">Consultation, precision cut, wash, style &middot; 30 min</p></div>
+          <div class="price">$30</div>
+          <button class="btn small ghost book-service" data-service="classic">Book</button>
+        </div>
+        <div class="service-row reveal" data-delay="1">
+          <div><h3>Skin Fade</h3><p class="meta">Zero blend fade, razor lineup, wash, style &middot; 40 min</p></div>
+          <div class="price">$38</div>
+          <button class="btn small ghost book-service" data-service="fade">Book</button>
+        </div>
+        <div class="service-row reveal" data-delay="2">
+          <div><h3>Cut + Beard</h3><p class="meta">Full cut plus beard sculpt, hot towel, oils &middot; 45 min</p></div>
+          <div class="price">$45</div>
+          <button class="btn small ghost book-service" data-service="cutbeard">Book</button>
+        </div>
+        <div class="service-row reveal" data-delay="3">
+          <div><h3>Hot Towel Shave</h3><p class="meta">Straight razor shave, three hot towels, cold finish &middot; 60 min</p></div>
+          <div class="price">$55</div>
+          <button class="btn small ghost book-service" data-service="shave">Book</button>
+        </div>
+        <div class="service-row reveal">
+          <div><h3>Junior Cut</h3><p class="meta">Ages 12 and under, patient first timers welcome &middot; 25 min</p></div>
+          <div class="price">$22</div>
+          <button class="btn small ghost book-service" data-service="junior">Book</button>
+        </div>
+        <div class="service-row reveal" data-delay="1">
+          <div><h3>Line Up</h3><p class="meta">Edge up, razor detail, between full cuts &middot; 15 min</p></div>
+          <div class="price">$15</div>
+          <button class="btn small ghost book-service" data-service="lineup">Book</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="craft-h" style="padding-top:0">
+    <div class="wrap split">
+      <div class="frame reveal">
+        <img src="assets/cut.jpg" alt="Close up of clippers blending a fade" loading="lazy">
+      </div>
+      <div class="reveal" data-delay="1">
+        <p class="mono">The craft</p>
+        <h2 id="craft-h">Old school tools.<br><span class="hollow">New school</span> booking.</h2>
+        <p>Straight razors, steel clippers, and hot lather. The work in the chair has not changed in a hundred years, and it should not have to.</p>
+        <p>What changed is everything around the chair. This template puts online booking, clear pricing, and your hours where customers actually look: their phones.</p>
+        <div class="stat-row">
+          <div><strong>60<span style="font-size:1.25rem">sec</span></strong><span>To book online</span></div>
+          <div><strong>6</strong><span>Services on the menu</span></div>
+          <div><strong>4</strong><span>Steps to booked</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="barbers" aria-labelledby="barbers-h" style="background:var(--smoke);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="mono">The chairs</p>
+        <h2 id="barbers-h">Pick <span class="hollow">your barber</span></h2>
+        <p>Every barber takes every service. Pick a favorite or take the first open chair.</p>
+      </div>
+      <div class="barber-grid">
+        <article class="barber-card reveal">
+          <img src="assets/barber1.jpg" alt="Demo barber profile portrait" loading="lazy">
+          <div class="info"><h3>Marcus</h3><p class="tag">Fades &middot; Designs</p></div>
+        </article>
+        <article class="barber-card reveal" data-delay="1">
+          <img src="assets/barber2.jpg" alt="Demo barber profile at work" loading="lazy">
+          <div class="info"><h3>Dre</h3><p class="tag">Classic cuts &middot; Beards</p></div>
+        </article>
+        <article class="barber-card reveal" data-delay="2">
+          <img src="assets/chair.jpg" alt="Demo barber profile in the shop" loading="lazy">
+          <div class="info"><h3>Sam</h3><p class="tag">Hot towel shaves</p></div>
+        </article>
+      </div>
+      <p class="demo-note">Demo profiles. Replace with your real team and photos.</p>
+    </div>
+  </section>
+
+  <section id="booking" class="booking" aria-labelledby="booking-h">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="mono">Online booking</p>
+        <h2 id="booking-h">Book your chair</h2>
+        <p class="demo-line">Demo experience. Connect a booking provider to take live appointments.</p>
+      </div>
+      <div class="bs" id="bookSteps">
+        <p class="bs-readout" id="bsReadout" aria-live="polite">Step 1 of 4 · Service</p>
+        <div class="bs-steps">
+          <ol class="bs-list" aria-label="Booking progress">
+            <li data-step="1" class="is-current"><button type="button" aria-current="step"><span class="dot" aria-hidden="true"><span class="num">1</span><span class="check"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7.2 5.7 10 11 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="name">Service</span></button></li>
+            <li data-step="2" class="is-upcoming"><button type="button"><span class="dot" aria-hidden="true"><span class="num">2</span><span class="check"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7.2 5.7 10 11 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="name">Barber</span></button></li>
+            <li data-step="3" class="is-upcoming"><button type="button"><span class="dot" aria-hidden="true"><span class="num">3</span><span class="check"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7.2 5.7 10 11 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="name">Time</span></button></li>
+            <li data-step="4" class="is-upcoming"><button type="button"><span class="dot" aria-hidden="true"><span class="num">4</span><span class="check"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7.2 5.7 10 11 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="name">Details</span></button></li>
+          </ol>
+          <div class="bs-track" aria-hidden="true"><span class="bs-bar" id="bsBar"></span></div>
+        </div>
+      </div>
+
+      <div class="book-panel active" data-panel="1" role="group" aria-label="Choose a service">
+        <div class="opt-grid" id="serviceOpts"></div>
+      </div>
+
+      <div class="book-panel" data-panel="2" role="group" aria-label="Choose a barber">
+        <div class="opt-grid" id="barberOpts"></div>
+      </div>
+
+      <div class="book-panel" data-panel="3" role="group" aria-label="Choose a day and time">
+        <div class="field"><label id="dayLabel">Pick a day</label><div class="day-row" id="dayRow" role="radiogroup" aria-labelledby="dayLabel"></div></div>
+        <div class="field"><label id="slotLabel">Pick a time</label><div class="slot-row" id="slotRow" role="radiogroup" aria-labelledby="slotLabel"></div></div>
+      </div>
+
+      <div class="book-panel" data-panel="4" role="group" aria-label="Your details">
+        <div class="field">
+          <label for="fName">Full name</label>
+          <input type="text" id="fName" name="name" autocomplete="name" placeholder="Jordan Ellis">
+          <p class="error" id="eName" role="alert">Please enter your name.</p>
+        </div>
+        <div class="field">
+          <label for="fPhone">Phone number</label>
+          <input type="tel" id="fPhone" name="phone" autocomplete="tel" inputmode="tel" placeholder="(555) 000-0000">
+          <p class="error" id="ePhone" role="alert">Please enter a valid phone number.</p>
+        </div>
+        <div class="field">
+          <label for="fNotes">Notes for your barber (optional)</label>
+          <input type="text" id="fNotes" name="notes" placeholder="Skin fade, keep the top long">
+        </div>
+      </div>
+
+      <div class="book-panel" data-panel="5" role="status" aria-live="polite">
+        <div class="confirm-card">
+          <div class="receipt-head">
+            <svg class="bigcheck" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29"/><path d="M20 33l8 8 16-17"/></svg>
+            <p class="mono">Booking confirmed (demo)</p>
+            <h3>You are on the books.</h3>
+          </div>
+          <div class="receipt-perf" aria-hidden="true"></div>
+          <div class="receipt-body">
+            <ul class="summary-list" id="summaryList"></ul>
+            <p class="ref" id="bookRef"></p>
+            <div class="receipt-actions">
+              <a class="btn" id="icsLink" href="#" download="booking.ics">Add to Calendar</a>
+              <a class="btn ghost" style="color:var(--ink);border-color:var(--ink)" href="tel:+15550102030">Call the shop</a>
+            </div>
+            <p class="receipt-note">Show this reference at the shop. Demo only, nothing was sent.</p>
+            <p style="text-align:center;margin-top:1rem"><button class="btn ghost" id="bookAgain" style="color:var(--ink);border-color:var(--ink)">Book another</button></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-nav">
+        <button class="btn ghost" id="bookBack" disabled>Back</button>
+        <button class="btn" id="bookNext">Continue</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit" aria-labelledby="visit-h">
+    <div class="wrap visit-grid">
+      <div class="visit-info reveal">
+        <p class="mono">Find us</p>
+        <h2 id="visit-h" style="font-size:clamp(2.5rem,6vw,4rem);margin:1rem 0 1.5rem">Come <span style="color:transparent;-webkit-text-stroke:1.5px var(--gold)">through</span></h2>
+        <p>123 Demo Street<br>Demo City, DC 00000</p>
+        <a class="big-tel" href="tel:+15550102030">(555) 010-2030</a>
+        <p>Walk-ins welcome whenever a chair is open. Booking ahead guarantees your time.</p>
+        <table class="hours-table" aria-label="Opening hours">
+          <tr><td>Tuesday to Friday</td><td>9:00a to 7:00p</td></tr>
+          <tr><td>Saturday</td><td>8:00a to 5:00p</td></tr>
+          <tr><td>Sunday</td><td>10:00a to 3:00p</td></tr>
+          <tr><td>Monday</td><td>Closed</td></tr>
+        </table>
+      </div>
+      <div class="visit-img reveal" data-delay="1">
+        <img src="assets/shop.jpg" alt="Inside the demo barbershop, chairs and mirrors" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" aria-labelledby="faq-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="mono">Good to know</p>
+        <h2 id="faq-h">Questions, <span class="hollow">answered</span></h2>
+      </div>
+      <div class="reveal">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How much does a haircut cost?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Demo pricing: $30 for a classic cut, $38 for a skin fade, $45 for cut plus beard, and $55 for the full hot towel shave. Junior cuts are $22. Your shop sets its own prices in the template.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Do I need an appointment or can I walk in?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Both. Book online to lock your time, or walk in and take the next open chair. Saturdays fill fast, so booking ahead is smart.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How long does a cut take?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Plan on 30 minutes for a classic cut, 40 for a fade, 45 for cut plus beard, and a full hour for the hot towel shave.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What forms of payment do you take?<span class="plus">+</span></button>
+          <div class="faq-a"><p>This template assumes cards, cash, and mobile pay. Update this answer with what your shop actually accepts.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Do you cut children's hair?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Yes. The junior cut covers ages 12 and under, and first timers get extra patience.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What if I need to cancel?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Life happens. Call the shop and we will move your booking, no fee in this demo. Real shops can add their own cancellation policy here.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="demo">Template demo</span>
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#top" style="font-size:1.25rem">CLIP<span>LINE</span></a>
+        <p style="margin-top:1rem">A booking-first barbershop website template. All business details, prices, names, and hours on this page are demo placeholders. Replace them with the real shop before launch.</p>
+        <p class="credit">Photos: Pexels (free license). Template concept 001 in the trades template line.</p>
+      </div>
+      <div>
+        <p class="mono" style="margin-bottom:1rem">Next templates</p>
+        <p>002 Plumber &middot; 003 Dentist &middot; 004 Salon<br>Same design system, trade specific booking flows.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-book" role="navigation" aria-label="Quick booking">
+  <a class="tel" href="tel:+15550102030" aria-label="Call the shop">&#9742;</a>
+  <a class="btn" href="#booking">Book a Chair</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* mobile menu */
+  var toggle = document.getElementById("menuToggle");
+  var nav = document.getElementById("navLinks");
+  toggle.addEventListener("click", function(){
+    var open = nav.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  nav.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", function(){ nav.classList.remove("open"); toggle.setAttribute("aria-expanded","false"); });
+  });
+
+  /* ticker: duplicate for seamless loop */
+  var track = document.getElementById("tickerTrack");
+  track.innerHTML += track.innerHTML;
+
+  /* reveal on scroll */
+  var revealEls = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, {threshold: 0.12, rootMargin: "0px 0px -40px 0px"});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* faq accordion */
+  document.querySelectorAll(".faq-q").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var open = btn.getAttribute("aria-expanded") === "true";
+      document.querySelectorAll(".faq-q").forEach(function(b){
+        b.setAttribute("aria-expanded","false");
+        b.nextElementSibling.style.maxHeight = null;
+      });
+      if (!open) {
+        btn.setAttribute("aria-expanded","true");
+        var panel = btn.nextElementSibling;
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  });
+
+  /* ---------- BookingProvider boundary (ChatGPT R2) ----------
+     The UI never talks to a booking backend directly. It consumes this
+     interface; any real provider (Square, Fresha, Setmore, OpenSalon)
+     implements it and drops in without touching the front end.
+     Contract:
+       getServices() -> [{id, name, meta, price}]
+       getBarbers()  -> [{id, name, meta, img}]
+       getDays()     -> [Date]  (bookable days, provider-defined)
+       getSlots(dayDate) -> ["9:00 AM", ...]  (live availability for that day)
+       createBooking(details) -> Promise resolving to
+         {reservationId, service, barber, dateStr, slot, name, phone}
+         or rejecting with {code} where code is one of:
+         "slot-taken" | "provider-timeout" | "invalid-details"
+  */
+  var DemoProvider = (function(){
+    var SERVICES = [
+      {id:"classic", name:"Classic Cut", meta:"30 min", price:"$30"},
+      {id:"fade", name:"Skin Fade", meta:"40 min", price:"$38"},
+      {id:"cutbeard", name:"Cut + Beard", meta:"45 min", price:"$45"},
+      {id:"shave", name:"Hot Towel Shave", meta:"60 min", price:"$55"},
+      {id:"junior", name:"Junior Cut", meta:"25 min", price:"$22"},
+      {id:"lineup", name:"Line Up", meta:"15 min", price:"$15"}
+    ];
+    var BARBERS = [
+      {id:"marcus", name:"Marcus", meta:"Fades, designs", img:"assets/barber1.jpg"},
+      {id:"dre", name:"Dre", meta:"Classic cuts, beards", img:"assets/barber2.jpg"},
+      {id:"sam", name:"Sam", meta:"Hot towel shaves", img:"assets/chair.jpg"},
+      {id:"first", name:"First available", meta:"Next open chair", img:null}
+    ];
+    /* test hook: window.__bookingChaos = "slot-taken" | "provider-timeout" forces the failure path */
+    function chaos(){ return window.__bookingChaos || null; }
+    return {
+      name: "demo",
+      getServices: function(){ return SERVICES.slice(); },
+      getBarbers: function(){ return BARBERS.slice(); },
+      getDays: function(){
+        var days = [], d = new Date(); d.setDate(d.getDate() + 1);
+        while (days.length < 10) {
+          if (d.getDay() !== 1) days.push(new Date(d));
+          d.setDate(d.getDate() + 1);
+        }
+        return days;
+      },
+      getSlots: function(d){
+        var h = d.getDay();
+        var hours = (h === 0) ? [10,11,12,13,14] : (h === 6 ? [8,9,10,11,12,13,14,15,16] : [9,10,11,12,13,14,15,16,17,18]);
+        return hours.map(function(x){ return (x > 12 ? x - 12 : x) + ":00 " + (x >= 12 ? "PM" : "AM"); });
+      },
+      createBooking: function(details){
+        return new Promise(function(resolve, reject){
+          setTimeout(function(){
+            var c = chaos();
+            if (c === "slot-taken") return reject({code:"slot-taken"});
+            if (c === "provider-timeout") return reject({code:"provider-timeout"});
+            if (!details.name || details.name.trim().length < 2 ||
+                (details.phone || "").replace(/\D/g,"").length < 7) {
+              return reject({code:"invalid-details"});
+            }
+            resolve({
+              reservationId: "CL-" + Math.random().toString(36).slice(2,7).toUpperCase(),
+              service: details.service, barber: details.barber,
+              dateStr: details.dateStr, slot: details.slot,
+              name: details.name.trim(), phone: details.phone.trim()
+            });
+          }, 650);
+        });
+      }
+    };
+  })();
+  /* swap this for a real adapter when Kiminou picks a provider */
+  var provider = DemoProvider;
+  var state = { service:null, barber:null, day:null, slot:null, step:1 };
+  var maxStep = 4;
+
+  var serviceOpts = document.getElementById("serviceOpts");
+  provider.getServices().forEach(function(s){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "opt"; b.dataset.id = s.id;
+    b.innerHTML = "<strong></strong><span class='meta'></span><div style='margin-top:.5rem;font-family:var(--font-display);color:var(--gold);font-size:1.25rem'></div>";
+    b.querySelector("strong").textContent = s.name;
+    b.querySelector(".meta").textContent = s.meta;
+    b.querySelector("div").textContent = s.price;
+    b.addEventListener("click", function(){ selectOpt(serviceOpts, b, "service"); });
+    serviceOpts.appendChild(b);
+  });
+
+  var barberOpts = document.getElementById("barberOpts");
+  provider.getBarbers().forEach(function(bdata){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "opt"; b.dataset.id = bdata.id;
+    var html = bdata.img ? "<img class='thumb' src='" + bdata.img + "' alt='' loading='lazy'>" : "";
+    html += "<strong></strong><span class='meta'></span>";
+    b.innerHTML = html;
+    b.querySelector("strong").textContent = bdata.name;
+    b.querySelector(".meta").textContent = bdata.meta;
+    b.addEventListener("click", function(){ selectOpt(barberOpts, b, "barber"); });
+    barberOpts.appendChild(b);
+  });
+
+  function selectOpt(container, btn, key){
+    container.querySelectorAll(".opt").forEach(function(o){ o.classList.remove("selected"); o.classList.add("dim"); o.setAttribute("aria-pressed","false"); });
+    btn.classList.add("selected");
+    btn.classList.remove("dim");
+    btn.setAttribute("aria-pressed","true");
+    state[key] = btn.dataset.id;
+    refreshNext();
+  }
+
+  /* quiet readiness check (no error display) for the Continue button state */
+  function stepReady(n){
+    if (n === 1) return !!state.service;
+    if (n === 2) return !!state.barber;
+    if (n === 3) return state.day !== null && !!state.slot;
+    return true;
+  }
+  function refreshNext(){
+    if (state.step <= maxStep) nextBtn.disabled = !stepReady(state.step);
+  }
+
+  /* days come from the provider (closed Mondays in the demo adapter) */
+  var dayRow = document.getElementById("dayRow");
+  var slotRow = document.getElementById("slotRow");
+  var days = provider.getDays();
+  var dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  days.forEach(function(d, i){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "day-btn"; b.setAttribute("role","radio"); b.setAttribute("aria-checked","false");
+    b.innerHTML = "<small></small><span></span>";
+    b.querySelector("small").textContent = dayNames[d.getDay()];
+    b.querySelector("span").textContent = monthNames[d.getMonth()] + " " + d.getDate();
+    b.addEventListener("click", function(){
+      dayRow.querySelectorAll(".day-btn").forEach(function(x){ x.classList.remove("selected"); x.setAttribute("aria-checked","false"); });
+      b.classList.add("selected"); b.setAttribute("aria-checked","true");
+      state.day = i;
+      renderSlots(d);
+      refreshNext();
+    });
+    dayRow.appendChild(b);
+  });
+
+  function renderSlots(d){
+    slotRow.innerHTML = "";
+    state.slot = null;
+    provider.getSlots(d).forEach(function(label){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "slot-btn"; b.setAttribute("role","radio"); b.setAttribute("aria-checked","false");
+      b.textContent = label;
+      b.addEventListener("click", function(){
+        slotRow.querySelectorAll(".slot-btn").forEach(function(x){ x.classList.remove("selected"); x.setAttribute("aria-checked","false"); });
+        b.classList.add("selected"); b.setAttribute("aria-checked","true");
+        state.slot = label;
+        refreshNext();
+      });
+      slotRow.appendChild(b);
+    });
+  }
+
+  /* service shortcut buttons */
+  document.querySelectorAll(".book-service").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var id = btn.dataset.service;
+      var target = serviceOpts.querySelector("[data-id='" + id + "']");
+      if (target) selectOpt(serviceOpts, target, "service");
+      goStep(2);
+      document.getElementById("booking").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth"});
+    });
+  });
+
+  /* step nav */
+  var panels = document.querySelectorAll(".book-panel");
+  var backBtn = document.getElementById("bookBack");
+  var nextBtn = document.getElementById("bookNext");
+
+  /* animated step indicator */
+  (function(){
+    var root = document.getElementById("bookSteps");
+    if (!root) return;
+    var bar = document.getElementById("bsBar");
+    var track = root.querySelector(".bs-track");
+    var readout = document.getElementById("bsReadout");
+    var items = Array.prototype.slice.call(root.querySelectorAll("li[data-step]"));
+    var names = ["Service", "Barber", "Time", "Details"];
+    var current = 1, explicit = {};
+    function clamp(n){ n = Math.round(Number(n)); if (n < 1) return 1; if (n > 4) return 4; return n; }
+    function paint(){
+      items.forEach(function(li, i){
+        var step = i + 1, btn = li.querySelector("button");
+        var done = explicit[step] || step < current, isCurrent = step === current;
+        li.classList.toggle("is-done", done && !isCurrent);
+        li.classList.toggle("is-current", isCurrent);
+        li.classList.toggle("is-upcoming", !done && !isCurrent);
+        if (isCurrent) btn.setAttribute("aria-current", "step");
+        else btn.removeAttribute("aria-current");
+      });
+      readout.textContent = "Step " + current + " of 4 · " + names[current - 1];
+      /* Grok R2: the fill must end exactly at the current dot's center, never past it */
+      paintBar();
+    }
+    function paintBar(){
+      if (!bar || !track) return;
+      var dots = root.querySelectorAll(".dot");
+      var dot = dots[current - 1];
+      if (!dot) return;
+      var tr = track.getBoundingClientRect(), dr = dot.getBoundingClientRect();
+      var pct = (dr.left + dr.width / 2 - tr.left) / tr.width * 100;
+      bar.style.width = Math.max(0, Math.min(100, pct)) + "%";
+    }
+    window.addEventListener("resize", paintBar);
+    function setStep(n){ current = clamp(n); paint(); return current; }
+    function markDone(n){ n = clamp(n); explicit[n] = true; paint(); return n; }
+    function reset(){ current = 1; explicit = {}; paint(); }
+    items.forEach(function(li){
+      li.querySelector("button").addEventListener("click", function(){
+        if (window.BookingJump) window.BookingJump(Number(li.getAttribute("data-step")));
+      });
+    });
+    paint();
+    window.BookingSteps = { setStep: setStep, markDone: markDone, reset: reset };
+  })();
+
+  /* guarded indicator jumps: back freely, forward only when steps validate */
+  window.BookingJump = function(target){
+    if (target < state.step) { goStep(target); return; }
+    if (target === state.step) return;
+    for (var s = state.step; s < target; s++) {
+      if (!validStep(s)) return;
+    }
+    goStep(target);
+  };
+
+  function goStep(n){
+    state.step = n;
+    panels.forEach(function(p){
+      var on = p.dataset.panel == String(n);
+      p.classList.toggle("active", on);
+      if (on) { p.setAttribute("tabindex","-1"); p.focus({preventScroll:true}); }
+      else { p.removeAttribute("tabindex"); }
+    });
+    if (window.BookingSteps) {
+      if (n <= maxStep) window.BookingSteps.setStep(n);
+      else { window.BookingSteps.setStep(maxStep); window.BookingSteps.markDone(maxStep); }
+    }
+    backBtn.disabled = (n === 1);
+    nextBtn.textContent = (n === maxStep) ? "Confirm booking" : "Continue";
+    nextBtn.style.display = (n === 5) ? "none" : "";
+    backBtn.style.display = (n === 5) ? "none" : "";
+    refreshNext();
+  }
+
+  function validStep(n){
+    if (n === 1) return !!state.service;
+    if (n === 2) return !!state.barber;
+    if (n === 3) return state.day !== null && !!state.slot;
+    if (n === 4) {
+      var ok = true;
+      var name = document.getElementById("fName");
+      var phone = document.getElementById("fPhone");
+      var eName = document.getElementById("eName");
+      var ePhone = document.getElementById("ePhone");
+      eName.style.display = "none"; ePhone.style.display = "none";
+      if (name.value.trim().length < 2) { eName.style.display = "block"; ok = false; }
+      if (phone.value.replace(/\D/g,"").length < 7) { ePhone.style.display = "block"; ok = false; }
+      return ok;
+    }
+    return true;
+  }
+
+  nextBtn.addEventListener("click", function(){
+    if (!validStep(state.step)) {
+      nextBtn.animate(
+        [{transform:"translateX(0)"},{transform:"translateX(-6px)"},{transform:"translateX(6px)"},{transform:"translateX(0)"}],
+        {duration: 220}
+      );
+      /* move focus to the first invalid field so the error is found */
+      var badName = document.getElementById("eName").style.display === "block";
+      var badPhone = document.getElementById("ePhone").style.display === "block";
+      if (badName) document.getElementById("fName").focus();
+      else if (badPhone) document.getElementById("fPhone").focus();
+      return;
+    }
+    if (state.step < maxStep) { goStep(state.step + 1); }
+    else { confirmBooking(); }
+  });
+  backBtn.addEventListener("click", function(){ if (state.step > 1) goStep(state.step - 1); });
+
+  function serviceName(id){ var s = provider.getServices().find(function(x){return x.id===id;}); return s ? s.name + " (" + s.price + ")" : ""; }
+  function barberName(id){ var b = provider.getBarbers().find(function(x){return x.id===id;}); return b ? b.name : ""; }
+
+  function confirmBooking(){
+    var d = days[state.day];
+    var dateStr = dayNames[d.getDay()] + ", " + monthNames[d.getMonth()] + " " + d.getDate();
+    var details = {
+      service: serviceName(state.service), barber: barberName(state.barber),
+      dateStr: dateStr, slot: state.slot,
+      name: document.getElementById("fName").value,
+      phone: document.getElementById("fPhone").value
+    };
+    nextBtn.disabled = true;
+    nextBtn.textContent = "Booking...";
+    provider.createBooking(details).then(function(conf){
+      var rows = [
+        ["Service", conf.service],
+        ["Barber", conf.barber],
+        ["Date", conf.dateStr],
+        ["Time", conf.slot],
+        ["Name", conf.name],
+        ["Phone", conf.phone]
+      ];
+      var list = document.getElementById("summaryList");
+      list.innerHTML = "";
+      rows.forEach(function(r){
+        var li = document.createElement("li");
+        var a = document.createElement("span"); a.textContent = r[0];
+        var b2 = document.createElement("span"); b2.textContent = r[1];
+        li.appendChild(a); li.appendChild(b2); list.appendChild(li);
+      });
+      document.getElementById("bookRef").textContent = "Ref: " + conf.reservationId;
+      document.getElementById("icsLink").href = buildICS(conf);
+      nextBtn.disabled = false;
+      goStep(5);
+    }).catch(function(err){
+      nextBtn.disabled = false;
+      nextBtn.textContent = "Confirm booking";
+      var code = (err && err.code) || "provider-timeout";
+      if (code === "slot-taken") {
+        state.slot = null;
+        renderSlots(days[state.day]);
+        goStep(3);
+        announce("That time was just taken. Pick another time.");
+      } else {
+        announce(code === "invalid-details"
+          ? "Check your name and phone number, then try again."
+          : "The booking service did not respond. Try again in a moment.");
+      }
+    });
+  }
+
+  /* polite live-region announcer for provider errors */
+  var announcer = null;
+  function announce(msg){
+    if (!announcer) {
+      announcer = document.createElement("p");
+      announcer.setAttribute("role","status");
+      announcer.setAttribute("aria-live","polite");
+      announcer.style.cssText = "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)";
+      document.body.appendChild(announcer);
+    }
+    announcer.textContent = "";
+    setTimeout(function(){ announcer.textContent = msg; }, 50);
+  }
+
+  function pad2(n){ return (n < 10 ? "0" : "") + n; }
+  function icsStamp(d){ return d.getFullYear() + pad2(d.getMonth()+1) + pad2(d.getDate()) + "T" + pad2(d.getHours()) + pad2(d.getMinutes()) + "00"; }
+  function buildICS(conf){
+    var svc = provider.getServices().find(function(x){ return x.id === state.service; });
+    var mins = svc ? parseInt((svc.meta.match(/(\d+)\s*min/) || [0, 60])[1], 10) : 60;
+    var m = (conf.slot || "").match(/(\d+):(\d+)\s*(AM|PM)/i);
+    var d = new Date(days[state.day]);
+    if (m) {
+      var h = parseInt(m[1], 10) % 12 + (/pm/i.test(m[3]) ? 12 : 0);
+      d.setHours(h, parseInt(m[2], 10), 0, 0);
+    }
+    var end = new Date(d.getTime() + mins * 60000);
+    var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "BEGIN:VEVENT",
+      "SUMMARY:ClipLine booking - " + conf.service + " with " + conf.barber,
+      "DTSTART:" + icsStamp(d),
+      "DTEND:" + icsStamp(end),
+      "DESCRIPTION:Reference " + conf.reservationId + " (demo booking)",
+      "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+    return "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
+  }
+
+  document.getElementById("bookAgain").addEventListener("click", function(){
+    state = { service:null, barber:null, day:null, slot:null, step:1 };
+    document.querySelectorAll(".opt.selected,.opt.dim,.day-btn.selected,.slot-btn.selected").forEach(function(x){ x.classList.remove("selected"); x.classList.remove("dim"); });
+    document.getElementById("slotRow").innerHTML = "";
+    document.getElementById("fName").value = "";
+    document.getElementById("fPhone").value = "";
+    document.getElementById("fNotes").value = "";
+    if (window.BookingSteps) window.BookingSteps.reset();
+    goStep(1);
+  });
+
+  /* ---------- motion pass 2: scroll progress, parallax, kinetic heads, counters ---------- */
+  var scrollBar = document.getElementById("scrollbar");
+  var hero = document.querySelector(".hero");
+  var stickyBook = document.querySelector(".sticky-book");
+
+  /* kinetic headlines: split .section-head h2 into animated lines */
+  document.querySelectorAll(".section-head h2").forEach(function(h2){
+    var lines = [[]];
+    Array.prototype.slice.call(h2.childNodes).forEach(function(n){
+      if (n.nodeName === "BR") { lines.push([]); }
+      else { lines[lines.length - 1].push(n); }
+    });
+    h2.innerHTML = "";
+    lines.forEach(function(nodes, i){
+      var line = document.createElement("span"); line.className = "k-line";
+      var inner = document.createElement("span"); inner.className = "k-inner";
+      inner.style.transitionDelay = (i * 0.1) + "s";
+      nodes.forEach(function(n){ inner.appendChild(n); });
+      line.appendChild(inner); h2.appendChild(line);
+    });
+  });
+
+  /* scroll progress + sticky bar entrance (rAF, passive) */
+  var ticking = false;
+  function onScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      ticking = false;
+      var y = window.scrollY || window.pageYOffset;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollBar) scrollBar.style.transform = "scaleX(" + (max > 0 ? (y / max).toFixed(3) : 0) + ")";
+      if (stickyBook) {
+        var past = hero ? y > hero.offsetHeight * 0.7 : y > 600;
+        stickyBook.classList.toggle("show", past || reduceMotion);
+      }
+    });
+  }
+  window.addEventListener("scroll", onScroll, {passive: true});
+  onScroll();
+
+  /* magnetic CTAs on fine pointers */
+  if (!reduceMotion && window.matchMedia("(pointer:fine)").matches) {
+    document.querySelectorAll(".hero-ctas .btn, .book-nav .btn").forEach(function(btn){
+      btn.addEventListener("mousemove", function(e){
+        var r = btn.getBoundingClientRect();
+        var x = e.clientX - r.left - r.width / 2;
+        var y = e.clientY - r.top - r.height / 2;
+        btn.style.transform = "translate(" + (x * 0.12).toFixed(1) + "px," + (y * 0.18).toFixed(1) + "px)";
+      });
+      btn.addEventListener("mouseleave", function(){ btn.style.transform = ""; });
+    });
+  }
+
+  goStep(1);
+})();
+</script>
+</body>
+</html>

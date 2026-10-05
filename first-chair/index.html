@@ -53,6 +53,7 @@ a{color:inherit}
   font-size:clamp(56px,8vw,128px);line-height:1;letter-spacing:-.01em;
   color:transparent;-webkit-text-stroke:1px rgba(120,180,255,.30);will-change:transform}
 .hero h1 .kl{display:inline-block;will-change:transform}
+.hero h1 .kw{display:inline-block;white-space:nowrap}
 
 /* ---------- hero ---------- */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw 0 190px;position:relative;z-index:2}
@@ -279,10 +280,15 @@ function splitLetters(el){
   while(walker.nextNode()) nodes.push(walker.currentNode);
   nodes.forEach(n=>{
     const frag = document.createDocumentFragment();
-    [...n.textContent].forEach(ch=>{
-      if(ch === ' ' || ch.trim() === ''){ frag.appendChild(document.createTextNode(' ')); return; }
-      const s = document.createElement('span'); s.className = 'kl'; s.textContent = ch;
-      frag.appendChild(s);
+    n.textContent.split(/(\s+)/).forEach(part=>{
+      if(part === '') return;
+      if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(' ')); return; }
+      const w = document.createElement('span'); w.className = 'kw';
+      [...part].forEach(ch=>{
+        const s = document.createElement('span'); s.className = 'kl'; s.textContent = ch;
+        w.appendChild(s);
+      });
+      frag.appendChild(w);
     });
     n.parentNode.replaceChild(frag, n);
   });

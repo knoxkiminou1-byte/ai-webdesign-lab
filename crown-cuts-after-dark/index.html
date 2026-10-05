@@ -78,6 +78,7 @@ a{color:inherit}
   letter-spacing:.02em;color:transparent;-webkit-text-stroke:1px rgba(255,240,235,.28);will-change:transform}
 /* per-letter hero drift */
 .hero-title .kl{display:inline-block;will-change:transform}
+.hero-title .kw{display:inline-block;white-space:nowrap}
 .hero-bg img{transform:scale(calc(1 + var(--p,0)*.12))}
 
 /* ---------- marquee ---------- */
@@ -395,10 +396,15 @@ function splitLetters(el){
   while(walker.nextNode()) nodes.push(walker.currentNode);
   nodes.forEach(n=>{
     const frag = document.createDocumentFragment();
-    [...n.textContent].forEach(ch=>{
-      if(ch === ' ' || ch.trim() === ''){ frag.appendChild(document.createTextNode(' ')); return; }
-      const s = document.createElement('span'); s.className = 'kl'; s.textContent = ch;
-      frag.appendChild(s);
+    n.textContent.split(/(\s+)/).forEach(part=>{
+      if(part === '') return;
+      if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(' ')); return; }
+      const w = document.createElement('span'); w.className = 'kw';
+      [...part].forEach(ch=>{
+        const s = document.createElement('span'); s.className = 'kl'; s.textContent = ch;
+        w.appendChild(s);
+      });
+      frag.appendChild(w);
     });
     n.parentNode.replaceChild(frag, n);
   });

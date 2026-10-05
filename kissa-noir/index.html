@@ -3,181 +3,296 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KISSA NOIR · Jazz Listening Bar · New Orleans</title>
-<meta name="description" content="Kissa Noir. A jazz listening bar in New Orleans. Vinyl only, no talking during solos. Concept mock.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Kissa Noir · Jazz Listening Bar · New Orleans</title>
+<meta name="description" content="Kissa Noir. A Japanese-style jazz listening bar in New Orleans. Vinyl only, no talking during solos. Concept mock.">
+<link rel="preload" as="image" href="media/room-wide.jpg">
 <style>
-@font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/anton-400.woff2') format('woff2')}
+/* self-hosted whisper faces (no CDN dependency) */
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:swap;src:url('media/fonts/cormorantg-normal-300.woff2') format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400;font-display:swap;src:url('media/fonts/cormorantg-normal-400.woff2') format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url('media/fonts/cormorantg-normal-500.woff2') format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url('media/fonts/cormorantg-normal-500.woff2') format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:300;font-display:swap;src:url('media/fonts/cormorantg-italic-300.woff2') format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url('media/fonts/cormorantg-italic-400.woff2') format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:swap;src:url('media/fonts/cormorantg-italic-500.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('media/fonts/jbm-normal-400.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('media/fonts/jbm-normal-500.woff2') format('woff2')}
+@property --accent{syntax:'<color>';inherits:true;initial-value:#E8A33D}
 :root{
-  --ink:#0D0B09; --panel:#141110; --cream:#F2EAD8; --dim:#9A8F7D;
-  --amber:#E8A33D; --blood:#B3341F; --line:rgba(242,234,216,.13);
+  --ink:#0D0B09; --ink2:#141110; --cream:#F2EAD8; --paper:#ECE1C8;
+  --dim:#9A8F7D; --amber:#E8A33D; --blood:#B3341F; --line:rgba(242,234,216,.13);
+  --accent:#E8A33D;
+  --serif:'Cormorant Garamond','EB Garamond',Georgia,'Times New Roman',serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 html.locked{overflow:hidden}
-body{background:var(--ink);color:var(--cream);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-::selection{background:var(--amber);color:#000}
+body{background:var(--ink);color:var(--cream);font-family:var(--serif);font-size:18px;line-height:1.65;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:120;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E")}
+::selection{background:var(--accent);color:#000}
 img,video{display:block;max-width:100%}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 /* ---------- loader ---------- */
-.loader{position:fixed;inset:0;z-index:200;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px;
-  transition:opacity .5s ease,visibility .5s;pointer-events:none}
+.loader{position:fixed;inset:0;z-index:200;background:var(--ink);display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;transition:opacity .5s ease,visibility .5s}
 .loader.done{opacity:0;visibility:hidden}
-.loader .disc{width:74px;height:74px;border-radius:50%;
+.loader .disc{width:46px;height:46px;border-radius:50%;
   background:repeating-radial-gradient(circle at 50% 50%,#000 0 2px,#161311 2px 4px);
   border:1px solid var(--line);position:relative;animation:spin 1.6s linear infinite}
-.loader .disc::after{content:"";position:absolute;top:50%;left:50%;width:22px;height:22px;border-radius:50%;
-  background:var(--amber);transform:translate(-50%,-50%)}
-.loader .l-word{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:.14em}
-.loader .l-word span{color:var(--amber)}
+.loader .disc::after{content:"";position:absolute;top:50%;left:50%;width:14px;height:14px;border-radius:50%;
+  background:var(--accent);transform:translate(-50%,-50%)}
+.loader .word{font-family:var(--serif);font-style:italic;font-size:30px;letter-spacing:.05em}
+.loader .sub{font-family:var(--mono);font-size:10px;letter-spacing:.32em;color:var(--dim)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ---------- HUD ---------- */
 .hud{position:fixed;top:0;left:0;right:0;z-index:90;display:flex;justify-content:space-between;align-items:center;
-  padding:14px 4vw;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--dim);
-  background:linear-gradient(180deg,rgba(13,11,9,.85),transparent);pointer-events:none}
-.hud .lamp{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);margin-right:8px;animation:lamp 3s ease-in-out infinite}
+  padding:14px 4vw;font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--dim);
+  background:linear-gradient(180deg,rgba(13,11,9,.88),transparent);pointer-events:none}
+.hud .lamp{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:8px;
+  animation:lamp 3s ease-in-out infinite;transition:background-color .8s}
 @keyframes lamp{0%,100%{opacity:.4}50%{opacity:1}}
-.hud b{color:var(--cream)}
+.hud b{color:var(--cream);font-weight:500}
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;display:flex;align-items:flex-end}
-.hero-video{position:absolute;inset:-12% 0;z-index:0}
-.hero-video video{width:100%;height:100%;object-fit:cover;will-change:transform}
-.hero-shade{position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,rgba(13,11,9,.6) 0%,rgba(13,11,9,.18) 38%,rgba(13,11,9,.4) 68%,rgba(13,11,9,.95) 100%)}
-.hero-warm{position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(55% 42% at 50% 60%,rgba(232,163,61,.16),transparent 70%)}
-.hero-copy{position:relative;z-index:2;padding:0 6vw 11vh;width:100%}
-.kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;color:var(--amber);margin-bottom:20px}
-.hero-title{font-family:'Anton',sans-serif;font-size:clamp(76px,15vw,220px);line-height:.9;letter-spacing:.01em}
-.hero-title .row{display:block;overflow:hidden}
+.hero-still{position:absolute;inset:-10% 0;z-index:0;will-change:transform;
+  background:url('media/room-wide.jpg') center 62%/cover no-repeat}
+.grade{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(58% 44% at 50% 60%,rgba(232,163,61,.15),transparent 70%),
+    linear-gradient(180deg,rgba(13,11,9,.86) 0%,rgba(13,11,9,.38) 42%,rgba(13,11,9,.55) 72%,rgba(13,11,9,.96) 100%)}
+.grade::after{content:"";position:absolute;inset:0;opacity:.08;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E")}
+.hero-copy{position:relative;z-index:2;width:100%;max-width:1200px;margin:0 auto;padding:0 6vw 10vh}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.34em;color:var(--accent);margin-bottom:20px;transition:color .8s}
+.hero-title{font-family:var(--serif);font-weight:500;font-size:clamp(54px,9vw,124px);line-height:1.02;letter-spacing:.015em}
+.hero-title .row{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
 .hero-title .row>span{display:inline-block;transform:translateY(112%)}
-.hero-title .noir{color:transparent;-webkit-text-stroke:1.5px var(--cream)}
-.hero-sub{max-width:540px;color:var(--dim);line-height:1.7;margin-top:24px;font-size:16.5px}
+.hero-title em{font-style:italic;color:var(--accent);transition:color .8s}
+.hero-sub{max-width:33rem;color:var(--cream);font-size:19px;line-height:1.7;margin-top:20px}
 .hero-sub b{color:var(--cream)}
-.spinning-now{margin-top:26px;display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--dim)}
-.spinning-now .mini-disc{width:34px;height:34px;border-radius:50%;flex:none;
+.hero-sub b{color:var(--cream);font-weight:600}
+.tone-row{display:flex;align-items:center;gap:16px;margin-top:26px;flex-wrap:wrap}
+.spinning-now{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--dim)}
+.spinning-now .mini-disc{width:30px;height:30px;border-radius:50%;flex:none;
   background:repeating-radial-gradient(circle at 50% 50%,#000 0 2px,#1c1815 2px 4px);
   border:1px solid var(--line);position:relative;animation:spin 2.4s linear infinite}
-.spinning-now .mini-disc::after{content:"";position:absolute;top:50%;left:50%;width:10px;height:10px;border-radius:50%;background:var(--amber);transform:translate(-50%,-50%)}
-.spinning-now b{color:var(--amber)}
-.scroll-hint{position:absolute;bottom:30px;right:5vw;z-index:2;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--dim);
-  display:flex;flex-direction:column;align-items:center;gap:10px}
-.scroll-hint .line{width:1px;height:52px;background:linear-gradient(var(--amber),transparent);animation:drop 1.8s ease-in-out infinite}
+.spinning-now .mini-disc::after{content:"";position:absolute;top:50%;left:50%;width:9px;height:9px;border-radius:50%;
+  background:var(--accent);transform:translate(-50%,-50%);transition:background-color .8s}
+.spinning-now b{color:var(--accent);font-weight:500;transition:color .8s}
+.tone-btn{font-family:var(--mono);font-size:10px;letter-spacing:.26em;color:var(--dim);background:transparent;
+  border:1px solid var(--line);border-radius:100px;padding:11px 22px;cursor:pointer;
+  transition:color .3s,border-color .3s,background-color .3s}
+.tone-btn:hover{border-color:var(--accent);color:var(--cream)}
+.tone-btn[aria-pressed="true"]{color:#0d0b09;background:var(--accent);border-color:var(--accent)}
+.listen-cue{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10px;letter-spacing:.26em;
+  color:var(--dim);text-decoration:none;padding:11px 6px}
+.listen-cue:hover{color:var(--cream)}
+.listen-cue .lc-line{width:1px;height:24px;background:linear-gradient(var(--accent),transparent);animation:drop 1.8s ease-in-out infinite}
 @keyframes drop{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-/* ---------- marquee ---------- */
-.marquee{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:var(--ink)}
-.marquee-track{display:flex;width:max-content;animation:mq 30s linear infinite;padding:18px 0}
-.marquee span{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.26em;color:var(--dim);white-space:nowrap;padding:0 30px}
-.marquee span i{font-style:normal;color:var(--amber);padding:0 30px}
-@keyframes mq{to{transform:translateX(-50%)}}
+/* ---------- obi strip divider ---------- */
+.obi{background:var(--paper);color:#171310;position:relative;z-index:2;overflow:hidden}
+.obi-in{max-width:1400px;margin:0 auto;padding:11px 4vw;display:flex;gap:0;justify-content:space-between;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;white-space:nowrap}
+.obi-in span{flex:none}
+.obi-in span:nth-child(even){opacity:.45}
 
 /* ---------- sections ---------- */
 section{position:relative;z-index:2}
-.wrap{max-width:1200px;margin:0 auto;padding:120px 6vw}
-.sec-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--amber);margin-bottom:18px}
-.sec-title{font-family:'Anton',sans-serif;font-size:clamp(48px,7.5vw,110px);line-height:.95;letter-spacing:.01em;margin-bottom:20px}
-.sec-sub{color:var(--dim);line-height:1.75;max-width:560px;font-size:16.5px}
+.wrap{max-width:1200px;margin:0 auto;padding:110px 6vw}
+.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--accent);margin-bottom:16px;transition:color .8s}
+.sec-title{font-family:var(--serif);font-weight:500;font-size:clamp(36px,4.6vw,64px);line-height:1.1;
+  letter-spacing:.01em;margin-bottom:18px}
+.sec-title em{font-style:italic;color:var(--accent);transition:color .8s}
+.sec-sub{color:var(--dim);font-size:18.5px;line-height:1.7;max-width:36rem}
+.sec-sub em{color:var(--cream)}
 
-/* ---------- now spinning: record selector ---------- */
-.spin-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:5vw;margin-top:56px;align-items:start}
-.record-list{display:flex;flex-direction:column}
-.record{border-top:1px solid var(--line);padding:24px 6px;cursor:pointer;transition:background .3s,padding-left .3s}
-.record:last-child{border-bottom:1px solid var(--line)}
-.record:hover{background:rgba(232,163,61,.05)}
-.record.active{background:rgba(232,163,61,.08);padding-left:20px;border-left:2px solid var(--amber)}
-.record .r-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-.record h3{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:.03em}
-.record .year{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:.14em;flex:none}
-.record .artist{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--amber);margin-top:8px}
-.record p{color:var(--dim);font-size:14px;line-height:1.65;margin-top:10px;max-height:0;overflow:hidden;opacity:0;transition:max-height .5s ease,opacity .4s,margin .3s}
-.record.active p{max-height:120px;opacity:1}
-.stage{position:sticky;top:12vh}
-.vinyl-wrap{position:relative;width:min(420px,80vw);aspect-ratio:1;margin:0 auto}
-.vinyl{position:absolute;inset:0;border-radius:50%;
-  background:repeating-radial-gradient(circle at 50% 50%,#000 0 2px,#171412 2px 5px);
-  border:1px solid var(--line);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);will-change:transform}
-.vinyl .label{position:absolute;top:50%;left:50%;width:32%;height:32%;border-radius:50%;background:var(--amber);
-  transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center}
-.vinyl .label::after{content:"";width:8%;height:8%;border-radius:50%;background:var(--ink)}
-.vinyl .label span{position:absolute;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:#000;top:14%;white-space:nowrap}
-.sleeve-note{margin-top:28px;text-align:center}
-.sleeve-note .now{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--dim);margin-bottom:10px}
-.sleeve-note h4{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:.02em}
-.sleeve-note .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--amber);margin-top:8px}
+/* ---------- record instrument ---------- */
+.crate{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:54px}
+.jacket{position:relative;display:flex;flex-direction:column;text-align:left;cursor:pointer;
+  background:var(--paper);color:#171310;border:none;padding:0;min-height:360px;font-family:var(--serif);
+  box-shadow:0 18px 40px -18px rgba(0,0,0,.7);
+  transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.jacket:hover{transform:translateY(-8px)}
+.jacket.active{transform:translateY(-8px);box-shadow:0 0 0 2px var(--accent),0 26px 54px -18px rgba(0,0,0,.85)}
+.jacket .peek{position:absolute;top:8px;left:50%;width:118px;height:118px;border-radius:50%;z-index:0;
+  background:repeating-radial-gradient(circle at 50% 50%,#0a0908 0 2px,#1a1613 2px 4px);
+  border:1px solid rgba(0,0,0,.4);transform:translate(-50%,64%);transition:transform .65s cubic-bezier(.2,.7,.2,1)}
+.jacket .peek::after{content:"";position:absolute;top:50%;left:50%;width:30px;height:30px;border-radius:50%;
+  background:var(--lc,#E8A33D);transform:translate(-50%,-50%)}
+.jacket.active .peek{transform:translate(-50%,-52%)}
+.jacket .spine{position:absolute;left:0;top:0;bottom:0;width:28px;z-index:1;background:#d8c8a2;
+  border-right:1px solid rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center}
+.jacket .spine span{writing-mode:vertical-rl;font-family:var(--mono);font-size:9px;letter-spacing:.26em;color:#5a4c36}
+.jacket .face{position:relative;z-index:1;padding:30px 24px 22px 50px;display:flex;flex-direction:column;flex:1;background:var(--paper)}
+.jacket .cat{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:#8a7a5c;margin-bottom:16px}
+.jacket .t{font-size:31px;font-weight:600;line-height:1.08;margin-bottom:10px}
+.jacket .a{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:#5a4c36}
+.jacket .y{margin-top:auto;padding-top:20px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:#8a7a5c}
+.jacket .band{height:9px;background:var(--lc,#E8A33D);margin-top:14px}
+.jacket .pick{position:absolute;z-index:2;top:12px;right:12px;font-family:var(--mono);font-size:9px;letter-spacing:.22em;
+  background:#171310;color:var(--paper);padding:7px 11px;opacity:0;transform:translateY(-5px);transition:opacity .3s,transform .3s}
+.jacket.active .pick{opacity:1;transform:none}
 
-/* ---------- scrub band ---------- */
-.scrubband{overflow:hidden;white-space:nowrap;padding:22px 0;user-select:none;background:var(--ink)}
-.scrubtrack{display:inline-block;font-family:'Anton',sans-serif;font-size:clamp(64px,9vw,148px);line-height:1;
-  color:transparent;-webkit-text-stroke:1px rgba(232,163,61,.45);will-change:transform}
+.stage{position:sticky;top:9vh;margin-top:54px}
+.plinth{position:relative;width:100%;max-width:430px;aspect-ratio:1.12;margin:0 auto;border-radius:12px;
+  background:linear-gradient(155deg,#2c221a,#1a1410 58%,#100d0a);
+  border:1px solid rgba(242,234,216,.13);
+  box-shadow:0 44px 90px -30px rgba(0,0,0,.9),inset 0 1px 0 rgba(242,234,216,.09)}
+.platter{position:absolute;left:7%;top:9%;width:60%;aspect-ratio:1;border-radius:50%;
+  background:repeating-radial-gradient(circle at 50% 50%,#000 0 2px,#161310 2px 5px);
+  border:1px solid var(--line);box-shadow:0 12px 34px rgba(0,0,0,.65);will-change:transform}
+.platter .tlabel{position:absolute;top:50%;left:50%;width:32%;height:32%;border-radius:50%;
+  background:var(--accent);transform:translate(-50%,-50%);transition:background-color .8s;
+  display:flex;align-items:center;justify-content:center}
+.platter .tlabel::after{content:"";width:9%;height:9%;border-radius:50%;background:var(--ink)}
+.platter .tlabel span{position:absolute;top:13%;font-family:var(--mono);font-size:7.5px;letter-spacing:.16em;color:#0d0b09;white-space:nowrap}
+.tonearm{position:absolute;top:5%;right:6%;width:96px;height:62%;transform-origin:48px 22px;
+  transform:rotate(26deg);transition:transform 1.5s cubic-bezier(.3,.7,.25,1);z-index:2}
+.tonearm .pivot{position:absolute;top:0;left:31px;width:34px;height:34px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#453c30,#12100d);border:1px solid var(--line)}
+.tonearm .arm{position:absolute;top:30px;left:46px;width:3px;height:76%;
+  background:linear-gradient(#978a73,#453d31);border-radius:2px}
+.tonearm .shell{position:absolute;bottom:2%;left:38px;width:24px;height:13px;background:#0a0908;
+  border:1px solid var(--line);border-radius:2px;transform:rotate(18deg)}
+.stage.playing .tonearm{transform:rotate(-3deg)}
+.sideprog{width:100%;max-width:430px;margin:24px auto 0}
+.sideprog .meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;
+  letter-spacing:.26em;color:var(--dim);margin-bottom:9px}
+.sideprog .track{height:2px;background:var(--line);position:relative;border-radius:2px}
+.sideprog .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);border-radius:2px;transition:background-color .8s}
+.sleeve-note{margin-top:26px;text-align:center}
+.sleeve-note .now{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--dim);margin-bottom:8px}
+.sleeve-note h3{font-family:var(--serif);font-style:italic;font-weight:500;font-size:30px}
+.sleeve-note .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent);margin-top:8px;transition:color .8s}
+.spin-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:4vw;align-items:start}
+.spin-grid>*{min-width:0}
 
-/* ---------- the room ---------- */
-.room{position:relative;min-height:110vh;overflow:hidden;display:flex;align-items:center}
-.room-video{position:absolute;inset:-12% 0;z-index:0}
-.room-video video{width:100%;height:100%;object-fit:cover;will-change:transform}
-.band-video{position:relative;height:52vh;overflow:hidden}
-.band-video video{position:absolute;inset:-12% 0;width:100%;height:124%;object-fit:cover;will-change:transform}
-.band-video .shade{position:absolute;inset:0;background:linear-gradient(180deg,var(--ink) 0%,transparent 28%,transparent 72%,var(--ink) 100%)}
-.band-video .cap{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.32em;color:rgba(244,235,222,.85);z-index:1}
-.room::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,var(--ink) 0%,rgba(13,11,9,.35) 30%,rgba(13,11,9,.35) 70%,var(--ink) 100%)}
-.room-copy{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:16vh 6vw;width:100%}
-.room-copy .sec-title{max-width:800px}
-.spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);
-  border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:48px;max-width:900px}
-.spec{background:rgba(13,11,9,.82);backdrop-filter:blur(8px);padding:28px 24px}
-.spec b{display:block;font-family:'Anton',sans-serif;font-size:20px;letter-spacing:.04em;margin-bottom:10px;color:var(--amber)}
-.spec span{color:var(--dim);font-size:14px;line-height:1.6}
+/* ---------- groove divider (jazz-native scroll metaphor) ---------- */
+.groove{position:relative;z-index:2;padding:64px 6vw}
+.groove .g-line{position:relative;height:1px;background:var(--line);max-width:1200px;margin:0 auto}
+.groove .stylus{position:absolute;top:50%;left:0;width:11px;height:11px;border-radius:50%;background:var(--accent);
+  transform:translate(-50%,-50%);box-shadow:0 0 14px rgba(232,163,61,.55);transition:background-color .8s}
+.groove .g-meta{display:flex;justify-content:space-between;max-width:1200px;margin:14px auto 0;
+  font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--dim)}
 
-/* ---------- the code ---------- */
-.code-list{margin-top:56px;max-width:820px}
-.code-row{display:grid;grid-template-columns:90px 1fr;gap:26px;padding:34px 0;border-top:1px solid var(--line);align-items:start}
-.code-row:last-child{border-bottom:1px solid var(--line)}
-.code-row .num{font-family:'Anton',sans-serif;font-size:44px;color:transparent;-webkit-text-stroke:1px var(--amber)}
-.code-row h3{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:.03em;margin-bottom:10px}
-.code-row p{color:var(--dim);line-height:1.7;font-size:15.5px;max-width:600px}
+/* ---------- the room : amplifier faceplate ---------- */
+.room{position:relative;min-height:104vh;overflow:hidden;display:flex;align-items:center}
+.room-still{position:absolute;inset:-10% 0;z-index:0;will-change:transform;
+  background:url('media/room-tubes.jpg') center/cover no-repeat}
+.room::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,var(--ink) 0%,rgba(13,11,9,.42) 26%,rgba(13,11,9,.42) 74%,var(--ink) 100%)}
+.room-copy{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:15vh 6vw;width:100%}
+.faceplate{position:relative;margin-top:50px;max-width:980px;border-radius:10px;
+  border:1px solid rgba(242,234,216,.15);padding:36px 34px 30px;
+  background:
+    radial-gradient(circle,#6b5f4a 2.6px,transparent 3.4px) 16px 16px/30px 30px no-repeat,
+    radial-gradient(circle,#6b5f4a 2.6px,transparent 3.4px) calc(100% - 16px) 16px/30px 30px no-repeat,
+    radial-gradient(circle,#6b5f4a 2.6px,transparent 3.4px) 16px calc(100% - 16px)/30px 30px no-repeat,
+    radial-gradient(circle,#6b5f4a 2.6px,transparent 3.4px) calc(100% - 16px) calc(100% - 16px)/30px 30px no-repeat,
+    linear-gradient(180deg,#1e1a16,#12100c);
+  box-shadow:0 34px 70px -28px rgba(0,0,0,.85),inset 0 1px 0 rgba(242,234,216,.08)}
+.face-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;
+  border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:8px;flex-wrap:wrap}
+.face-head .model{font-family:var(--mono);font-size:10.5px;letter-spacing:.28em;color:var(--dim)}
+.face-head .model b{color:var(--accent);font-weight:500;transition:color .8s}
+.vu{width:132px;text-align:center}
+.vu .dial{position:relative;width:132px;height:72px}
+.vu .dialface{position:absolute;left:50%;bottom:0;width:118px;height:59px;transform:translateX(-50%);
+  border-radius:118px 118px 0 0;
+  background:repeating-conic-gradient(from -90deg at 50% 100%,rgba(242,234,216,.4) 0deg 1.2deg,transparent 1.2deg 13deg);
+  -webkit-mask:radial-gradient(circle at 50% 100%,transparent 60%,#000 61%);
+  mask:radial-gradient(circle at 50% 100%,transparent 60%,#000 61%)}
+.vu .needle{position:absolute;left:50%;bottom:0;width:2px;height:54px;background:var(--accent);
+  transform-origin:50% 100%;transform:translateX(-50%) rotate(-38deg);transition:background-color .8s}
+.vu .hub{position:absolute;left:50%;bottom:-5px;width:11px;height:11px;border-radius:50%;
+  background:#2c2620;border:1px solid var(--line);transform:translateX(-50%)}
+.vu figcaption{font-family:var(--mono);font-size:9px;letter-spacing:.3em;color:var(--dim);margin-top:8px}
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px 26px;margin-top:26px}
+.spec b{display:block;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.26em;
+  color:var(--accent);margin-bottom:10px;transition:color .8s}
+.spec span{color:var(--dim);font-size:17.5px;line-height:1.6}
+.spec span em{color:var(--cream)}
+
+/* ---------- the code : stamped house menu ---------- */
+.menu-card{position:relative;background:var(--paper);color:#171310;border-radius:4px;
+  max-width:880px;margin:54px auto 0;padding:60px 56px 52px;transform:rotate(-.5deg);
+  box-shadow:0 34px 64px -22px rgba(0,0,0,.75)}
+.menu-card::before{content:"";position:absolute;inset:11px;border:1px solid rgba(23,19,16,.4);border-radius:2px;pointer-events:none}
+.menu-card::after{content:"HOUSE STAMP";position:absolute;top:24px;right:28px;font-family:var(--mono);font-size:9px;
+  letter-spacing:.3em;color:#8a2f1d;border:2px solid #8a2f1d;border-radius:4px;padding:7px 11px;
+  transform:rotate(7deg);opacity:.72}
+.menu-card .m-head{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:#6b5c42;margin-bottom:30px}
+.code-row{display:grid;grid-template-columns:64px 1fr;gap:22px;padding:26px 0;border-top:1px solid rgba(23,19,16,.22);align-items:start}
+.code-row:last-child{border-bottom:1px solid rgba(23,19,16,.22)}
+.code-row .num{font-family:var(--serif);font-style:italic;font-size:30px;color:#8a2f1d}
+.code-row h3{font-family:var(--serif);font-weight:600;font-size:25px;letter-spacing:.01em;margin-bottom:8px}
+.code-row p{color:#3d342a;line-height:1.65;font-size:17px;max-width:600px}
 
 /* ---------- visit ---------- */
-.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:start;margin-top:48px}
-.hours{border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.hours .h-row{display:flex;justify-content:space-between;padding:20px 26px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--dim);border-bottom:1px solid var(--line)}
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:start;margin-top:50px}
+.hours{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:rgba(20,17,16,.6)}
+.hours .h-row{display:flex;justify-content:space-between;padding:19px 26px;font-family:var(--mono);font-size:12px;
+  letter-spacing:.14em;color:var(--dim);border-bottom:1px solid var(--line)}
 .hours .h-row:last-child{border-bottom:none}
-.hours .h-row b{color:var(--cream)}
-.hours .h-row.today{background:rgba(232,163,61,.1)}
-.hours .h-row.today b{color:var(--amber)}
-.visit-copy p{color:var(--dim);line-height:1.75;margin-bottom:18px;font-size:16px}
-.visit-copy p b{color:var(--cream)}
-.btn{display:inline-block;background:var(--amber);color:#000;font-weight:700;padding:17px 42px;border-radius:100px;text-decoration:none;
-  transition:transform .3s;margin-top:8px}
+.hours .h-row b{color:var(--cream);font-weight:500}
+.hours .h-row.today{background:rgba(232,163,61,.09)}
+.hours .h-row.today b{color:var(--accent)}
+.visit-copy p{color:var(--dim);line-height:1.7;margin-bottom:18px;font-size:18px}
+.visit-copy p b{color:var(--cream);font-weight:600}
+.visit-copy p em{color:var(--cream)}
+.btn{display:inline-block;background:var(--accent);color:#0d0b09;font-family:var(--mono);font-size:12px;
+  font-weight:500;letter-spacing:.22em;padding:18px 38px;border-radius:3px;text-decoration:none;
+  transition:transform .3s,background-color .8s;margin-top:10px;border:none;cursor:pointer}
+.btn:hover{transform:translateY(-2px)}
 .btn.ghost{background:transparent;color:var(--cream);border:1px solid var(--line)}
-.addr{margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--dim);line-height:2}
-.addr b{color:var(--amber)}
+.addr{margin-top:36px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--dim);line-height:2.1}
+.addr b{color:var(--accent);font-weight:500;transition:color .8s}
 
 /* ---------- finale / footer ---------- */
 .finale{text-align:center;padding:150px 6vw 110px;position:relative;z-index:2}
-.finale h2{font-family:'Anton',sans-serif;font-size:clamp(52px,9vw,130px);line-height:.95}
-.finale h2 span{color:var(--amber)}
-.finale p{color:var(--dim);margin:24px auto 0;max-width:480px;line-height:1.7}
-footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px 6vw;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--dim)}
+.finale .lamp-glow{width:10px;height:10px;border-radius:50%;background:var(--accent);margin:0 auto 30px;
+  box-shadow:0 0 34px 10px rgba(232,163,61,.4);animation:lamp 3s ease-in-out infinite;transition:background-color .8s}
+.finale h2{font-family:var(--serif);font-weight:500;font-size:clamp(38px,5.4vw,76px);line-height:1.16;letter-spacing:.01em}
+.finale h2 em{font-style:italic;color:var(--accent);transition:color .8s}
+.finale p{color:var(--dim);margin:22px auto 0;max-width:460px;font-size:17.5px;line-height:1.7}
+.finale .fine{font-family:var(--mono);font-size:10px;letter-spacing:.26em;color:var(--dim);opacity:.7;margin-top:26px}
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:28px 6vw;display:flex;
+  justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--dim)}
 
 /* reveal */
-.rv{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
 .rv.on{opacity:1;transform:none}
 
 @media(max-width:900px){
   .spin-grid{grid-template-columns:1fr}
-  .stage{position:relative;top:0;order:-1;margin-bottom:10px}
-  .visit-grid{grid-template-columns:1fr}
-  .code-row{grid-template-columns:56px 1fr;gap:16px}
-  .scroll-hint{display:none}
+  .stage{position:relative;top:0;order:-1;margin:0 0 8px}
+  .crate{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:40px -6vw 0;padding:0 6vw 18px}
+  .jacket{flex:0 0 74vw;scroll-snap-align:center;min-height:340px}
+  .visit-grid{grid-template-columns:1fr;gap:2.5rem}
+  .code-row{grid-template-columns:48px 1fr;gap:14px}
+  .menu-card{padding:44px 30px 40px}
+  .menu-card::after{top:14px;right:16px}
+  .kicker{font-size:9px;letter-spacing:.22em}
+  .hero-copy::before{content:"";position:absolute;inset:-3vh -6vw -9vh;z-index:-1;pointer-events:none;
+    background:linear-gradient(180deg,transparent 0%,rgba(13,11,9,.68) 42%,rgba(13,11,9,.88) 100%)}
+  .groove .g-meta span:nth-child(2){display:none}
+  .obi-in{font-size:9px;letter-spacing:.2em}
+  .face-head{flex-direction:column;align-items:flex-start}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+  *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+  html{scroll-behavior:auto}
   .hero-title .row>span{transform:none}
+  .rv{opacity:1;transform:none}
 }
 </style>
     <link rel="canonical" href="https://ai-webdesign-lab.vercel.app/kissa-noir/" />
@@ -200,9 +315,10 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
   </head>
 <body>
 
-<div class="loader" id="loader">
+<div class="loader" id="loader" aria-hidden="true">
   <div class="disc"></div>
-  <div class="l-word">KISSA <span>NOIR</span></div>
+  <div class="word">Kissa <span style="color:var(--accent)">Noir</span></div>
+  <div class="sub">WARMING THE TUBES</div>
 </div>
 
 <div class="hud">
@@ -212,121 +328,115 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
 
 <!-- HERO -->
 <header class="hero">
-  <div class="hero-video"><video id="heroVid" muted loop playsinline autoplay preload="auto" src="https://videos.pexels.com/video-files/5983041/5983041-hd_1920_1080_24fps.mp4"></video></div>
-  <div class="hero-shade"></div><div class="hero-warm"></div>
+  <div class="hero-still" aria-hidden="true"></div>
+  <div class="grade"></div>
   <div class="hero-copy">
     <div class="kicker">JAZZ LISTENING BAR · NEW ORLEANS, LA</div>
     <h1 class="hero-title">
-      <span class="row"><span>KISSA</span></span>
-      <span class="row"><span class="noir">NOIR</span></span>
+      <span class="row"><span>Kissa <em>Noir</em></span></span>
     </h1>
-    <p class="hero-sub">A Japanese-style jazz kissa in the French Quarter. <b>Vinyl only, tube amps, no talking during solos.</b> You come here to listen.</p>
-    <div class="spinning-now">
-      <div class="mini-disc"></div>
-      <div class="spinning-text">NOW SPINNING · <b>A LOVE SUPREME</b> · COLTRANE · IMPULSE! 1965</div>
+    <p class="hero-sub">A Japanese-style jazz kissa in the French Quarter. <b>Vinyl only, tube amps, no talking during solos.</b> Fourteen seats. You come here to listen.</p>
+    <div class="tone-row">
+      <div class="spinning-now">
+        <div class="mini-disc" aria-hidden="true"></div>
+        <div class="spinning-text" id="heroSpin">NOW SPINNING · <b>A LOVE SUPREME</b> · COLTRANE · IMPULSE! 1965</div>
+      </div>
+      <button class="tone-btn" id="toneBtn" aria-pressed="false" title="Generated room tone. No music, just the room."><span>ROOM TONE · OFF</span></button>
+      <a class="listen-cue" href="#shelves"><span>LISTEN</span><span class="lc-line" aria-hidden="true"></span></a>
     </div>
   </div>
-  <div class="scroll-hint">LISTEN<div class="line"></div></div>
 </header>
 
-<!-- MARQUEE -->
-<div class="marquee"><div class="marquee-track">
-  <span>NO TALKING DURING SOLOS <i>·</i></span><span>VINYL ONLY <i>·</i></span><span>ONE REQUEST PER NIGHT <i>·</i></span><span>PHONES STAY IN POCKETS <i>·</i></span><span>STAY FOR THE WHOLE SIDE <i>·</i></span><span>NO TALKING DURING SOLOS <i>·</i></span><span>VINYL ONLY <i>·</i></span><span>ONE REQUEST PER NIGHT <i>·</i></span><span>PHONES STAY IN POCKETS <i>·</i></span><span>STAY FOR THE WHOLE SIDE <i>·</i></span>
+<!-- OBI 1 -->
+<div class="obi" aria-hidden="true"><div class="obi-in">
+  <span>KISSA NOIR</span><span>NEW ORLEANS</span><span>SIDE A</span><span>33⅓ RPM</span><span>VINYL ONLY</span><span>NO COVER</span>
 </div></div>
 
-<!-- NOW SPINNING -->
-<section id="spinning"><div class="wrap">
+<!-- NOW SPINNING : the instrument -->
+<section id="shelves"><div class="wrap">
   <div class="sec-label rv">01 · NOW SPINNING</div>
-  <h2 class="sec-title rv">TONIGHT'S<br>SHELVES</h2>
-  <p class="sec-sub rv">Four records pulled for tonight. Pick one and it goes on the platter. The bartender handles the needle, you handle the listening.</p>
+  <h2 class="sec-title rv">Tonight's <em>shelves</em></h2>
+  <p class="sec-sub rv">Four records pulled for tonight. Pull one from the crate and it goes on the platter. <em>The bartender handles the needle. You handle the listening.</em></p>
   <div class="spin-grid">
-    <div class="record-list rv">
-      <div class="record active" data-i="0">
-        <div class="r-top"><h3>A Love Supreme</h3><span class="year">1965</span></div>
-        <div class="artist">JOHN COLTRANE · IMPULSE!</div>
-        <p>Four parts, one prayer. When side one ends the room stays quiet for a full minute. That is not awkwardness. That is respect.</p>
-      </div>
-      <div class="record" data-i="1">
-        <div class="r-top"><h3>Kind of Blue</h3><span class="year">1959</span></div>
-        <div class="artist">MILES DAVIS · COLUMBIA</div>
-        <p>Recorded in two sessions, barely rehearsed. The best-selling jazz record ever made, and it still sounds like it is being invented in front of you.</p>
-      </div>
-      <div class="record" data-i="2">
-        <div class="r-top"><h3>Mingus Ah Um</h3><span class="year">1959</span></div>
-        <div class="artist">CHARLES MINGUS · COLUMBIA</div>
-        <p>Blues, gospel, and pure Mingus fury. "Better Git It in Your Soul" at full volume is the closest this room gets to shouting.</p>
-      </div>
-      <div class="record" data-i="3">
-        <div class="r-top"><h3>The Sidewinder</h3><span class="year">1964</span></div>
-        <div class="artist">LEE MORGAN · BLUE NOTE</div>
-        <p>Twenty-four years old and already a Blue Note legend. The title track grooves so hard the glasses rattle. We let them.</p>
-      </div>
+    <div>
+      <div class="crate rv" id="crate" role="listbox" aria-label="Tonight's records. Use arrow keys to browse."></div>
+      <noscript><p style="color:var(--dim);margin-top:2rem">Tonight: A Love Supreme, Kind of Blue, Mingus Ah Um, The Sidewinder.</p></noscript>
     </div>
-    <div class="stage rv">
-      <div class="vinyl-wrap">
-        <div class="vinyl" id="bigVinyl"><div class="label"><span id="vinylLabel">IMPULSE! · 1965</span></div></div>
+    <div class="stage rv" id="stage">
+      <div class="plinth">
+        <div class="platter" id="platter"><div class="tlabel"><span id="plabel">IMPULSE!</span></div></div>
+        <div class="tonearm" id="tonearm" aria-hidden="true"><div class="pivot"></div><div class="arm"></div><div class="shell"></div></div>
+      </div>
+      <div class="sideprog">
+        <div class="meta"><span>SIDE A</span><span>33⅓ RPM</span></div>
+        <div class="track"><div class="fill" id="sideFill"></div></div>
       </div>
       <div class="sleeve-note">
         <div class="now">ON THE PLATTER</div>
-        <h4 id="sleeveTitle">A Love Supreme</h4>
+        <h3 id="sleeveTitle">A Love Supreme</h3>
         <div class="lbl" id="sleeveMeta">JOHN COLTRANE · IMPULSE! · 1965</div>
       </div>
     </div>
   </div>
+  <p class="sr-only" aria-live="polite" id="spinLive"></p>
 </div></section>
 
-<div class="scrubband" aria-hidden="true"><div class="scrubtrack">VINYL ONLY · TUBE AMPS · VINYL ONLY · TUBE AMPS · </div></div>
-
-<!-- ARRIVAL: rainy Quarter night -->
-<div class="band-video rv">
-  <video muted loop playsinline preload="metadata" data-play src="https://videos.pexels.com/video-files/3588017/3588017-hd_1920_1080_24fps.mp4"></video>
-  <div class="shade"></div>
-  <div class="cap">DECATUR STREET · 11:47 PM · RAIN</div>
+<!-- GROOVE DIVIDER -->
+<div class="groove" aria-hidden="true">
+  <div class="g-line"><div class="stylus" id="stylus"></div></div>
+  <div class="g-meta"><span>SIDE A</span><span>THE NEEDLE TRAVELS AS YOU DO</span><span>33⅓</span></div>
 </div>
 
 <!-- THE ROOM -->
-<div class="room">
-  <div class="room-video"><video muted loop playsinline preload="metadata" data-play src="media/club-1080p.mp4"></video></div>
+<div class="room" id="room">
+  <div class="room-still" aria-hidden="true"></div>
+  <div class="grade"></div>
   <div class="room-copy">
     <div class="sec-label rv">02 · THE ROOM</div>
-    <h2 class="sec-title rv">BUILT FOR<br>THE NEEDLE</h2>
-    <p class="sec-sub rv">Fourteen seats, one pair of speakers, zero televisions. The system is the second bartender.</p>
-    <div class="spec-grid rv">
-      <div class="spec"><b>TURNTABLE</b><span>Technics SP-10, Ortofon SPU cartridge. Leveled weekly, cleaned nightly.</span></div>
-      <div class="spec"><b>AMPLIFIERS</b><span>McIntosh tube amps, recapped 2024. Warm the room ten minutes before first spin.</span></div>
-      <div class="spec"><b>SPEAKERS</b><span>JBL 4343 horns, toed in to the sweet seat. There are three sweet seats. Regulars know.</span></div>
-      <div class="spec"><b>THE BAR</b><span>Twelve whiskeys, one beer, no cocktails with umbrellas. Ice is cut, not cubed.</span></div>
+    <h2 class="sec-title rv">Built for the needle</h2>
+    <p class="sec-sub rv">Fourteen seats, one pair of speakers, zero televisions. <em>The system is the second bartender.</em></p>
+    <div class="faceplate rv">
+      <div class="face-head">
+        <div class="model">MODEL NO. KN-1 · <b>STEREO</b> · HAND-WIRED</div>
+        <figure class="vu" aria-hidden="true">
+          <div class="dial"><div class="dialface"></div><div class="needle" id="vuNeedle"></div><div class="hub"></div></div>
+          <figcaption>LEVEL</figcaption>
+        </figure>
+      </div>
+      <div class="spec-grid">
+        <div class="spec"><b>TURNTABLE</b><span>Technics SP-10, Ortofon SPU cartridge. <em>Leveled weekly, cleaned nightly.</em></span></div>
+        <div class="spec"><b>AMPLIFIERS</b><span>McIntosh tube amps, recapped 2024. <em>Warm the room ten minutes before first spin.</em></span></div>
+        <div class="spec"><b>SPEAKERS</b><span>JBL 4343 horns, toed in to the sweet seat. <em>There are three sweet seats. Regulars know.</em></span></div>
+        <div class="spec"><b>THE BAR</b><span>Twelve whiskeys, one beer, no cocktails with umbrellas. <em>Ice is cut, not cubed.</em></span></div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- THE CODE -->
-<section><div class="wrap">
+<!-- OBI 2 -->
+<div class="obi" aria-hidden="true"><div class="obi-in">
+  <span>TECHNICS SP-10</span><span>MCINTOSH</span><span>JBL 4343</span><span>FOURTEEN SEATS</span><span>NO TALKING DURING SOLOS</span>
+</div></div>
+
+<!-- THE CODE : stamped house menu -->
+<section id="code"><div class="wrap">
   <div class="sec-label rv">03 · THE CODE</div>
-  <h2 class="sec-title rv">HOUSE<br>RULES</h2>
-  <p class="sec-sub rv">Every kissa has a code. Ours is short and non-negotiable. Break one and the bartender will know.</p>
-  <div class="code-list">
-    <div class="code-row rv"><div class="num">01</div><div><h3>NO TALKING DURING SOLOS</h3><p>Whisper during the head, silence during the solo. If you must speak, wait for the applause that never comes. This is a listening bar.</p></div></div>
-    <div class="code-row rv"><div class="num">02</div><div><h3>PHONES STAY IN POCKETS</h3><p>No photos of the platter, no Shazam, no scrolling glow in the dark. The music is the screen.</p></div></div>
-    <div class="code-row rv"><div class="num">03</div><div><h3>ONE REQUEST PER NIGHT</h3><p>Write it on the slip, hand it to the bar. Make it count. Obscure B-sides earn nods; requests for the obvious earn smiles.</p></div></div>
-    <div class="code-row rv"><div class="num">04</div><div><h3>THE BAR CHOOSES THE SIDE</h3><p>You pick the record, we pick the side. Trust the needle. It has been doing this longer than you.</p></div></div>
-    <div class="code-row rv"><div class="num">05</div><div><h3>STAY FOR THE WHOLE SIDE</h3><p>Leaving mid-side is leaving mid-sentence. Finish your pour, flip with us, then go.</p></div></div>
+  <h2 class="sec-title rv">House <em>rules</em></h2>
+  <p class="sec-sub rv">Every kissa has a code. Ours is short and non-negotiable. <em>Break one and the bartender will know.</em></p>
+  <div class="menu-card rv">
+    <div class="m-head">KISSA NOIR · HOUSE MENU · PLEASE READ BEFORE SITTING</div>
+    <div class="code-row"><div class="num">01</div><div><h3>No talking during solos</h3><p>Whisper during the head, silence during the solo. If you must speak, wait for the applause that never comes. This is a listening bar.</p></div></div>
+    <div class="code-row"><div class="num">02</div><div><h3>Phones stay in pockets</h3><p>No photos of the platter, no Shazam, no scrolling glow in the dark. The music is the screen.</p></div></div>
+    <div class="code-row"><div class="num">03</div><div><h3>One request per night</h3><p>Write it on the slip, hand it to the bar. Make it count. Obscure B-sides earn nods; requests for the obvious earn smiles.</p></div></div>
+    <div class="code-row"><div class="num">04</div><div><h3>The bar chooses the side</h3><p>You pick the record, we pick the side. Trust the needle. It has been doing this longer than you.</p></div></div>
+    <div class="code-row"><div class="num">05</div><div><h3>Stay for the whole side</h3><p>Leaving mid-side is leaving mid-sentence. Finish your pour, flip with us, then go.</p></div></div>
   </div>
 </div></section>
 
-<div class="scrubband" aria-hidden="true"><div class="scrubtrack">NO TALKING DURING SOLOS · NO TALKING DURING SOLOS · </div></div>
-
-<!-- THE POUR -->
-<div class="band-video rv">
-  <video muted loop playsinline preload="metadata" data-play src="https://videos.pexels.com/video-files/10823229/10823229-hd_1920_1080_24fps.mp4"></video>
-  <div class="shade"></div>
-  <div class="cap">ICE CUT, NOT CUBED · THE HOUSE POUR</div>
-</div>
-
 <!-- VISIT -->
-<section><div class="wrap">
+<section id="visit"><div class="wrap">
   <div class="sec-label rv">04 · VISIT</div>
-  <h2 class="sec-title rv">FIND<br>THE DOOR</h2>
+  <h2 class="sec-title rv">Find the <em>door</em></h2>
   <div class="visit-grid">
     <div class="hours rv" id="hoursRow">
       <div class="h-row" data-d="0"><b>SUN</b><span>6PM – 1AM</span></div>
@@ -338,11 +448,9 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
       <div class="h-row" data-d="6"><b>SAT</b><span>6PM – 1AM</span></div>
     </div>
     <div class="visit-copy">
-      <p class="rv">No reservations. <b>Fourteen seats, first come.</b> The sweet seats go by 8. If the lamp is on in the window, there is room.</p>
-      <p class="rv">First pour is on the house if you can name the drummer before the head ends. Nobody has done it twice.</p>
-      <div class="rv">
-        <a class="btn magnetic" href="tel:+15045550198">CALL (504) 555-0198</a>
-      </div>
+      <p class="rv">No reservations. <b>Fourteen seats, first come.</b> The sweet seats go by 8. <em>If the lamp is on in the window, there is room.</em></p>
+      <p class="rv">First pour is on the house if you can name the drummer before the head ends. <em>Nobody has done it twice.</em></p>
+      <div class="rv"><a class="btn magnetic" href="tel:+15045550198">CALL (504) 555-0198</a></div>
       <div class="addr rv">
         <b>1129 DECATUR ST, NEW ORLEANS LA</b><br>
         AROUND THE CORNER FROM THE CLOSED POOL HALL<br>
@@ -353,16 +461,17 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
 </div></section>
 
 <div class="finale">
-  <h2 class="rv">SIT DOWN.<br><span>LISTEN CLOSE.</span></h2>
-  <p class="rv">Kissa Noir · 1129 Decatur St, New Orleans LA<br>Concept mock, not a real bar.</p>
+  <div class="lamp-glow rv" aria-hidden="true"></div>
+  <h2 class="rv">Sit down.<br><em>Listen close.</em></h2>
+  <p class="rv">Kissa Noir · 1129 Decatur St, New Orleans LA</p>
+  <div class="fine rv">CONCEPT MOCK · NOT A REAL BAR</div>
   <div class="rv" style="margin-top:34px"><a class="btn magnetic" href="tel:+15045550198">CALL THE BAR</a></div>
 </div>
 
 <footer>
   <span>KISSA NOIR · 1129 DECATUR ST, NEW ORLEANS LA</span>
-  <span>CONCEPT MOCK · VIDEO VIA PEXELS</span>
+  <span>CONCEPT MOCK · PHOTOS VIA PEXELS</span>
 </footer>
-
 <script>
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -383,16 +492,6 @@ if(document.readyState === 'complete') ready();
 else addEventListener('load', ready);
 setTimeout(ready, 1800);
 
-/* ---------- video play/pause ---------- */
-const heroVid = document.getElementById('heroVid');
-const vids = [...document.querySelectorAll('video[data-play]')];
-const vio = new IntersectionObserver(es=>es.forEach(e=>{
-  if(RM) return;
-  if(e.isIntersecting){ e.target.play().catch(()=>{}); } else { e.target.pause(); }
-}),{threshold:.25});
-vids.forEach(v=>vio.observe(v));
-if(RM){ heroVid.removeAttribute('autoplay'); heroVid.pause(); }
-
 /* ---------- clock + open state (6PM-1AM, closed Mon) ---------- */
 function clock(){
   const n = new Date(new Date().toLocaleString('en-US',{timeZone:'America/Chicago'}));
@@ -407,62 +506,119 @@ function clock(){
 }
 clock(); setInterval(clock, 30000);
 
-/* ---------- record selector ---------- */
-const records = [...document.querySelectorAll('.record')];
+/* ---------- the instrument : crate + platter + tonearm ---------- */
+const RECORDS = [
+  {t:'A Love Supreme', artist:'JOHN COLTRANE', label:'IMPULSE!', year:'1965', cat:'AS-77', accent:'#E8722A',
+   note:'Four parts, one prayer. When side one ends the room stays quiet for a full minute. That is not awkwardness. That is respect.'},
+  {t:'Kind of Blue', artist:'MILES DAVIS', label:'COLUMBIA', year:'1959', cat:'CS 8163', accent:'#6E8FB2',
+   note:'Recorded in two sessions, barely rehearsed. The best-selling jazz record ever made, still sounding invented in front of you.'},
+  {t:'Mingus Ah Um', artist:'CHARLES MINGUS', label:'COLUMBIA', year:'1959', cat:'CS 8171', accent:'#B3341F',
+   note:'Blues, gospel, and pure Mingus fury. "Better Git It in Your Soul" at full volume is the closest this room gets to shouting.'},
+  {t:'The Sidewinder', artist:'LEE MORGAN', label:'BLUE NOTE', year:'1964', cat:'BN 84157', accent:'#3B6EA5',
+   note:'Twenty-four and already a Blue Note legend. The title track grooves so hard the glasses rattle. We let them.'}
+];
+const crate = document.getElementById('crate');
+const stage = document.getElementById('stage');
+const platter = document.getElementById('platter');
 const sleeveTitle = document.getElementById('sleeveTitle');
 const sleeveMeta = document.getElementById('sleeveMeta');
-const vinylLabel = document.getElementById('vinylLabel');
-const bigVinyl = document.getElementById('bigVinyl');
-const meta = [
-  ['A Love Supreme','JOHN COLTRANE · IMPULSE! · 1965','IMPULSE! · 1965'],
-  ['Kind of Blue','MILES DAVIS · COLUMBIA · 1959','COLUMBIA · 1959'],
-  ['Mingus Ah Um','CHARLES MINGUS · COLUMBIA · 1959','COLUMBIA · 1959'],
-  ['The Sidewinder','LEE MORGAN · BLUE NOTE · 1964','BLUE NOTE · 1964']
-];
-function setRecord(i){
-  records.forEach((r,j)=>r.classList.toggle('active', j===i));
-  const m = meta[i];
-  sleeveTitle.textContent = m[0];
-  sleeveMeta.textContent = m[1];
-  vinylLabel.textContent = m[2];
-  if(!RM){ // needle-drop kick: quick spin burst
-    bigVinyl.style.transition = 'transform .18s ease-out';
-    spinBoost += 40;
-  }
-  document.querySelector('.spinning-now .spinning-text').innerHTML =
-    'NOW SPINNING · <b>' + m[0].toUpperCase() + '</b> · ' + m[1];
-}
-records.forEach((r,i)=>{
-  r.addEventListener('click', ()=>setRecord(i));
-  r.addEventListener('mouseenter', ()=>{ if(matchMedia('(pointer:fine)').matches) setRecord(i); });
+const plabel = document.getElementById('plabel');
+const heroSpin = document.getElementById('heroSpin');
+const spinLive = document.getElementById('spinLive');
+let armTimer = null, spinBoost = 0;
+
+RECORDS.forEach((r,i)=>{
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'jacket' + (i===0 ? ' active' : '');
+  b.setAttribute('role','option');
+  b.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+  b.dataset.i = i;
+  b.style.setProperty('--lc', r.accent);
+  b.innerHTML =
+    '<span class="peek" aria-hidden="true"></span>' +
+    '<span class="spine" aria-hidden="true"><span>'+r.label+' · '+r.cat+'</span></span>' +
+    '<span class="face">' +
+      '<span class="cat">'+r.cat+' · STEREO</span>' +
+      '<span class="t">'+r.t+'</span>' +
+      '<span class="a">'+r.artist+'</span>' +
+      '<span class="y">'+r.year+'</span>' +
+      '<span class="band" aria-hidden="true"></span>' +
+    '</span>' +
+    '<span class="pick" aria-hidden="true">ON THE PLATTER</span>' +
+    '<span class="sr-only">'+r.t+', '+r.artist+', '+r.year+'. '+r.note+'</span>';
+  b.addEventListener('click', ()=>setRecord(i));
+  crate.appendChild(b);
 });
 
-/* ---------- kinetic: parallax, scrub band, scroll-spun vinyl ---------- */
-const band = document.querySelector('.scrubband .scrubtrack');
-let spinBoost = 0, vinylAngle = 0, lastT = performance.now(), lastY = scrollY, ticking = false;
+function lastName(a){ const p=a.split(' '); return p[p.length-1]; }
+function setRecord(i, announce){
+  if(announce === undefined) announce = true;
+  const r = RECORDS[i];
+  crate.querySelectorAll('.jacket').forEach((j,k)=>{
+    j.classList.toggle('active', k===i);
+    j.setAttribute('aria-selected', k===i ? 'true' : 'false');
+  });
+  document.documentElement.style.setProperty('--accent', r.accent);
+  stage.classList.remove('playing'); // tonearm lifts
+  clearTimeout(armTimer);
+  const drop = ()=>{
+    sleeveTitle.textContent = r.t;
+    sleeveMeta.textContent = r.artist + ' · ' + r.label + ' · ' + r.year;
+    plabel.textContent = r.label;
+    heroSpin.innerHTML = 'NOW SPINNING · <b>' + r.t.toUpperCase() + '</b> · ' + lastName(r.artist) + ' · ' + r.label + ' ' + r.year;
+    if(announce) spinLive.textContent = 'Now spinning: ' + r.t + ' by ' + r.artist + '.';
+    stage.classList.add('playing'); // tonearm drops
+    if(!RM) spinBoost += 50;
+  };
+  if(RM){ drop(); } else { armTimer = setTimeout(drop, 430); }
+}
+crate.addEventListener('keydown', e=>{
+  const cur = document.activeElement;
+  if(!cur || !cur.classList || !cur.classList.contains('jacket')) return;
+  let i = +cur.dataset.i;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){ i=(i+1)%RECORDS.length; }
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ i=(i-1+RECORDS.length)%RECORDS.length; }
+  else if(e.key==='Home'){ i=0; }
+  else if(e.key==='End'){ i=RECORDS.length-1; }
+  else return;
+  e.preventDefault();
+  const next = crate.querySelectorAll('.jacket')[i];
+  next.focus(); setRecord(i);
+});
+// initial state: first record on the platter, tonearm down
+document.documentElement.style.setProperty('--accent', RECORDS[0].accent);
+stage.classList.add('playing');
+
+/* ---------- kinetic: parallax, groove stylus, SIDE A, VU, platter ---------- */
+const stylus = document.getElementById('stylus');
+const sideFill = document.getElementById('sideFill');
+const vuNeedle = document.getElementById('vuNeedle');
+let vinylAngle = 0, lastT = performance.now(), lastY = scrollY, ticking = false, needleA = -38;
+function pageProg(){
+  const max = document.documentElement.scrollHeight - innerHeight;
+  return max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+}
 function kinetic(now){
   ticking = false;
   const dt = Math.min(50, now - lastT); lastT = now;
   if(!RM){
     const vh = innerHeight, y = scrollY;
-    // hero + room + band parallax (transform the VIDEO, never the band container)
-    document.querySelectorAll('.hero-video, .room-video, .band-video').forEach(el=>{
-      const target = el.classList.contains('band-video') ? el.querySelector('video') : el;
-      const box = el.classList.contains('band-video') ? el : el.parentElement;
-      const r = box.getBoundingClientRect();
-      if(r.bottom > 0 && r.top < vh && target) target.style.transform = 'translateY(' + ((y - (box.offsetTop - vh)) * 0.18).toFixed(1) + 'px)';
+    document.querySelectorAll('.hero-still, .room-still').forEach(el=>{
+      const box = el.parentElement, r = box.getBoundingClientRect();
+      if(r.bottom > 0 && r.top < vh)
+        el.style.transform = 'translateY(' + ((y - (box.offsetTop - vh)) * 0.18).toFixed(1) + 'px)';
     });
-    // scrub band
-    document.querySelectorAll('.scrubband').forEach(b=>{
-      const r = b.getBoundingClientRect();
-      const prog = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
-      b.querySelector('.scrubtrack').style.transform = 'translateX(' + (-prog*25).toFixed(2) + '%)';
-    });
-    // vinyl: constant slow spin + scroll velocity adds spin
+    const p = pageProg(), pct = (p*100).toFixed(2) + '%';
+    stylus.style.left = pct;
+    sideFill.style.width = pct;
     const vel = Math.abs(y - lastY); lastY = y;
     spinBoost = Math.max(0, spinBoost - dt*0.06);
     vinylAngle = (vinylAngle + dt*0.02 + vel*0.35 + spinBoost*dt*0.02) % 360;
-    bigVinyl.style.transform = 'rotate(' + vinylAngle.toFixed(1) + 'deg)';
+    platter.style.transform = 'rotate(' + vinylAngle.toFixed(1) + 'deg)';
+    const target = -38 + Math.min(76, vel*1.4);
+    needleA += (target - needleA) * Math.min(1, dt/120);
+    vuNeedle.style.transform = 'translateX(-50%) rotate(' + needleA.toFixed(1) + 'deg)';
   }
   requestAnimationFrame(kinetic);
 }
@@ -479,6 +635,58 @@ if(!RM && matchMedia('(pointer:fine)').matches){
     el.addEventListener('mouseleave', ()=>{ el.style.transform = ''; });
   });
 }
+
+/* ---------- room tone : generated, opt-in, no music ---------- */
+const toneBtn = document.getElementById('toneBtn');
+let AC = null, master = null, roomOn = false, crackleTO = null;
+function buildRoom(){
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  AC = new Ctx();
+  master = AC.createGain(); master.gain.value = 0; master.connect(AC.destination);
+  // low rumble: looped brown noise through lowpass
+  const len = AC.sampleRate * 3, buf = AC.createBuffer(1, len, AC.sampleRate), d = buf.getChannelData(0);
+  let last = 0;
+  for(let i=0;i<len;i++){ const w = Math.random()*2-1; last = (last + 0.02*w)/1.02; d[i] = last*2.4; }
+  const src = AC.createBufferSource(); src.buffer = buf; src.loop = true;
+  const lp = AC.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 200;
+  const g = AC.createGain(); g.gain.value = 0.5;
+  src.connect(lp); lp.connect(g); g.connect(master); src.start();
+  // faint hiss
+  const hlen = AC.sampleRate * 2, hbuf = AC.createBuffer(1, hlen, AC.sampleRate), hd = hbuf.getChannelData(0);
+  for(let i=0;i<hlen;i++) hd[i] = (Math.random()*2-1)*0.5;
+  const hsrc = AC.createBufferSource(); hsrc.buffer = hbuf; hsrc.loop = true;
+  const hp = AC.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 6500;
+  const hg = AC.createGain(); hg.gain.value = 0.012;
+  hsrc.connect(hp); hp.connect(hg); hg.connect(master); hsrc.start();
+  // vinyl crackle: random soft pops
+  const pop = ()=>{
+    if(!roomOn || !AC) return;
+    const t = AC.currentTime;
+    const o = AC.createBufferSource(); o.buffer = hbuf;
+    const bp = AC.createBiquadFilter(); bp.type = 'bandpass';
+    bp.frequency.value = 1800 + Math.random()*2600; bp.Q.value = 1.1;
+    const og = AC.createGain();
+    og.gain.setValueAtTime(0, t);
+    og.gain.linearRampToValueAtTime(0.03 + Math.random()*0.1, t + 0.004);
+    og.gain.exponentialRampToValueAtTime(0.0001, t + 0.05 + Math.random()*0.05);
+    o.connect(bp); bp.connect(og); og.connect(master);
+    o.start(t, Math.random()*1.5, 0.12); o.stop(t + 0.25);
+    crackleTO = setTimeout(pop, 70 + Math.random()*420);
+  };
+  pop();
+}
+toneBtn.addEventListener('click', ()=>{
+  if(!AC) buildRoom();
+  if(AC.state === 'suspended') AC.resume();
+  roomOn = !roomOn;
+  toneBtn.setAttribute('aria-pressed', String(roomOn));
+  toneBtn.querySelector('span').textContent = roomOn ? 'ROOM TONE · ON' : 'ROOM TONE · OFF';
+  const t = AC.currentTime;
+  master.gain.cancelScheduledValues(t);
+  master.gain.setValueAtTime(master.gain.value, t);
+  master.gain.linearRampToValueAtTime(roomOn ? 0.55 : 0, t + 1.4);
+  if(!roomOn && crackleTO){ clearTimeout(crackleTO); crackleTO = null; }
+});
 
 /* ---------- reveal ---------- */
 const io = new IntersectionObserver(es=>es.forEach(e=>{

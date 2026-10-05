@@ -4,143 +4,160 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FIRST CHAIR · The Cut Is a Journey · Oakland Barbershop</title>
-<meta name="description" content="First Chair Barbershop. Scroll through the appointment: walk in, consult, cut, detail, finish. Concept mock.">
+<meta name="description" content="First Chair Barbershop, Oakland. Walk in, consult, cut, detail, finish. Concept mock.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+/* self-hosted type: no third-party font dependency */
+@font-face{font-family:'Bowlby One SC';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/bowlby-400.woff2') format('woff2')}
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/newsreader-400.woff2') format('woff2')}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/newsreader-400-italic.woff2') format('woff2')}
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/newsreader-500.woff2') format('woff2')}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:500;font-display:swap;src:url('fonts/newsreader-500-italic.woff2') format('woff2')}
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/newsreader-600.woff2') format('woff2')}
+@font-face{font-family:'Caveat';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/caveat-500.woff2') format('woff2')}
+@font-face{font-family:'Caveat';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/caveat-600.woff2') format('woff2')}
+@font-face{font-family:'Caveat';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/caveat-700.woff2') format('woff2')}
 :root{
-  --ink:#06080C; --panel:#0B0F16; --card:#0D121B;
-  --ice:#EAF6FF; --dim:#8B98AB;
-  --cy:#3D8BFF; --cy-deep:#2E5BA8;
-  --line:rgba(234,246,255,.12);
+  --paper:#ECE0C4; --paper2:#E2D3B2; --card:#F4EBD6;
+  --ink:#191007; --ink2:#2A1E0E;
+  --red:#B3271E; --red-deep:#8C1D15;
+  --brass:#B98A2F;
+  --line:rgba(25,16,7,.22);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--ink);color:var(--ice);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-::selection{background:var(--cy);color:#04121a}
+body{background:var(--paper);color:var(--ink);font-family:'Newsreader',Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+/* faint paper grain */
+body::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
+::selection{background:var(--red);color:var(--paper)}
 a{color:inherit}
 
-/* floating orbs */
-.orb{position:fixed;border-radius:50%;filter:blur(90px);z-index:0;pointer-events:none;opacity:.5;animation:drift 14s ease-in-out infinite}
-.orb.o1{width:420px;height:420px;background:rgba(255,179,71,.12);top:-120px;right:-100px}
-.orb.o2{width:340px;height:340px;background:rgba(61,139,255,.12);bottom:10%;left:-140px;animation-delay:-6s}
-@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-46px,38px)}}
-
-/* ---------- progress rail ---------- */
-.rail{position:fixed;left:26px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:0}
-.rail .track{position:absolute;left:9px;top:14px;bottom:14px;width:2px;background:var(--line)}
-.rail .fill{position:absolute;left:9px;top:14px;width:2px;background:linear-gradient(var(--cy),var(--cy-deep));height:0;box-shadow:0 0 12px var(--cy)}
-.node{position:relative;display:flex;align-items:center;gap:14px;padding:20px 0;cursor:pointer;text-decoration:none}
-.node .pip{width:20px;height:20px;border-radius:50%;border:2px solid var(--dim);background:var(--ink);flex:none;transition:all .4s;position:relative;z-index:2}
-.node .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--dim);transition:color .4s;white-space:nowrap}
-.node.active .pip{border-color:var(--cy);background:var(--cy);box-shadow:0 0 16px var(--cy)}
-.node.active .lbl{color:var(--ice)}
-.node.done .pip{border-color:var(--cy);background:var(--cy-deep)}
-.topbar{display:none;position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(6,8,12,.88);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line)}
-.topbar .bar{height:3px;background:var(--line)}
-.topbar i{display:block;height:100%;width:0;background:var(--cy);box-shadow:0 0 10px var(--cy)}
+/* ---------- progress rail: five marks painted down the mirror ---------- */
+.rail{position:fixed;left:26px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column}
+.rail .track{position:absolute;left:8px;top:16px;bottom:16px;width:3px;background:var(--line)}
+.rail .fill{position:absolute;left:8px;top:16px;width:3px;background:var(--red);height:0}
+.node{position:relative;display:flex;align-items:center;gap:14px;padding:19px 0;cursor:pointer;text-decoration:none}
+.node .pip{width:18px;height:18px;background:var(--paper);border:2px solid var(--ink);transform:rotate(45deg);flex:none;transition:all .35s;position:relative;z-index:2}
+.node .lbl{font-family:'Bowlby One SC',cursive;font-size:11px;color:var(--ink2);opacity:.55;transition:all .35s;white-space:nowrap;letter-spacing:.02em}
+.node.active .pip{background:var(--red);border-color:var(--red-deep);transform:rotate(45deg) scale(1.15)}
+.node.active .lbl{opacity:1;color:var(--red-deep)}
+.node.done .pip{background:var(--ink)}
+.topbar{display:none;position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(236,224,196,.94);backdrop-filter:blur(8px);
+  border-bottom:2px solid var(--ink)}
+.topbar .bar{height:4px;background:var(--line)}
+.topbar i{display:block;height:100%;width:0;background:var(--red)}
 .topbar .trow{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 12px}
-.topbar span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.26em;color:var(--ice)}
-.topbar span b{color:var(--cy)}
-.topbar .tbook{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--cy);text-decoration:none;
-  border:1px solid rgba(61,139,255,.5);border-radius:100px;padding:7px 14px}
+.topbar span{display:block;font-family:'Bowlby One SC',cursive;font-size:11px;color:var(--ink)}
+.topbar span b{color:var(--red)}
+.topbar .tbook{font-family:'Bowlby One SC',cursive;font-size:10px;color:var(--paper);background:var(--red);text-decoration:none;
+  border-radius:6px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink)}
 
-/* scroll-scrubbed kinetic type band */
-.scrubband{overflow:hidden;white-space:nowrap;padding:22px 0;user-select:none}
-.scrubtrack{display:inline-block;font-family:'Space Grotesk',sans-serif;font-weight:700;
-  font-size:clamp(56px,8vw,128px);line-height:1;letter-spacing:-.01em;
-  color:transparent;-webkit-text-stroke:1px rgba(120,180,255,.30);will-change:transform}
+/* scroll-scrubbed painted type band */
+.scrubband{overflow:hidden;white-space:nowrap;padding:26px 0;user-select:none;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:var(--red)}
+.scrubtrack{display:inline-block;font-family:'Bowlby One SC',cursive;
+  font-size:clamp(44px,6.4vw,104px);line-height:1.05;color:var(--paper);
+  text-shadow:3px 3px 0 var(--red-deep);will-change:transform}
 .hero h1 .kl{display:inline-block;will-change:transform}
 .hero h1 .kw{display:inline-block;white-space:nowrap}
 
-/* ---------- hero ---------- */
+/* ---------- hero: painted shop-window lettering ---------- */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw 0 190px;position:relative;z-index:2}
-.hero .k{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;color:var(--cy);margin-bottom:22px}
-.hero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(56px,10.5vw,150px);line-height:.94;letter-spacing:-.02em}
-.hero h1 .thin{font-weight:400;color:var(--dim)}
-.hero p{max-width:520px;color:var(--dim);line-height:1.7;margin-top:24px;font-size:17px}
-.hero .cta-row{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
-.btn{display:inline-block;background:var(--cy);color:#04121a;font-weight:700;padding:17px 42px;border-radius:100px;text-decoration:none;
-  box-shadow:0 10px 40px -10px rgba(34,211,238,.55);transition:transform .3s}
-.btn:hover{transform:translateY(-3px) scale(1.03)}
-.btn.ghost{background:transparent;color:var(--ice);border:1px solid var(--line);box-shadow:none}
-.scroll-cue{position:absolute;bottom:34px;left:190px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--dim);
-  display:flex;align-items:center;gap:12px}
-.scroll-cue::after{content:"";width:52px;height:1px;background:var(--cy);animation:slide 1.8s ease-in-out infinite}
+.hero .k{font-family:'Caveat',cursive;font-size:24px;font-weight:600;color:var(--red-deep);margin-bottom:18px;transform:rotate(-1.5deg)}
+.hero h1{font-family:'Bowlby One SC',cursive;font-size:clamp(52px,10vw,148px);line-height:.98;color:var(--ink);
+  text-shadow:4px 4px 0 rgba(179,39,30,.28)}
+.hero h1 .rd{color:var(--red);text-shadow:4px 4px 0 rgba(25,16,7,.18)}
+.hero p{max-width:520px;color:var(--ink2);line-height:1.7;margin-top:26px;font-size:18px}
+.hero p b{color:var(--red-deep)}
+.hero .cta-row{display:flex;gap:16px;margin-top:34px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--red);color:var(--paper);font-family:'Bowlby One SC',cursive;font-size:15px;
+  padding:18px 40px;border-radius:6px;text-decoration:none;box-shadow:5px 5px 0 var(--ink);transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.scroll-cue{position:absolute;bottom:20px;left:190px;font-family:'Caveat',cursive;font-size:22px;font-weight:600;color:var(--ink2);
+  display:flex;align-items:center;gap:12px;transform:rotate(-2deg)}
+.scroll-cue::after{content:"";width:52px;height:3px;background:var(--red);animation:slide 1.8s ease-in-out infinite}
 @keyframes slide{0%{transform:scaleX(0);transform-origin:left}50%{transform:scaleX(1);transform-origin:left}51%{transform-origin:right}100%{transform:scaleX(0);transform-origin:right}}
 
-/* ---------- chapters ---------- */
+/* ---------- chapters: the chart on the wall ---------- */
 .chapter{position:relative;z-index:2;min-height:135vh}
 .chapter.short{min-height:115vh}
 .ch-sticky{position:sticky;top:0;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:6vw;padding:12vh 8vw 12vh 190px;overflow:hidden}
-.ch-img{position:relative;border-radius:18px;overflow:hidden;height:62vh;min-height:380px}
-.ch-img img{width:100%;height:120%;object-fit:cover;will-change:transform}
-.ch-img::after{content:"";position:absolute;inset:0;border:1px solid var(--line);border-radius:18px;pointer-events:none}
-.ch-num{position:absolute;top:18px;left:22px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.24em;
-  background:rgba(6,8,12,.7);border:1px solid var(--line);padding:8px 14px;border-radius:100px;backdrop-filter:blur(6px);z-index:2}
-.ch-num b{color:var(--cy)}
-/* walk-in ticket stub */
-.ticket{position:relative;margin:22px 0 4px;max-width:340px;background:linear-gradient(180deg,#141a24,#0d1119);
-  border:1px solid var(--line);border-radius:10px;padding:16px 18px 14px 26px;transform:rotate(-1.5deg)}
-.ticket::before{content:"";position:absolute;left:12px;top:10px;bottom:10px;border-left:2px dashed rgba(61,139,255,.55)}
-.ticket .t-no{display:block;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.18em;color:var(--ice)}
-.ticket .t-no b{color:var(--cy)}
-.ticket .t-sub{display:block;margin-top:6px;font-size:11px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
-/* detail: razor-edge line draws across the photo on reveal */
+.ch-img{position:relative;border:3px solid var(--ink);border-radius:4px;overflow:hidden;height:62vh;min-height:380px;
+  box-shadow:10px 10px 0 rgba(25,16,7,.16);background:var(--paper2)}
+.ch-img img{width:100%;height:120%;object-fit:cover;will-change:transform;filter:sepia(.28) contrast(1.04)}
+.ch-img figcaption{position:absolute;left:0;right:0;bottom:0;background:var(--ink);color:var(--paper);
+  font-family:'Caveat',cursive;font-size:20px;padding:8px 16px}
+/* sign-painter layout mark */
+.ch-num{position:absolute;top:-6px;left:18px;z-index:2;font-family:'Bowlby One SC',cursive;font-size:64px;line-height:1;
+  color:transparent;-webkit-text-stroke:2px var(--paper)}
+.ch-num::after{content:attr(data-n);position:absolute;left:5px;top:5px;color:var(--red);-webkit-text-stroke:0;z-index:-1}
+/* walk-in ticket stub: real paper ticket */
+.ticket{position:relative;margin:24px 0 4px;max-width:340px;background:var(--card);
+  border:2px solid var(--ink);border-radius:4px;padding:16px 18px 14px 30px;transform:rotate(-1.5deg);box-shadow:5px 5px 0 rgba(25,16,7,.2)}
+.ticket::before{content:"";position:absolute;left:14px;top:10px;bottom:10px;border-left:2px dashed var(--red)}
+.ticket .t-no{display:block;font-family:'Bowlby One SC',cursive;font-size:14px;color:var(--ink)}
+.ticket .t-no b{color:var(--red)}
+.ticket .t-sub{display:block;margin-top:6px;font-size:15px;font-style:italic;color:var(--ink2)}
+.ticket .stamp{position:absolute;right:10px;top:8px;font-family:'Bowlby One SC',cursive;font-size:11px;color:var(--red);
+  border:2px solid var(--red);border-radius:4px;padding:4px 8px;transform:rotate(8deg);opacity:.85}
 /* the cut: blend line travels down the photo as you scroll the chapter */
-.blendline{position:absolute;left:0;right:0;top:12%;height:2px;pointer-events:none;
-  background:linear-gradient(90deg,transparent,rgba(61,139,255,.9) 20%,rgba(160,210,255,.95) 50%,rgba(61,139,255,.9) 80%,transparent);
-  box-shadow:0 0 12px rgba(61,139,255,.8)}
-.blendline span{position:absolute;right:10px;top:-20px;font-family:'JetBrains Mono',monospace;font-size:9px;
-  letter-spacing:.24em;color:#bcdcff;background:rgba(6,10,16,.75);padding:4px 9px;border-radius:100px;border:1px solid rgba(61,139,255,.5)}
-.ch-img{position:relative}
+.blendline{position:absolute;left:0;right:0;top:12%;height:3px;pointer-events:none;background:var(--red);box-shadow:0 0 10px rgba(179,39,30,.7)}
+.blendline span{position:absolute;right:10px;top:-24px;font-family:'Caveat',cursive;font-size:19px;font-weight:600;
+  color:var(--paper);background:var(--red);padding:2px 12px;border-radius:4px;transform:rotate(-2deg)}
+/* detail: razor-edge line draws across the photo on reveal */
 .razorline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.razorline line{stroke:#d6e9ff;stroke-width:2;filter:drop-shadow(0 0 7px rgba(61,139,255,.95));
-  stroke-dasharray:480;stroke-dashoffset:480;transition:stroke-dashoffset 1.5s cubic-bezier(.6,0,.2,1) .35s}
+.razorline line{stroke:var(--ink);stroke-width:3;stroke-dasharray:480;stroke-dashoffset:480;
+  transition:stroke-dashoffset 1.5s cubic-bezier(.6,0,.2,1) .35s}
 .ch-img.on .razorline line{stroke-dashoffset:0}
-.ch-type{position:relative;border-radius:18px;min-height:62vh;display:flex;align-items:center;justify-content:center;
-  border:1px solid var(--line);background:radial-gradient(80% 80% at 50% 50%,rgba(61,139,255,.12),transparent 70%),var(--card)}
-.bignod{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(72px,10vw,150px);line-height:.95;letter-spacing:-.02em;text-align:center}
-.bignod::after{content:"";display:block;width:72px;height:3px;background:var(--cy);margin:26px auto 0}
-.ch-copy .step{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.32em;color:var(--cy);margin-bottom:16px}
-.ch-copy h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(38px,5.4vw,72px);line-height:1;letter-spacing:-.02em;margin-bottom:20px}
-.ch-copy p{color:var(--dim);line-height:1.75;font-size:16px;max-width:460px;margin-bottom:14px}
-.ch-copy p b{color:var(--ice);font-weight:600}
+.ch-type{position:relative;border:3px solid var(--ink);border-radius:4px;min-height:62vh;display:flex;align-items:center;justify-content:center;
+  background:var(--card);box-shadow:10px 10px 0 rgba(25,16,7,.16)}
+.bignod{font-family:'Bowlby One SC',cursive;font-size:clamp(64px,9vw,140px);line-height:.95;text-align:center;color:var(--ink);
+  text-shadow:4px 4px 0 rgba(179,39,30,.3)}
+.bignod::after{content:"";display:block;width:72px;height:4px;background:var(--red);margin:26px auto 0}
+.ch-copy .step{font-family:'Caveat',cursive;font-size:24px;font-weight:700;color:var(--red-deep);margin-bottom:10px;transform:rotate(-1deg)}
+.ch-copy h2{font-family:'Bowlby One SC',cursive;font-size:clamp(34px,4.8vw,64px);line-height:1.02;margin-bottom:20px;color:var(--ink)}
+.ch-copy p{color:var(--ink2);line-height:1.75;font-size:17px;max-width:460px;margin-bottom:14px}
+.ch-copy p b{color:var(--ink);font-weight:600}
+.note{font-family:'Caveat',cursive;font-size:22px;font-weight:600;color:var(--red-deep);transform:rotate(-2deg);margin:18px 0 4px;max-width:420px}
+/* chart catalogue tags */
 .tagrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;border:1px solid var(--line);border-radius:100px;padding:9px 16px;color:var(--dim)}
-.tag.hot{border-color:rgba(61,139,255,.5);color:var(--cy)}
+.tag{font-family:'Newsreader',serif;font-style:italic;font-weight:500;font-size:15px;border:2px solid var(--ink);border-radius:4px;
+  padding:8px 14px;color:var(--ink);background:var(--card)}
+.tag b{font-style:normal;font-family:'Bowlby One SC',cursive;font-size:11px;margin-right:8px}
+.tag.hot{background:var(--red);border-color:var(--red-deep);color:var(--paper)}
+.tag.hot b{color:var(--paper)}
 .flip .ch-img{order:2}
 .rv{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
 .rv.on{opacity:1;transform:none}
 
-/* guard scale (chapter 02 visual) */
+/* guard scale (chapter 02 visual): chart swatches */
 .guards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
-.guard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 8px;text-align:center;transition:all .3s;cursor:default}
-.guard:hover{border-color:var(--cy);transform:translateY(-4px)}
-.guard b{display:block;font-family:'Space Grotesk',sans-serif;font-size:22px;color:var(--cy)}
-.guard span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--dim)}
-.guard .bar{height:4px;background:var(--line);border-radius:4px;margin:10px 4px 0;overflow:hidden}
-.guard .bar i{display:block;height:100%;background:var(--cy)}
-/* consult: guards are clickable, readout answers */
+.guard{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:16px 8px;text-align:center;transition:all .25s;cursor:default}
+.guard:hover{transform:translateY(-4px);box-shadow:4px 4px 0 rgba(25,16,7,.25)}
+.guard b{display:block;font-family:'Bowlby One SC',cursive;font-size:22px;color:var(--red)}
+.guard span{font-size:13px;font-style:italic;color:var(--ink2)}
+.guard .bar{height:5px;background:var(--line);border-radius:4px;margin:10px 4px 0;overflow:hidden}
+.guard .bar i{display:block;height:100%;background:var(--red)}
 #guardGrid .guard{cursor:pointer}
-#guardGrid .guard.sel{border-color:var(--cy);background:linear-gradient(180deg,rgba(61,139,255,.16),rgba(61,139,255,.03));
-  transform:translateY(-4px);box-shadow:0 12px 30px -12px rgba(61,139,255,.5)}
-.guardread{margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--cy);
-  border:1px dashed rgba(61,139,255,.5);border-radius:10px;padding:12px 16px;min-height:44px;line-height:1.6}
+#guardGrid .guard.sel{border-color:var(--red);transform:translateY(-4px);box-shadow:5px 5px 0 var(--red)}
+.guardread{margin-top:14px;font-family:'Caveat',cursive;font-size:22px;font-weight:600;color:var(--red-deep);
+  border:2px dashed var(--red);border-radius:4px;padding:10px 16px;min-height:52px;line-height:1.4;background:rgba(179,39,30,.06)}
 
-/* ---------- finale ---------- */
-.finale{position:relative;z-index:2;text-align:center;padding:150px 8vw 120px;border-top:1px solid var(--line);
-  background:radial-gradient(70% 60% at 50% 100%,rgba(61,139,255,.14),transparent 70%)}
-.finale h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(48px,8.5vw,120px);letter-spacing:-.02em;line-height:1}
-.finale h2 span{color:var(--cy)}
-.finale p{color:var(--dim);margin:22px auto 0;max-width:480px;line-height:1.7}
-.mirror{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;color:var(--dim);margin-top:40px}
-.mirror b{color:var(--cy)}
+/* ---------- finale: the shop window at night ---------- */
+.finale{position:relative;z-index:2;text-align:center;padding:150px 8vw 120px;background:var(--ink);color:var(--paper)}
+.finale .fk{font-family:'Caveat',cursive;font-size:26px;color:var(--brass);margin-bottom:18px;transform:rotate(-1.5deg)}
+.finale h2{font-family:'Bowlby One SC',cursive;font-size:clamp(44px,8vw,116px);line-height:1;color:var(--paper);
+  text-shadow:4px 4px 0 rgba(179,39,30,.55)}
+.finale h2 span{color:var(--red)}
+.finale p{color:#C9BBA0;margin:22px auto 0;max-width:480px;line-height:1.7;font-size:18px}
+.finale .btn{box-shadow:5px 5px 0 rgba(236,224,196,.25)}
+.mirror{font-family:'Caveat',cursive;font-size:22px;color:#C9BBA0;margin-top:40px}
+.mirror b{color:var(--brass)}
 
-footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px 8vw;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--dim)}
+footer{position:relative;z-index:2;background:var(--ink);color:#8d7f63;border-top:1px solid rgba(236,224,196,.2);
+  padding:26px 8vw;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;font-style:italic}
 
 @media(max-width:900px){
   .rail{display:none}.topbar{display:block}
@@ -148,6 +165,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
   .ch-sticky{grid-template-columns:1fr;padding:10vh 6vw;gap:26px}
   .flip .ch-img{order:0}
   .ch-img{height:38vh;min-height:260px}
+  .ch-num{font-size:48px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
@@ -158,7 +176,6 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
 </head>
 <body>
 
-<div class="orb o1"></div><div class="orb o2"></div>
 <div class="topbar"><div class="bar"><i id="topFill"></i></div><div class="trow"><span id="stopLabel"><b>01</b> · WALK IN</span><a class="tbook" href="tel:+15105550188">BOOK →</a></div></div>
 
 <nav class="rail" id="rail">
@@ -171,104 +188,111 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
 </nav>
 
 <header class="hero">
-  <div class="k">FIRST CHAIR BARBERSHOP · OAKLAND, CA</div>
-  <h1>CUTS FROM $35.<br><span class="thin">WALK-INS TIL 6.</span></h1>
-  <p>Five stops, one chair. Scroll down and ride the appointment from the door to the mirror, exactly how it happens when you book with us.</p>
+  <div class="k">First Chair Barbershop · Oakland, California</div>
+  <h1>CUTS FROM $35.<br><span class="rd">WALK-INS TIL 6.</span></h1>
+  <p>Five stops, one chair. Scroll down and ride the appointment from the door to the mirror, <b>exactly how it happens</b> when you book with us.</p>
   <div class="cta-row">
     <a class="btn" href="tel:+15105550188">BOOK THE CHAIR</a>
   </div>
-  <div class="scroll-cue">SCROLL</div>
+  <div class="scroll-cue">scroll slow, it is worth it</div>
 </header>
 
-<div class="scrubband" aria-hidden="true"><div class="scrubtrack">FIVE STOPS · ONE CHAIR · </div></div>
+<div class="scrubband" aria-hidden="true"><div class="scrubtrack">FIVE STOPS · ONE CHAIR · FIVE STOPS · ONE CHAIR · </div></div>
 
 <!-- 01 WALK IN -->
 <div class="chapter short" id="walkin"><div class="ch-sticky">
-  <div class="ch-img rv"><span class="ch-num"><b>01</b> / 05</span>
-    <img data-plx src="../assets/fc-walkin.png" alt="Empty barber chair under warm lights" loading="lazy"></div>
+  <div class="ch-img rv"><span class="ch-num" data-n="01">01</span>
+    <img data-plx src="../assets/fc-walkin.png" alt="Empty barber chair under warm lights" loading="lazy">
+    <figcaption>the chair, waiting on you</figcaption></div>
   <div class="ch-copy rv">
-    <div class="step">STOP 01 · WALK IN</div>
+    <div class="step">stop 01 · walk in</div>
     <h2>The door is open.</h2>
     <p>No appointment? No problem. <b>Walk-ins are welcome until 6 PM</b>, and the waitlist runs on a screen you can actually read.</p>
     <p>Cape on, shoulders back. The shop smells like hot lather and cedar, the playlist is already arguing with itself, and your chair is getting wiped down.</p>
-    <div class="ticket rv"><span class="t-no">WALK-IN TICKET · <b>NO. 04</b></span><span class="t-sub">take a seat · we will call your number</span></div>
-    <div class="tagrow"><span class="tag hot">WALK-INS TILL 6</span><span class="tag">CUTS FROM $35</span><span class="tag">1814 BROADWAY</span><span class="tag">(510) 555-0188</span></div>
+    <div class="ticket rv"><span class="stamp">WALK-IN</span><span class="t-no">TICKET <b>NO. 04</b></span><span class="t-sub">take a seat, we will call your number</span></div>
+    <div class="note">psst — the waitlist screen is by the window</div>
+    <div class="tagrow"><span class="tag hot"><b>A</b>WALK-INS TILL 6</span><span class="tag"><b>B</b>CUTS FROM $35</span><span class="tag"><b>C</b>1814 BROADWAY</span><span class="tag"><b>D</b>(510) 555-0188</span></div>
   </div>
 </div></div>
 
 <!-- 02 CONSULT -->
 <div class="chapter flip" id="consult"><div class="ch-sticky">
-  <div class="ch-img rv"><span class="ch-num"><b>02</b> / 05</span>
-    <img data-plx src="../assets/fc-consult.webp" alt="Barber consulting with client at the mirror" loading="lazy"></div>
+  <div class="ch-img rv"><span class="ch-num" data-n="02">02</span>
+    <img data-plx src="../assets/fc-consult.webp" alt="Barber consulting with client at the mirror" loading="lazy">
+    <figcaption>point at the wall, we will take it from there</figcaption></div>
   <div class="ch-copy rv">
-    <div class="step">STOP 02 · CONSULT</div>
+    <div class="step">stop 02 · consult</div>
     <h2>Say the number.</h2>
     <p>Every cut starts with three questions: <b>how short at the shortest point, where the blend sits, and what the top does.</b> Bring a photo or just point at the wall.</p>
     <p>Guard numbers, tapers, necklines, all of it gets decided before a single clipper touches you. Pick your guard:</p>
     <div class="guards" id="guardGrid">
-      <div class="guard" data-say="YOUR CALL: #1 · 3MM. Skin-tight on the sides, the blend rides high."><b>#1</b><span>3MM · TIGHT</span><div class="bar"><i style="width:12%"></i></div></div>
-      <div class="guard" data-say="YOUR CALL: #2 · 6MM. The classic clean fade, blend sits mid-scalp."><b>#2</b><span>6MM · CLEAN</span><div class="bar"><i style="width:25%"></i></div></div>
-      <div class="guard" data-say="YOUR CALL: #4 · 13MM. Safe length, soft blend, office-proof."><b>#4</b><span>13MM · SAFE</span><div class="bar"><i style="width:50%"></i></div></div>
-      <div class="guard" data-say="YOUR CALL: #8 · 25MM. Length kept up top, scissor blend, barely a fade."><b>#8</b><span>25MM · LONG</span><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="guard" data-say="Your call: #1, 3mm. Skin-tight on the sides, the blend rides high."><b>#1</b><span>3mm · tight</span><div class="bar"><i style="width:12%"></i></div></div>
+      <div class="guard" data-say="Your call: #2, 6mm. The classic clean fade, blend sits mid-scalp."><b>#2</b><span>6mm · clean</span><div class="bar"><i style="width:25%"></i></div></div>
+      <div class="guard" data-say="Your call: #4, 13mm. Safe length, soft blend, office-proof."><b>#4</b><span>13mm · safe</span><div class="bar"><i style="width:50%"></i></div></div>
+      <div class="guard" data-say="Your call: #8, 25mm. Length kept up top, scissor blend, barely a fade."><b>#8</b><span>25mm · long</span><div class="bar"><i style="width:100%"></i></div></div>
     </div>
-    <div class="guardread" id="guardRead">TAP A GUARD · THAT IS YOUR WHOLE CONSULT</div>
-    <div class="tagrow"><span class="tag">EVERY CUT STARTS HERE</span><span class="tag">(510) 555-0188</span></div>
+    <div class="guardread" id="guardRead">tap a guard · that is your whole consult</div>
+    <div class="tagrow"><span class="tag"><b>E</b>EVERY CUT STARTS HERE</span><span class="tag"><b>F</b>(510) 555-0188</span></div>
   </div>
 </div></div>
 
 <!-- 03 THE CUT -->
 <div class="chapter" id="cut"><div class="ch-sticky">
-  <div class="ch-img rv"><span class="ch-num"><b>03</b> / 05</span>
+  <div class="ch-img rv"><span class="ch-num" data-n="03">03</span>
     <img data-plx src="../assets/fc-cut.jpg" alt="Trimmer cleaning up the neckline" loading="lazy">
-    <div class="blendline" id="blendLine"><span>BLEND LINE</span></div></div>
+    <figcaption>watch the blend line travel</figcaption>
+    <div class="blendline" id="blendLine"><span>blend line</span></div></div>
   <div class="ch-copy rv">
-    <div class="step">STOP 03 · THE CUT</div>
+    <div class="step">stop 03 · the cut</div>
     <h2>Set the shape.</h2>
     <p><b>Clippers set the shape, shears refine the top, foil shavers erase the bottom.</b> The blend gets checked in three mirrors because one mirror lies.</p>
     <p>Skin fade, taper, scissor cut, your call. The crown gets managed, the weight line gets melted, and nobody gets rushed.</p>
-    <div class="tagrow"><span class="tag hot">SKIN FADE $45</span><span class="tag hot">TAPER $35</span><span class="tag">SCISSOR CUT $40</span></div>
+    <div class="tagrow"><span class="tag hot"><b>CUT 01</b>SKIN FADE $45</span><span class="tag hot"><b>CUT 02</b>TAPER $35</span><span class="tag"><b>CUT 03</b>SCISSOR CUT $40</span></div>
   </div>
 </div></div>
 
 <!-- 04 DETAIL -->
 <div class="chapter flip" id="detail"><div class="ch-sticky">
-  <div class="ch-img rv"><span class="ch-num"><b>04</b> / 05</span>
+  <div class="ch-img rv"><span class="ch-num" data-n="04">04</span>
     <img data-plx src="../assets/fc-detail.jpg" alt="Straight razor on the neck" loading="lazy">
+    <figcaption>the razor does the signing</figcaption>
     <svg class="razorline" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true"><line x1="24" y1="272" x2="376" y2="28"/></svg></div>
   <div class="ch-copy rv">
-    <div class="step">STOP 04 · DETAIL WORK</div>
+    <div class="step">stop 04 · detail work</div>
     <h2>Sharp enough to sign.</h2>
     <p>This is where good cuts become great ones. <b>Straight razor line-up on the hairline and arches.</b> Hot lather on the neck, your choice of blocked, rounded, or tapered finish.</p>
     <p>Beard gets architected: cheeks razored, neck trimmed, oils combed through. Ears and nose cleaned up without being asked.</p>
-    <div class="tagrow"><span class="tag hot">LINE-UP $20</span><span class="tag hot">BEARD SCULPT $30</span><span class="tag">HOT TOWEL SHAVE $50</span></div>
+    <div class="tagrow"><span class="tag hot"><b>CUT 04</b>LINE-UP $20</span><span class="tag hot"><b>CUT 05</b>BEARD SCULPT $30</span><span class="tag"><b>CUT 06</b>HOT TOWEL SHAVE $50</span></div>
   </div>
 </div></div>
 
 <!-- 05 FINISH -->
 <div class="chapter short" id="finish"><div class="ch-sticky">
-  <div class="ch-type rv"><span class="ch-num"><b>05</b> / 05</span>
+  <div class="ch-type rv"><span class="ch-num" data-n="05">05</span>
     <div class="bignod">THE<br>NOD.</div></div>
   <div class="ch-copy rv">
-    <div class="step">STOP 05 · FINISH</div>
+    <div class="step">stop 05 · finish</div>
     <h2>The mirror check.</h2>
     <p>Hand mirror, full 360. <b>You point at anything, we fix it on the spot.</b> Neck dusted, style product worked in, aftercare explained in ten seconds.</p>
     <p>Then the nod. You know the nod. See you in two to three weeks, that is when the blend starts asking for us.</p>
-    <div class="tagrow"><span class="tag hot">CASH + CARD</span><span class="tag">TUE–SAT · 9–7</span><span class="tag">(510) 555-0188</span></div>
+    <div class="note">no nod, no pay. that is the house rule.</div>
+    <div class="tagrow"><span class="tag hot"><b>G</b>CASH + CARD</span><span class="tag"><b>H</b>TUE–SAT · 9–7</span><span class="tag"><b>I</b>(510) 555-0188</span></div>
   </div>
 </div></div>
 
-<div class="scrubband flip" aria-hidden="true"><div class="scrubtrack">THE NOD · SEE YOU IN THREE WEEKS · </div></div>
+<div class="scrubband flip" aria-hidden="true"><div class="scrubtrack">THE NOD · SEE YOU IN THREE WEEKS · THE NOD · SEE YOU IN THREE WEEKS · </div></div>
 
 <div class="finale">
+  <div class="fk rv">the window says it best</div>
   <h2 class="rv">YOUR TURN<br><span>IN THE CHAIR.</span></h2>
   <p class="rv">Call or text and the journey starts at the door. The consult is always free, the cut earns the rest.</p>
   <div class="rv" style="margin-top:34px"><a class="btn" href="tel:+15105550188">CALL (510) 555-0188</a></div>
-  <div class="mirror rv">▸ <b>05 / 05</b> · JOURNEY COMPLETE · THE CHAIR IS YOURS</div>
+  <div class="mirror rv">▸ <b>05 / 05</b> · journey complete · the chair is yours</div>
 </div>
 
 <footer>
-  <span>FIRST CHAIR · 1814 BROADWAY, OAKLAND CA</span>
-  <span>CONCEPT MOCK · NOT A REAL SHOP · PHOTOS VIA GOOGLE IMAGE SEARCH</span>
+  <span>First Chair · 1814 Broadway, Oakland CA</span>
+  <span>concept mock · not a real shop</span>
 </footer>
 
 <script>
@@ -313,10 +337,8 @@ function update(){
   const vh = innerHeight;
   const doc = document.documentElement.scrollHeight - vh;
   const y = scrollY;
-  // top bar
   topFill.style.width = (doc > 0 ? (y/doc)*100 : 0) + '%';
-  // rail fill
-  const railH = rail.offsetHeight - 28;
+  const railH = rail.offsetHeight - 32;
   let activeIdx = 0;
   chapters.forEach((id, i)=>{
     const el = document.getElementById(id);
@@ -329,14 +351,12 @@ function update(){
   });
   if(stopLabel) stopLabel.innerHTML = stopNames[activeIdx];
   railFill.style.height = (railH * (activeIdx/(chapters.length-1))) + 'px';
-  // parallax images
   document.querySelectorAll('[data-plx]').forEach(img=>{
     const r = img.closest('.ch-sticky').getBoundingClientRect();
     const prog = (vh - r.top) / (vh + r.height);
     const c = Math.min(1, Math.max(0, prog));
     img.style.transform = `translateY(${((c-0.5)*-14).toFixed(2)}%)`;
   });
-  // blend line travels down the cut photo as the chapter scrolls
   const cutEl = document.getElementById('cut');
   const blendLine = document.getElementById('blendLine');
   if(cutEl && blendLine){
@@ -344,13 +364,11 @@ function update(){
     const cp = Math.min(1, Math.max(0, (vh*0.9 - cr.top) / (vh*0.9 + cr.height*0.6)));
     blendLine.style.top = (8 + cp*80).toFixed(2) + '%';
   }
-  // kinetic type: hero letters drift apart as you leave the hero
   if(heroKL.length){
     const spread = Math.min(1, y / vh);
     const c = (heroKL.length - 1) / 2;
     heroKL.forEach((s,i)=>{ s.style.transform = 'translateX(' + ((i - c) * spread * 14).toFixed(1) + 'px)'; });
   }
-  // scrub bands travel with scroll
   if(!RM_FC) bands.forEach(b=>{
     const r = b.el.getBoundingClientRect();
     const prog = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
@@ -363,7 +381,6 @@ addEventListener('scroll', ()=>{ if(!tick){ requestAnimationFrame(()=>{ update()
 addEventListener('resize', update);
 update();
 
-// ---------- consult: tap a guard, get your consult ----------
 const guardGrid = document.getElementById('guardGrid');
 const guardRead = document.getElementById('guardRead');
 if(guardGrid){
@@ -376,7 +393,6 @@ if(guardGrid){
   });
 }
 
-// ---------- reveal ----------
 const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} }),{threshold:.15});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>

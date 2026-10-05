@@ -61,15 +61,22 @@ a{color:inherit}
 .hero-title{font-family:'Anton',sans-serif;font-size:clamp(64px,15vw,210px);line-height:.88;letter-spacing:.01em;
   transform:translateY(calc(-46px*var(--p)));text-shadow:0 0 calc(60px*var(--p)) rgba(255,59,48,.55)}
 .hero-title .stroke{color:transparent;-webkit-text-stroke:2px var(--bone)}
-.hero-sub{max-width:520px;margin-top:22px;color:var(--dim);font-size:16px;line-height:1.65;opacity:calc(.35 + .65*var(--p))}
+.hero-sub{max-width:520px;margin-top:22px;color:#cfc9bd;font-size:16px;line-height:1.65;opacity:calc(.82 + .18*var(--p))}
+/* staged lighting: mirror bulbs, red backlight, full warm wash */
+.stg{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen}
+.stg1{background:radial-gradient(38% 30% at 22% 18%,rgba(255,190,110,.55),transparent 70%),radial-gradient(30% 26% at 78% 14%,rgba(255,190,110,.45),transparent 70%);
+  opacity:clamp(0,calc((var(--p) - .08)*4),.85)}
+.stg2{background:radial-gradient(46% 60% at 88% 55%,rgba(255,45,45,.5),transparent 70%);
+  opacity:clamp(0,calc((var(--p) - .38)*4),.75)}
+.stg3{background:radial-gradient(90% 75% at 50% 45%,rgba(255,170,90,.34),transparent 75%);
+  opacity:clamp(0,calc((var(--p) - .68)*4),.9)}
 .hero-lights{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;color:var(--red);margin-top:18px;opacity:var(--p)}
-.hero-hudrow{position:absolute;top:76px;right:26px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;
-  color:var(--bone);text-align:right;opacity:.85}
-.hero-hudrow b{color:var(--red)}
 
 /* ---------- marquee ---------- */
 .marquee{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  background:var(--red-deep);overflow:hidden;padding:16px 0;transform:rotate(-1.2deg) scale(1.02)}
+  background:var(--red-deep);overflow:hidden;padding:16px 0;transform:rotate(-1.2deg) scale(1.02);
+  animation:neonflick 11s infinite}
+@keyframes neonflick{0%,100%{opacity:1}3%{opacity:.55}4.5%{opacity:1}41%{opacity:1}42%{opacity:.4}43.5%{opacity:1}44.5%{opacity:.7}45.5%{opacity:1}77%{opacity:1}78%{opacity:.5}79.5%{opacity:1}}
 .marquee-track{display:flex;gap:0;width:max-content;animation:mq 26s linear infinite}
 .marquee span{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:.06em;color:#fff;white-space:nowrap;padding:0 26px}
 .marquee span i{font-style:normal;color:var(--ink);padding:0 26px}
@@ -92,8 +99,12 @@ section{position:relative;z-index:2}
   transition:transform .45s cubic-bezier(.2,.7,.2,1),border-color .45s,box-shadow .45s;cursor:default}
 .card:hover{transform:translateY(-10px);border-color:rgba(255,59,48,.55);box-shadow:0 24px 60px -18px rgba(255,59,48,.35)}
 .card .ph{height:190px;overflow:hidden;position:relative}
-.card .ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(.35) contrast(1.08);transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .8s}
+.card .ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(.85) brightness(.62) contrast(1.05);transition:transform .8s cubic-bezier(.2,.7,.2,1),filter 1.4s ease}
+.card.on .ph img{filter:grayscale(.35) brightness(1) contrast(1.08)}
 .card:hover .ph img{transform:scale(1.08);filter:grayscale(0) contrast(1.05)}
+/* neon flicker when the lighting stage changes */
+.hero-title.flick{animation:flick .45s steps(2,jump-none)}
+@keyframes flick{0%{opacity:1}25%{opacity:.35}50%{opacity:1}75%{opacity:.55}100%{opacity:1}}
 .card .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(11,10,9,.75))}
 .card .body{padding:22px}
 .card .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
@@ -153,6 +164,10 @@ section{position:relative;z-index:2}
 .book .hours{margin-top:64px}
 .book-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:center;text-align:left}
 .book-img{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);transform:rotate(1.2deg)}
+.book-img::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(48% 62% at 50% 38%,rgba(255,70,70,.30),transparent 70%);
+  animation:poleglow 3.4s ease-in-out infinite}
+@keyframes polegglow{0%,100%{opacity:.45}50%{opacity:1}}
 .book-img img{width:100%;height:460px;object-fit:cover;filter:saturate(1.05)}
 .book-img .chip{position:absolute;top:18px;left:18px;animation:float 5s ease-in-out infinite}
 .book-copy .sec-title{font-size:clamp(52px,7vw,110px)}
@@ -189,7 +204,6 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:34px
   .hud .hide-m{display:none}
   .mbar{display:flex}
   body{padding-bottom:76px}
-  .hero-hudrow{display:none}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
@@ -215,12 +229,14 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:34px
     <div class="hero-bg"><img src="../assets/ad-hero.jpg" alt="Barber giving a scissor cut in a dark Oakland shop"></div>
     <div class="hero-shade"></div>
     <div class="hero-glow"></div>
-    <div class="hero-hudrow">LIGHTING <b id="lightPct">12%</b><br>CLIPPERS <b>ARMED</b><br>CHAIR <b>02 / 04</b></div>
+    <div class="stg stg1"></div>
+    <div class="stg stg2"></div>
+    <div class="stg stg3"></div>
     <div class="hero-copy">
-      <div class="kicker">OAKLAND, CA · EST. 2019 · WALK-INS WELCOME</div>
+      <div class="kicker">OAKLAND, CA · WALK-INS WELCOME</div>
       <h1 class="hero-title">CROWN<br><span class="stroke">AFTER DARK</span></h1>
       <p class="hero-sub">Skin fades, razor line-ups, hot towel shaves. The shop stays lit late and the clippers stay sharp. Scroll to turn the lights on.</p>
-      <div class="hero-lights">▸ KEEP SCROLLING · THE SHOP WAKES UP</div>
+      <div class="hero-lights" id="stageLabel">▸ KEEP SCROLLING · THE SHOP WAKES UP</div>
     </div>
   </div>
 </div>
@@ -354,13 +370,23 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:34px
 // ---------- scroll-scrubbed hero ----------
 const pin = document.getElementById('heroPin');
 const hint = document.getElementById('scrollHint');
-const lightPct = document.getElementById('lightPct');
+const stageLabel = document.getElementById('stageLabel');
+const STAGES = ['▸ KEEP SCROLLING · THE SHOP WAKES UP','▸ MIRROR BULBS ON','▸ OPEN SIGN LIT','▸ STATION LIGHTS UP','▸ POLE SPINNING · FULL SHOP'];
+let lastStage = 0;
+const heroTitle = document.querySelector('.hero-title');
 function scrub(){
   const r = pin.getBoundingClientRect();
   const total = r.height - innerHeight;
   let p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1;
   document.documentElement.style.setProperty('--p', p.toFixed(3));
-  lightPct.textContent = Math.round(12 + 88*p) + '%';
+  const si = Math.min(4, Math.floor(p * 5));
+  stageLabel.textContent = STAGES[si];
+  if(si !== lastStage){
+    lastStage = si;
+    heroTitle.classList.remove('flick');
+    void heroTitle.offsetWidth;
+    heroTitle.classList.add('flick');
+  }
   hint.style.opacity = p > .04 ? 0 : 1;
 }
 let ticking = false;

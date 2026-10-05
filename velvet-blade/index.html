@@ -52,6 +52,13 @@ a{color:inherit}
 .link-arrow{color:var(--gold);text-decoration:none;font-size:16px;font-weight:600;align-self:center}
 .price-note{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--dim)}
 
+/* scroll-scrubbed kinetic type band */
+.scrubband{overflow:hidden;white-space:nowrap;padding:24px 0;user-select:none}
+.scrubtrack{display:inline-block;font-family:'Inter',sans-serif;font-weight:800;
+  font-size:clamp(58px,8.5vw,134px);line-height:1;letter-spacing:-.03em;
+  color:transparent;-webkit-text-stroke:1px rgba(227,179,76,.32);will-change:transform}
+.hero h1 .kl{display:inline-block;will-change:transform}
+
 /* stat strip */
 .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}
 .stats .row{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);padding:44px 6vw;gap:20px;text-align:center}
@@ -204,6 +211,8 @@ footer{border-top:1px solid var(--line);padding:32px 6vw;display:flex;justify-co
   <div class="price-note">FROM $95 · TUE–SAT 9–7 · WALK-INS WELCOME</div>
 </header>
 
+<div class="scrubband" aria-hidden="true"><div class="scrubtrack">NINETY MINUTES · STRAIGHT RAZOR · </div></div>
+
 <div class="stats"><div class="row">
   <div class="rv"><b>90<em>′</em></b><span>MINUTES FLAT</span></div>
   <div class="rv"><b>06<em>×</em></b><span>STEAMED TOWELS</span></div>
@@ -277,6 +286,8 @@ footer{border-top:1px solid var(--line);padding:32px 6vw;display:flex;justify-co
     <div class="spec rv"><div class="k">AFTERCARE</div><div class="v">Oils + balm</div><div class="d">Beard oil, aftershave balm, and the ten second routine to keep it sharp.</div></div>
   </div>
 </div></div>
+
+<div class="scrubband flip" aria-hidden="true"><div class="scrubtrack">BUILD YOUR ROYAL · </div></div>
 
 <div class="builder" id="builder"><div class="wrap">
   <div class="eyebrow rv">Configure</div>
@@ -362,6 +373,50 @@ recalc();
 // razor slice: blade sweeps when a divider enters view
 const rio = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('cut'); rio.unobserve(e.target);} }),{threshold:.6});
 document.querySelectorAll('.razor').forEach(el=>rio.observe(el));
+
+// kinetic type: split hero letters, scrub bands with scroll
+const RM_VB = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function splitLetters(el){
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n=>{
+    const frag = document.createDocumentFragment();
+    [...n.textContent].forEach(ch=>{
+      if(ch === ' ' || ch.trim() === ''){ frag.appendChild(document.createTextNode(' ')); return; }
+      const s = document.createElement('span'); s.className = 'kl'; s.textContent = ch;
+      frag.appendChild(s);
+    });
+    n.parentNode.replaceChild(frag, n);
+  });
+  return [...el.querySelectorAll('.kl')];
+}
+const vbHeroH1 = document.querySelector('.hero h1');
+const vbKL = RM_VB ? [] : splitLetters(vbHeroH1);
+const vbBands = [...document.querySelectorAll('.scrubband')].map(b=>{
+  const t = b.querySelector('.scrubtrack');
+  t.innerHTML += t.innerHTML + t.innerHTML;
+  return {el:b, track:t, flip:b.classList.contains('flip')};
+});
+let vbTick = false;
+function vbKinetic(){
+  vbTick = false;
+  if(RM_VB) return;
+  const vh = innerHeight, y = scrollY;
+  if(vbKL.length){
+    const spread = Math.min(1, y / vh);
+    const c = (vbKL.length - 1) / 2;
+    vbKL.forEach((s,i)=>{ s.style.transform = 'translateX(' + ((i - c) * spread * 16).toFixed(1) + 'px)'; });
+  }
+  vbBands.forEach(b=>{
+    const r = b.el.getBoundingClientRect();
+    const prog = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+    const x = b.flip ? (-33.333 + prog*33.333) : (-prog*33.333);
+    b.track.style.transform = 'translateX(' + x.toFixed(2) + '%)';
+  });
+}
+addEventListener('scroll', ()=>{ if(!vbTick){ vbTick = true; requestAnimationFrame(vbKinetic); } }, {passive:true});
+vbKinetic();
 </script>
 </body>
 </html>

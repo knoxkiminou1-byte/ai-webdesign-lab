@@ -47,6 +47,13 @@ a{color:inherit}
 .topbar .tbook{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--cy);text-decoration:none;
   border:1px solid rgba(61,139,255,.5);border-radius:100px;padding:7px 14px}
 
+/* scroll-scrubbed kinetic type band */
+.scrubband{overflow:hidden;white-space:nowrap;padding:22px 0;user-select:none}
+.scrubtrack{display:inline-block;font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(56px,8vw,128px);line-height:1;letter-spacing:-.01em;
+  color:transparent;-webkit-text-stroke:1px rgba(120,180,255,.30);will-change:transform}
+.hero h1 .kl{display:inline-block;will-change:transform}
+
 /* ---------- hero ---------- */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw 0 190px;position:relative;z-index:2}
 .hero .k{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;color:var(--cy);margin-bottom:22px}
@@ -172,6 +179,8 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
   <div class="scroll-cue">SCROLL</div>
 </header>
 
+<div class="scrubband" aria-hidden="true"><div class="scrubtrack">FIVE STOPS · ONE CHAIR · </div></div>
+
 <!-- 01 WALK IN -->
 <div class="chapter short" id="walkin"><div class="ch-sticky">
   <div class="ch-img rv"><span class="ch-num"><b>01</b> / 05</span>
@@ -247,6 +256,8 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
   </div>
 </div></div>
 
+<div class="scrubband flip" aria-hidden="true"><div class="scrubtrack">THE NOD · SEE YOU IN THREE WEEKS · </div></div>
+
 <div class="finale">
   <h2 class="rv">YOUR TURN<br><span>IN THE CHAIR.</span></h2>
   <p class="rv">Call or text and the journey starts at the door. The consult is always free, the cut earns the rest.</p>
@@ -261,6 +272,29 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
 
 <script>
 // ---------- chapter tracking ----------
+const RM_FC = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function splitLetters(el){
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n=>{
+    const frag = document.createDocumentFragment();
+    [...n.textContent].forEach(ch=>{
+      if(ch === ' ' || ch.trim() === ''){ frag.appendChild(document.createTextNode(' ')); return; }
+      const s = document.createElement('span'); s.className = 'kl'; s.textContent = ch;
+      frag.appendChild(s);
+    });
+    n.parentNode.replaceChild(frag, n);
+  });
+  return [...el.querySelectorAll('.kl')];
+}
+const heroH1 = document.querySelector('.hero h1');
+const heroKL = RM_FC ? [] : splitLetters(heroH1);
+const bands = [...document.querySelectorAll('.scrubband')].map(b=>{
+  const t = b.querySelector('.scrubtrack');
+  t.innerHTML += t.innerHTML + t.innerHTML;
+  return {el:b, track:t, flip:b.classList.contains('flip')};
+});
 const chapters = ['walkin','consult','cut','detail','finish'];
 const nodes = document.querySelectorAll('.node');
 const railFill = document.getElementById('railFill');
@@ -304,6 +338,19 @@ function update(){
     const cp = Math.min(1, Math.max(0, (vh*0.9 - cr.top) / (vh*0.9 + cr.height*0.6)));
     blendLine.style.top = (8 + cp*80).toFixed(2) + '%';
   }
+  // kinetic type: hero letters drift apart as you leave the hero
+  if(heroKL.length){
+    const spread = Math.min(1, y / vh);
+    const c = (heroKL.length - 1) / 2;
+    heroKL.forEach((s,i)=>{ s.style.transform = 'translateX(' + ((i - c) * spread * 14).toFixed(1) + 'px)'; });
+  }
+  // scrub bands travel with scroll
+  if(!RM_FC) bands.forEach(b=>{
+    const r = b.el.getBoundingClientRect();
+    const prog = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+    const x = b.flip ? (-33.333 + prog*33.333) : (-prog*33.333);
+    b.track.style.transform = 'translateX(' + x.toFixed(2) + '%)';
+  });
 }
 let tick = false;
 addEventListener('scroll', ()=>{ if(!tick){ requestAnimationFrame(()=>{ update(); tick=false; }); tick=true; } }, {passive:true});

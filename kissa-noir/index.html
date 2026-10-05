@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KISSA NOIR · Jazz Listening Bar · New Orleans</title>
+<meta name="description" content="Kissa Noir. A jazz listening bar in New Orleans. Vinyl only, no talking during solos. Concept mock.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/anton-400.woff2') format('woff2')}
+:root{
+  --ink:#0D0B09; --panel:#141110; --cream:#F2EAD8; --dim:#9A8F7D;
+  --amber:#E8A33D; --blood:#B3341F; --line:rgba(242,234,216,.13);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html.locked{overflow:hidden}
+body{background:var(--ink);color:var(--cream);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--amber);color:#000}
+img,video{display:block;max-width:100%}
+
+/* ---------- loader ---------- */
+.loader{position:fixed;inset:0;z-index:200;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px;
+  transition:opacity .5s ease,visibility .5s;pointer-events:none}
+.loader.done{opacity:0;visibility:hidden}
+.loader .disc{width:74px;height:74px;border-radius:50%;
+  background:repeating-radial-gradient(circle at 50% 50%,#000 0 2px,#161311 2px 4px);
+  border:1px solid var(--line);position:relative;animation:spin 1.6s linear infinite}
+.loader .disc::after{content:"";position:absolute;top:50%;left:50%;width:22px;height:22px;border-radius:50%;
+  background:var(--amber);transform:translate(-50%,-50%)}
+.loader .l-word{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:.14em}
+.loader .l-word span{color:var(--amber)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- HUD ---------- */
+.hud{position:fixed;top:0;left:0;right:0;z-index:90;display:flex;justify-content:space-between;align-items:center;
+  padding:14px 4vw;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--dim);
+  background:linear-gradient(180deg,rgba(13,11,9,.85),transparent);pointer-events:none}
+.hud .lamp{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);margin-right:8px;animation:lamp 3s ease-in-out infinite}
+@keyframes lamp{0%,100%{opacity:.4}50%{opacity:1}}
+.hud b{color:var(--cream)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;display:flex;align-items:flex-end}
+.hero-video{position:absolute;inset:-12% 0;z-index:0}
+.hero-video video{width:100%;height:100%;object-fit:cover;will-change:transform}
+.hero-shade{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(13,11,9,.6) 0%,rgba(13,11,9,.18) 38%,rgba(13,11,9,.4) 68%,rgba(13,11,9,.95) 100%)}
+.hero-warm{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(55% 42% at 50% 60%,rgba(232,163,61,.16),transparent 70%)}
+.hero-copy{position:relative;z-index:2;padding:0 6vw 11vh;width:100%}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;color:var(--amber);margin-bottom:20px}
+.hero-title{font-family:'Anton',sans-serif;font-size:clamp(76px,15vw,220px);line-height:.9;letter-spacing:.01em}
+.hero-title .row{display:block;overflow:hidden}
+.hero-title .row>span{display:inline-block;transform:translateY(112%)}
+.hero-title .noir{color:transparent;-webkit-text-stroke:1.5px var(--cream)}
+.hero-sub{max-width:540px;color:var(--dim);line-height:1.7;margin-top:24px;font-size:16.5px}
+.hero-sub b{color:var(--cream)}
+.spinning-now{margin-top:26px;display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--dim)}
+.spinning-now .mini-disc{width:34px;height:34px;border-radius:50%;flex:none;
+  background:repeating-radial-gradient(circle at 50% 50%,#000 0 2px,#1c1815 2px 4px);
+  border:1px solid var(--line);position:relative;animation:spin 2.4s linear infinite}
+.spinning-now .mini-disc::after{content:"";position:absolute;top:50%;left:50%;width:10px;height:10px;border-radius:50%;background:var(--amber);transform:translate(-50%,-50%)}
+.spinning-now b{color:var(--amber)}
+.scroll-hint{position:absolute;bottom:30px;right:5vw;z-index:2;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--dim);
+  display:flex;flex-direction:column;align-items:center;gap:10px}
+.scroll-hint .line{width:1px;height:52px;background:linear-gradient(var(--amber),transparent);animation:drop 1.8s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- marquee ---------- */
+.marquee{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:var(--ink)}
+.marquee-track{display:flex;width:max-content;animation:mq 30s linear infinite;padding:18px 0}
+.marquee span{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.26em;color:var(--dim);white-space:nowrap;padding:0 30px}
+.marquee span i{font-style:normal;color:var(--amber);padding:0 30px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+section{position:relative;z-index:2}
+.wrap{max-width:1200px;margin:0 auto;padding:120px 6vw}
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--amber);margin-bottom:18px}
+.sec-title{font-family:'Anton',sans-serif;font-size:clamp(48px,7.5vw,110px);line-height:.95;letter-spacing:.01em;margin-bottom:20px}
+.sec-sub{color:var(--dim);line-height:1.75;max-width:560px;font-size:16.5px}
+
+/* ---------- now spinning: record selector ---------- */
+.spin-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:5vw;margin-top:56px;align-items:start}
+.record-list{display:flex;flex-direction:column}
+.record{border-top:1px solid var(--line);padding:24px 6px;cursor:pointer;transition:background .3s,padding-left .3s}
+.record:last-child{border-bottom:1px solid var(--line)}
+.record:hover{background:rgba(232,163,61,.05)}
+.record.active{background:rgba(232,163,61,.08);padding-left:20px;border-left:2px solid var(--amber)}
+.record .r-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.record h3{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:.03em}
+.record .year{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:.14em;flex:none}
+.record .artist{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--amber);margin-top:8px}
+.record p{color:var(--dim);font-size:14px;line-height:1.65;margin-top:10px;max-height:0;overflow:hidden;opacity:0;transition:max-height .5s ease,opacity .4s,margin .3s}
+.record.active p{max-height:120px;opacity:1}
+.stage{position:sticky;top:12vh}
+.vinyl-wrap{position:relative;width:min(420px,80vw);aspect-ratio:1;margin:0 auto}
+.vinyl{position:absolute;inset:0;border-radius:50%;
+  background:repeating-radial-gradient(circle at 50% 50%,#000 0 2px,#171412 2px 5px);
+  border:1px solid var(--line);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);will-change:transform}
+.vinyl .label{position:absolute;top:50%;left:50%;width:32%;height:32%;border-radius:50%;background:var(--amber);
+  transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center}
+.vinyl .label::after{content:"";width:8%;height:8%;border-radius:50%;background:var(--ink)}
+.vinyl .label span{position:absolute;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:#000;top:14%;white-space:nowrap}
+.sleeve-note{margin-top:28px;text-align:center}
+.sleeve-note .now{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--dim);margin-bottom:10px}
+.sleeve-note h4{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:.02em}
+.sleeve-note .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--amber);margin-top:8px}
+
+/* ---------- scrub band ---------- */
+.scrubband{overflow:hidden;white-space:nowrap;padding:22px 0;user-select:none;background:var(--ink)}
+.scrubtrack{display:inline-block;font-family:'Anton',sans-serif;font-size:clamp(64px,9vw,148px);line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(232,163,61,.45);will-change:transform}
+
+/* ---------- the room ---------- */
+.room{position:relative;min-height:110vh;overflow:hidden;display:flex;align-items:center}
+.room-video{position:absolute;inset:-12% 0;z-index:0}
+.room-video video{width:100%;height:100%;object-fit:cover;will-change:transform}
+.band-video{position:relative;height:52vh;overflow:hidden}
+.band-video video{position:absolute;inset:-12% 0;width:100%;height:124%;object-fit:cover;will-change:transform}
+.band-video .shade{position:absolute;inset:0;background:linear-gradient(180deg,var(--ink) 0%,transparent 28%,transparent 72%,var(--ink) 100%)}
+.band-video .cap{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.32em;color:rgba(244,235,222,.85);z-index:1}
+.room::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,var(--ink) 0%,rgba(13,11,9,.35) 30%,rgba(13,11,9,.35) 70%,var(--ink) 100%)}
+.room-copy{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:16vh 6vw;width:100%}
+.room-copy .sec-title{max-width:800px}
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:48px;max-width:900px}
+.spec{background:rgba(13,11,9,.82);backdrop-filter:blur(8px);padding:28px 24px}
+.spec b{display:block;font-family:'Anton',sans-serif;font-size:20px;letter-spacing:.04em;margin-bottom:10px;color:var(--amber)}
+.spec span{color:var(--dim);font-size:14px;line-height:1.6}
+
+/* ---------- the code ---------- */
+.code-list{margin-top:56px;max-width:820px}
+.code-row{display:grid;grid-template-columns:90px 1fr;gap:26px;padding:34px 0;border-top:1px solid var(--line);align-items:start}
+.code-row:last-child{border-bottom:1px solid var(--line)}
+.code-row .num{font-family:'Anton',sans-serif;font-size:44px;color:transparent;-webkit-text-stroke:1px var(--amber)}
+.code-row h3{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:.03em;margin-bottom:10px}
+.code-row p{color:var(--dim);line-height:1.7;font-size:15.5px;max-width:600px}
+
+/* ---------- visit ---------- */
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:start;margin-top:48px}
+.hours{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.hours .h-row{display:flex;justify-content:space-between;padding:20px 26px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--dim);border-bottom:1px solid var(--line)}
+.hours .h-row:last-child{border-bottom:none}
+.hours .h-row b{color:var(--cream)}
+.hours .h-row.today{background:rgba(232,163,61,.1)}
+.hours .h-row.today b{color:var(--amber)}
+.visit-copy p{color:var(--dim);line-height:1.75;margin-bottom:18px;font-size:16px}
+.visit-copy p b{color:var(--cream)}
+.btn{display:inline-block;background:var(--amber);color:#000;font-weight:700;padding:17px 42px;border-radius:100px;text-decoration:none;
+  transition:transform .3s;margin-top:8px}
+.btn.ghost{background:transparent;color:var(--cream);border:1px solid var(--line)}
+.addr{margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--dim);line-height:2}
+.addr b{color:var(--amber)}
+
+/* ---------- finale / footer ---------- */
+.finale{text-align:center;padding:150px 6vw 110px;position:relative;z-index:2}
+.finale h2{font-family:'Anton',sans-serif;font-size:clamp(52px,9vw,130px);line-height:.95}
+.finale h2 span{color:var(--amber)}
+.finale p{color:var(--dim);margin:24px auto 0;max-width:480px;line-height:1.7}
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px 6vw;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--dim)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.on{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .spin-grid{grid-template-columns:1fr}
+  .stage{position:relative;top:0;order:-1;margin-bottom:10px}
+  .visit-grid{grid-template-columns:1fr}
+  .code-row{grid-template-columns:56px 1fr;gap:16px}
+  .scroll-hint{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+  .hero-title .row>span{transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader">
+  <div class="disc"></div>
+  <div class="l-word">KISSA <span>NOIR</span></div>
+</div>
+
+<div class="hud">
+  <div><span class="lamp"></span><b id="openWord">OPEN NOW</b> · NEW ORLEANS, LA</div>
+  <div><span id="clock">--:--</span> CT</div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-video"><video id="heroVid" muted loop playsinline autoplay preload="auto" src="https://videos.pexels.com/video-files/5983041/5983041-hd_1920_1080_24fps.mp4"></video></div>
+  <div class="hero-shade"></div><div class="hero-warm"></div>
+  <div class="hero-copy">
+    <div class="kicker">JAZZ LISTENING BAR · NEW ORLEANS, LA</div>
+    <h1 class="hero-title">
+      <span class="row"><span>KISSA</span></span>
+      <span class="row"><span class="noir">NOIR</span></span>
+    </h1>
+    <p class="hero-sub">A Japanese-style jazz kissa in the French Quarter. <b>Vinyl only, tube amps, no talking during solos.</b> You come here to listen.</p>
+    <div class="spinning-now">
+      <div class="mini-disc"></div>
+      <div class="spinning-text">NOW SPINNING · <b>A LOVE SUPREME</b> · COLTRANE · IMPULSE! 1965</div>
+    </div>
+  </div>
+  <div class="scroll-hint">LISTEN<div class="line"></div></div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee"><div class="marquee-track">
+  <span>NO TALKING DURING SOLOS <i>·</i></span><span>VINYL ONLY <i>·</i></span><span>ONE REQUEST PER NIGHT <i>·</i></span><span>PHONES STAY IN POCKETS <i>·</i></span><span>STAY FOR THE WHOLE SIDE <i>·</i></span><span>NO TALKING DURING SOLOS <i>·</i></span><span>VINYL ONLY <i>·</i></span><span>ONE REQUEST PER NIGHT <i>·</i></span><span>PHONES STAY IN POCKETS <i>·</i></span><span>STAY FOR THE WHOLE SIDE <i>·</i></span>
+</div></div>
+
+<!-- NOW SPINNING -->
+<section id="spinning"><div class="wrap">
+  <div class="sec-label rv">01 · NOW SPINNING</div>
+  <h2 class="sec-title rv">TONIGHT'S<br>SHELVES</h2>
+  <p class="sec-sub rv">Four records pulled for tonight. Pick one and it goes on the platter. The bartender handles the needle, you handle the listening.</p>
+  <div class="spin-grid">
+    <div class="record-list rv">
+      <div class="record active" data-i="0">
+        <div class="r-top"><h3>A Love Supreme</h3><span class="year">1965</span></div>
+        <div class="artist">JOHN COLTRANE · IMPULSE!</div>
+        <p>Four parts, one prayer. When side one ends the room stays quiet for a full minute. That is not awkwardness. That is respect.</p>
+      </div>
+      <div class="record" data-i="1">
+        <div class="r-top"><h3>Kind of Blue</h3><span class="year">1959</span></div>
+        <div class="artist">MILES DAVIS · COLUMBIA</div>
+        <p>Recorded in two sessions, barely rehearsed. The best-selling jazz record ever made, and it still sounds like it is being invented in front of you.</p>
+      </div>
+      <div class="record" data-i="2">
+        <div class="r-top"><h3>Mingus Ah Um</h3><span class="year">1959</span></div>
+        <div class="artist">CHARLES MINGUS · COLUMBIA</div>
+        <p>Blues, gospel, and pure Mingus fury. "Better Git It in Your Soul" at full volume is the closest this room gets to shouting.</p>
+      </div>
+      <div class="record" data-i="3">
+        <div class="r-top"><h3>The Sidewinder</h3><span class="year">1964</span></div>
+        <div class="artist">LEE MORGAN · BLUE NOTE</div>
+        <p>Twenty-four years old and already a Blue Note legend. The title track grooves so hard the glasses rattle. We let them.</p>
+      </div>
+    </div>
+    <div class="stage rv">
+      <div class="vinyl-wrap">
+        <div class="vinyl" id="bigVinyl"><div class="label"><span id="vinylLabel">IMPULSE! · 1965</span></div></div>
+      </div>
+      <div class="sleeve-note">
+        <div class="now">ON THE PLATTER</div>
+        <h4 id="sleeveTitle">A Love Supreme</h4>
+        <div class="lbl" id="sleeveMeta">JOHN COLTRANE · IMPULSE! · 1965</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<div class="scrubband" aria-hidden="true"><div class="scrubtrack">VINYL ONLY · TUBE AMPS · VINYL ONLY · TUBE AMPS · </div></div>
+
+<!-- ARRIVAL: rainy Quarter night -->
+<div class="band-video rv">
+  <video muted loop playsinline preload="metadata" data-play src="https://videos.pexels.com/video-files/3588017/3588017-hd_1920_1080_24fps.mp4"></video>
+  <div class="shade"></div>
+  <div class="cap">DECATUR STREET · 11:47 PM · RAIN</div>
+</div>
+
+<!-- THE ROOM -->
+<div class="room">
+  <div class="room-video"><video muted loop playsinline preload="metadata" data-play src="media/club-1080p.mp4"></video></div>
+  <div class="room-copy">
+    <div class="sec-label rv">02 · THE ROOM</div>
+    <h2 class="sec-title rv">BUILT FOR<br>THE NEEDLE</h2>
+    <p class="sec-sub rv">Fourteen seats, one pair of speakers, zero televisions. The system is the second bartender.</p>
+    <div class="spec-grid rv">
+      <div class="spec"><b>TURNTABLE</b><span>Technics SP-10, Ortofon SPU cartridge. Leveled weekly, cleaned nightly.</span></div>
+      <div class="spec"><b>AMPLIFIERS</b><span>McIntosh tube amps, recapped 2024. Warm the room ten minutes before first spin.</span></div>
+      <div class="spec"><b>SPEAKERS</b><span>JBL 4343 horns, toed in to the sweet seat. There are three sweet seats. Regulars know.</span></div>
+      <div class="spec"><b>THE BAR</b><span>Twelve whiskeys, one beer, no cocktails with umbrellas. Ice is cut, not cubed.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- THE CODE -->
+<section><div class="wrap">
+  <div class="sec-label rv">03 · THE CODE</div>
+  <h2 class="sec-title rv">HOUSE<br>RULES</h2>
+  <p class="sec-sub rv">Every kissa has a code. Ours is short and non-negotiable. Break one and the bartender will know.</p>
+  <div class="code-list">
+    <div class="code-row rv"><div class="num">01</div><div><h3>NO TALKING DURING SOLOS</h3><p>Whisper during the head, silence during the solo. If you must speak, wait for the applause that never comes. This is a listening bar.</p></div></div>
+    <div class="code-row rv"><div class="num">02</div><div><h3>PHONES STAY IN POCKETS</h3><p>No photos of the platter, no Shazam, no scrolling glow in the dark. The music is the screen.</p></div></div>
+    <div class="code-row rv"><div class="num">03</div><div><h3>ONE REQUEST PER NIGHT</h3><p>Write it on the slip, hand it to the bar. Make it count. Obscure B-sides earn nods; requests for the obvious earn smiles.</p></div></div>
+    <div class="code-row rv"><div class="num">04</div><div><h3>THE BAR CHOOSES THE SIDE</h3><p>You pick the record, we pick the side. Trust the needle. It has been doing this longer than you.</p></div></div>
+    <div class="code-row rv"><div class="num">05</div><div><h3>STAY FOR THE WHOLE SIDE</h3><p>Leaving mid-side is leaving mid-sentence. Finish your pour, flip with us, then go.</p></div></div>
+  </div>
+</div></section>
+
+<div class="scrubband" aria-hidden="true"><div class="scrubtrack">NO TALKING DURING SOLOS · NO TALKING DURING SOLOS · </div></div>
+
+<!-- THE POUR -->
+<div class="band-video rv">
+  <video muted loop playsinline preload="metadata" data-play src="https://videos.pexels.com/video-files/10823229/10823229-hd_1920_1080_24fps.mp4"></video>
+  <div class="shade"></div>
+  <div class="cap">ICE CUT, NOT CUBED · THE HOUSE POUR</div>
+</div>
+
+<!-- VISIT -->
+<section><div class="wrap">
+  <div class="sec-label rv">04 · VISIT</div>
+  <h2 class="sec-title rv">FIND<br>THE DOOR</h2>
+  <div class="visit-grid">
+    <div class="hours rv" id="hoursRow">
+      <div class="h-row" data-d="0"><b>SUN</b><span>6PM – 1AM</span></div>
+      <div class="h-row" data-d="1"><b>MON</b><span>CLOSED</span></div>
+      <div class="h-row" data-d="2"><b>TUE</b><span>6PM – 1AM</span></div>
+      <div class="h-row" data-d="3"><b>WED</b><span>6PM – 1AM</span></div>
+      <div class="h-row" data-d="4"><b>THU</b><span>6PM – 1AM</span></div>
+      <div class="h-row" data-d="5"><b>FRI</b><span>6PM – 1AM</span></div>
+      <div class="h-row" data-d="6"><b>SAT</b><span>6PM – 1AM</span></div>
+    </div>
+    <div class="visit-copy">
+      <p class="rv">No reservations. <b>Fourteen seats, first come.</b> The sweet seats go by 8. If the lamp is on in the window, there is room.</p>
+      <p class="rv">First pour is on the house if you can name the drummer before the head ends. Nobody has done it twice.</p>
+      <div class="rv">
+        <a class="btn magnetic" href="tel:+15045550198">CALL (504) 555-0198</a>
+      </div>
+      <div class="addr rv">
+        <b>1129 DECATUR ST, NEW ORLEANS LA</b><br>
+        AROUND THE CORNER FROM THE CLOSED POOL HALL<br>
+        LOOK FOR THE AMBER LAMP
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<div class="finale">
+  <h2 class="rv">SIT DOWN.<br><span>LISTEN CLOSE.</span></h2>
+  <p class="rv">Kissa Noir · 1129 Decatur St, New Orleans LA<br>Concept mock, not a real bar.</p>
+  <div class="rv" style="margin-top:34px"><a class="btn magnetic" href="tel:+15045550198">CALL THE BAR</a></div>
+</div>
+
+<footer>
+  <span>KISSA NOIR · 1129 DECATUR ST, NEW ORLEANS LA</span>
+  <span>CONCEPT MOCK · VIDEO VIA PEXELS</span>
+</footer>
+
+<script>
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- loader ---------- */
+const loader = document.getElementById('loader');
+document.documentElement.classList.add('locked');
+let loadDone = false;
+function finishLoad(){
+  loader.classList.add('done');
+  document.documentElement.classList.remove('locked');
+  document.querySelectorAll('.hero-title .row > span').forEach((s,i)=>{
+    s.style.transition = 'transform 1.1s cubic-bezier(.2,.7,.2,1) ' + (i*0.12) + 's';
+    requestAnimationFrame(()=>{ s.style.transform = 'translateY(0)'; });
+  });
+}
+function ready(){ if(loadDone) return; loadDone = true; setTimeout(finishLoad, 400); }
+if(document.readyState === 'complete') ready();
+else addEventListener('load', ready);
+setTimeout(ready, 1800);
+
+/* ---------- video play/pause ---------- */
+const heroVid = document.getElementById('heroVid');
+const vids = [...document.querySelectorAll('video[data-play]')];
+const vio = new IntersectionObserver(es=>es.forEach(e=>{
+  if(RM) return;
+  if(e.isIntersecting){ e.target.play().catch(()=>{}); } else { e.target.pause(); }
+}),{threshold:.25});
+vids.forEach(v=>vio.observe(v));
+if(RM){ heroVid.removeAttribute('autoplay'); heroVid.pause(); }
+
+/* ---------- clock + open state (6PM-1AM, closed Mon) ---------- */
+function clock(){
+  const n = new Date(new Date().toLocaleString('en-US',{timeZone:'America/Chicago'}));
+  const h = n.getHours(), m = n.getMinutes(), d = n.getDay();
+  document.getElementById('clock').textContent =
+    String(h%12||12).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+  const open = d !== 1 && (h >= 18 || h < 1);
+  document.getElementById('openWord').textContent = open ? 'OPEN NOW' : 'CLOSED';
+  document.querySelectorAll('#hoursRow .h-row').forEach(x=>{
+    x.classList.toggle('today', +x.dataset.d === d);
+  });
+}
+clock(); setInterval(clock, 30000);
+
+/* ---------- record selector ---------- */
+const records = [...document.querySelectorAll('.record')];
+const sleeveTitle = document.getElementById('sleeveTitle');
+const sleeveMeta = document.getElementById('sleeveMeta');
+const vinylLabel = document.getElementById('vinylLabel');
+const bigVinyl = document.getElementById('bigVinyl');
+const meta = [
+  ['A Love Supreme','JOHN COLTRANE · IMPULSE! · 1965','IMPULSE! · 1965'],
+  ['Kind of Blue','MILES DAVIS · COLUMBIA · 1959','COLUMBIA · 1959'],
+  ['Mingus Ah Um','CHARLES MINGUS · COLUMBIA · 1959','COLUMBIA · 1959'],
+  ['The Sidewinder','LEE MORGAN · BLUE NOTE · 1964','BLUE NOTE · 1964']
+];
+function setRecord(i){
+  records.forEach((r,j)=>r.classList.toggle('active', j===i));
+  const m = meta[i];
+  sleeveTitle.textContent = m[0];
+  sleeveMeta.textContent = m[1];
+  vinylLabel.textContent = m[2];
+  if(!RM){ // needle-drop kick: quick spin burst
+    bigVinyl.style.transition = 'transform .18s ease-out';
+    spinBoost += 40;
+  }
+  document.querySelector('.spinning-now .spinning-text').innerHTML =
+    'NOW SPINNING · <b>' + m[0].toUpperCase() + '</b> · ' + m[1];
+}
+records.forEach((r,i)=>{
+  r.addEventListener('click', ()=>setRecord(i));
+  r.addEventListener('mouseenter', ()=>{ if(matchMedia('(pointer:fine)').matches) setRecord(i); });
+});
+
+/* ---------- kinetic: parallax, scrub band, scroll-spun vinyl ---------- */
+const band = document.querySelector('.scrubband .scrubtrack');
+let spinBoost = 0, vinylAngle = 0, lastT = performance.now(), lastY = scrollY, ticking = false;
+function kinetic(now){
+  ticking = false;
+  const dt = Math.min(50, now - lastT); lastT = now;
+  if(!RM){
+    const vh = innerHeight, y = scrollY;
+    // hero + room + band parallax
+    document.querySelectorAll('.hero-video, .room-video, .band-video').forEach(el=>{
+      const r = el.parentElement.getBoundingClientRect();
+      if(r.bottom > 0 && r.top < vh) el.style.transform = 'translateY(' + ((y - (el.parentElement.offsetTop - vh)) * 0.18).toFixed(1) + 'px)';
+    });
+    // scrub band
+    document.querySelectorAll('.scrubband').forEach(b=>{
+      const r = b.getBoundingClientRect();
+      const prog = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+      b.querySelector('.scrubtrack').style.transform = 'translateX(' + (-prog*25).toFixed(2) + '%)';
+    });
+    // vinyl: constant slow spin + scroll velocity adds spin
+    const vel = Math.abs(y - lastY); lastY = y;
+    spinBoost = Math.max(0, spinBoost - dt*0.06);
+    vinylAngle = (vinylAngle + dt*0.02 + vel*0.35 + spinBoost*dt*0.02) % 360;
+    bigVinyl.style.transform = 'rotate(' + vinylAngle.toFixed(1) + 'deg)';
+  }
+  requestAnimationFrame(kinetic);
+}
+requestAnimationFrame(kinetic);
+
+/* ---------- magnetic buttons ---------- */
+if(!RM && matchMedia('(pointer:fine)').matches){
+  document.querySelectorAll('.magnetic').forEach(el=>{
+    el.addEventListener('mousemove', e=>{
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width/2, y = e.clientY - r.top - r.height/2;
+      el.style.transform = 'translate(' + (x*0.15).toFixed(1) + 'px,' + (y*0.22).toFixed(1) + 'px)';
+    });
+    el.addEventListener('mouseleave', ()=>{ el.style.transform = ''; });
+  });
+}
+
+/* ---------- reveal ---------- */
+const io = new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

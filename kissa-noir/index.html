@@ -428,10 +428,12 @@ function kinetic(now){
   const dt = Math.min(50, now - lastT); lastT = now;
   if(!RM){
     const vh = innerHeight, y = scrollY;
-    // hero + room + band parallax
+    // hero + room + band parallax (transform the VIDEO, never the band container)
     document.querySelectorAll('.hero-video, .room-video, .band-video').forEach(el=>{
-      const r = el.parentElement.getBoundingClientRect();
-      if(r.bottom > 0 && r.top < vh) el.style.transform = 'translateY(' + ((y - (el.parentElement.offsetTop - vh)) * 0.18).toFixed(1) + 'px)';
+      const target = el.classList.contains('band-video') ? el.querySelector('video') : el;
+      const box = el.classList.contains('band-video') ? el : el.parentElement;
+      const r = box.getBoundingClientRect();
+      if(r.bottom > 0 && r.top < vh && target) target.style.transform = 'translateY(' + ((y - (box.offsetTop - vh)) * 0.18).toFixed(1) + 'px)';
     });
     // scrub band
     document.querySelectorAll('.scrubband').forEach(b=>{

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crown Cuts Barber Co. · Oakland, CA</title>
+<meta name="description" content="Crown Cuts Barber Co., 2714 Telegraph Ave, Oakland. Walk-ins welcome. Build your cut: pick a guard, pick the sides, book the chair. Tue–Fri 9–7, Sat 8–5.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#17130d;
+    --ink-soft:#2c2519;
+    --bone:#f2ebdd;
+    --bone-deep:#e7dcc4;
+    --red:#b5342c;
+    --red-deep:#8c251f;
+    --line:rgba(23,19,13,.22);
+    --line-bone:rgba(242,235,221,.22);
+    --font-display:"Alfa Slab One",Georgia,serif;
+    --font-body:"Archivo",-apple-system,"Segoe UI",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bone);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--red);color:var(--bone)}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--red);outline-offset:3px}
+
+  /* ---------- utility strip ---------- */
+  .strip{background:var(--ink);color:var(--bone);font-size:13px;letter-spacing:.04em}
+  .strip-inner{
+    max-width:1240px;margin:0 auto;padding:9px 24px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .strip a{color:var(--bone);text-decoration:none;border-bottom:1px solid var(--red)}
+  .open-pill{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  .open-pill .dot{width:8px;height:8px;border-radius:50%;background:#7fb069}
+  .open-pill.closed .dot{background:var(--red)}
+
+  /* ---------- header ---------- */
+  header.site{
+    max-width:1240px;margin:0 auto;padding:20px 24px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .wordmark{font-family:var(--font-display);font-size:22px;letter-spacing:.01em;text-decoration:none;line-height:1}
+  .wordmark span{color:var(--red)}
+  nav.site-nav{display:flex;gap:26px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;align-items:center}
+  nav.site-nav a{text-decoration:none;border-bottom:2px solid transparent;padding-bottom:2px}
+  nav.site-nav a:hover{border-color:var(--red)}
+  nav.site-nav a.nav-call{background:var(--red);color:var(--bone);padding:10px 18px;border-radius:2px;border:none}
+  nav.site-nav a.nav-call:hover{background:var(--red-deep)}
+
+  /* ---------- hero ---------- */
+  .hero{max-width:1240px;margin:0 auto;padding:48px 24px 64px;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start}
+  .kicker{
+    display:inline-block;font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--red);border-top:3px solid var(--red);padding-top:10px;margin-bottom:22px;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-size:clamp(52px,7vw,102px);
+    line-height:1.02;letter-spacing:0;
+    margin-bottom:22px;
+  }
+  h1 .co{font-family:var(--font-body);font-weight:800;font-size:.32em;letter-spacing:.14em;vertical-align:.5em;margin-left:.35em}
+  .lede{font-size:19px;max-width:36ch;margin-bottom:14px;color:var(--ink-soft)}
+  .lede strong{color:var(--ink)}
+  .today-line{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    font-size:14px;font-weight:600;margin-bottom:30px;
+  }
+  .today-line .sep{color:var(--red);font-weight:800}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{display:inline-block;font-weight:700;font-size:16px;padding:15px 28px;text-decoration:none;border-radius:2px;transition:background .18s ease}
+  .btn-primary{background:var(--red);color:var(--bone)}
+  .btn-primary:hover{background:var(--red-deep)}
+  .btn-ghost{border:3px solid var(--ink);color:var(--ink);padding:12px 25px}
+  .btn-ghost:hover{background:var(--ink);color:var(--bone)}
+
+  /* ---------- consultation builder ---------- */
+  .builder{
+    border:3px solid var(--ink);border-radius:4px;background:var(--bone);
+    padding:26px;position:relative;
+  }
+  .builder-tag{
+    position:absolute;top:-16px;left:22px;background:var(--red);color:var(--bone);
+    font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;padding:7px 14px;border-radius:2px;
+  }
+  .builder h2{font-family:var(--font-display);font-size:24px;margin-bottom:2px}
+  .builder p.sub{font-size:14px;color:var(--ink-soft);margin-bottom:18px}
+  .builder fieldset{border:none;margin-bottom:16px}
+  .builder legend{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;color:var(--ink-soft)}
+  .opt-row{display:flex;flex-wrap:wrap;gap:8px}
+  .opt-row button{
+    font-family:var(--font-body);font-weight:700;font-size:14px;
+    padding:9px 14px;border:2px solid var(--ink);background:transparent;color:var(--ink);
+    border-radius:2px;cursor:pointer;min-width:44px;
+  }
+  .opt-row button:hover{background:var(--ink-soft);border-color:var(--ink-soft);color:var(--bone)}
+  .opt-row button[aria-pressed="true"]{background:var(--ink);color:var(--bone)}
+  .builder-result{
+    margin-top:6px;border-top:3px solid var(--ink);padding-top:16px;
+  }
+  .builder-summary{font-family:var(--font-display);font-size:19px;line-height:1.35;margin-bottom:6px}
+  .builder-price{font-size:15px;color:var(--ink-soft);margin-bottom:14px}
+  .builder-price b{color:var(--red);font-size:19px}
+  .builder .btn-primary{display:block;text-align:center;width:100%}
+
+  /* ---------- board (full-bleed ink) ---------- */
+  .board-wrap{background:var(--ink);color:var(--bone)}
+  .board-inner{max-width:1240px;margin:0 auto;padding:76px 24px}
+  .board-inner .kicker{color:var(--red);border-color:var(--red)}
+  .board-inner h2{font-family:var(--font-display);font-size:clamp(34px,4.6vw,58px);margin-bottom:10px}
+  .board-sub{color:rgba(242,235,221,.66);max-width:62ch;margin-bottom:38px}
+  .board{border-top:3px solid var(--bone)}
+  .service{
+    display:grid;grid-template-columns:1fr auto;gap:6px 24px;align-items:baseline;
+    padding:24px 4px;border-bottom:1px solid var(--line-bone);text-decoration:none;color:var(--bone);
+  }
+  .service:hover{background:rgba(242,235,221,.05)}
+  .service-top{display:flex;align-items:baseline;gap:16px;min-width:0}
+  .service-name{font-family:var(--font-display);font-size:clamp(21px,3vw,32px);white-space:nowrap}
+  .service-dots{flex:1;border-bottom:2px dotted rgba(242,235,221,.35);transform:translateY(-7px);min-width:20px}
+  .service-price{font-family:var(--font-display);font-size:clamp(21px,3vw,32px);color:var(--red)}
+  .service-detail{grid-column:1/-1;font-size:15px;color:rgba(242,235,221,.66);max-width:64ch}
+  .service-detail b{color:var(--bone)}
+
+  /* ---------- shop ---------- */
+  section.shop{max-width:1240px;margin:0 auto;padding:76px 24px}
+  section.shop .kicker{margin-bottom:22px}
+  section.shop h2{font-family:var(--font-display);font-size:clamp(34px,4.6vw,58px);margin-bottom:36px}
+  .shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .roster{border:3px solid var(--ink);border-radius:4px;padding:22px;margin-bottom:36px;background:var(--bone)}
+  .roster h3{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+  .barber{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .barber:last-child{border-bottom:none}
+  .barber b{font-weight:700}
+  .barber span{color:var(--ink-soft);font-size:14px;text-align:right}
+  .hours{width:100%;border-collapse:collapse}
+  .hours caption{text-align:left;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);padding-bottom:12px}
+  .hours th,.hours td{padding:13px 4px;border-bottom:2px solid var(--line);text-align:left;font-size:16px}
+  .hours th{font-weight:600}
+  .hours td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+  .hours tr.today th,.hours tr.today td{font-weight:800}
+  .hours tr.today th::after{
+    content:"today";font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    background:var(--red);color:var(--bone);border-radius:2px;padding:3px 8px;margin-left:10px;vertical-align:2px;
+  }
+  .hours tr.closed-day td{color:var(--ink-soft)}
+  .shop-info h3{font-family:var(--font-display);font-size:22px;margin:30px 0 8px}
+  .shop-info h3:first-child{margin-top:0}
+  .shop-info p{color:var(--ink-soft);max-width:44ch}
+  .shop-info a{font-weight:700}
+  .rules{list-style:none;margin-top:6px}
+  .rules li{padding:11px 0;border-bottom:2px solid var(--line);font-size:15px}
+  .rules li b{color:var(--ink)}
+
+  /* ---------- CTA band ---------- */
+  .band{background:var(--ink);color:var(--bone);border-top:3px solid var(--red)}
+  .band-inner{max-width:1240px;margin:0 auto;padding:80px 24px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+  .band h2{font-family:var(--font-display);font-size:clamp(38px,5.6vw,76px);line-height:1.05}
+  .band h2 em{font-style:normal;color:var(--red)}
+  .band p{margin-top:16px;color:rgba(242,235,221,.7);max-width:44ch}
+  .band .btn-primary{font-size:18px;padding:17px 36px}
+  .band-side{font-size:14px;color:rgba(242,235,221,.6)}
+  .band-side a{color:var(--bone);font-weight:700}
+
+  footer.site{max-width:1240px;margin:0 auto;padding:34px 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft)}
+  footer.site .wordmark{font-size:15px}
+  .mock-note{font-size:12px;opacity:.75;max-width:70ch}
+
+  /* ---------- mobile call bar ---------- */
+  .mobile-call{
+    display:none;position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:var(--ink);color:var(--bone);text-align:center;
+    font-weight:800;font-size:17px;letter-spacing:.02em;text-decoration:none;
+    padding:16px; border-top:3px solid var(--red);
+  }
+
+  @media (max-width:920px){
+    .hero{grid-template-columns:1fr;padding-top:32px;gap:36px}
+    h1{font-size:clamp(50px,15vw,76px)}
+    .band-inner{grid-template-columns:1fr}
+    .shop-grid{grid-template-columns:1fr;gap:40px}
+    nav.site-nav{gap:16px;font-size:12px}
+    body{padding-bottom:58px}
+    .mobile-call{display:block}
+    footer.site{padding-bottom:20px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="strip" role="note">
+  <div class="strip-inner">
+    <span class="open-pill" id="openPill"><span class="dot" aria-hidden="true"></span><span id="openText">Checking hours…</span></span>
+    <span>Tue–Fri 9–7 &nbsp;·&nbsp; Sat 8–5 &nbsp;·&nbsp; <a href="tel:+15105550114">(510) 555-0114</a></span>
+  </div>
+</div>
+
+<header class="site">
+  <a class="wordmark" href="#top">CROWN <span>CUTS</span></a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="#builder">Build a cut</a>
+    <a href="#board">The board</a>
+    <a href="#shop">The shop</a>
+    <a class="nav-call" href="tel:+15105550114">(510) 555-0114</a>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div>
+      <p class="kicker">Barbershop · Oakland, CA</p>
+      <h1>Crown Cuts <span class="co">CO.</span></h1>
+      <p class="lede">Four chairs on Telegraph. <strong>Walk-ins welcome</strong>, appointments held for 15 minutes, <strong>hot towel with every cut</strong>.</p>
+      <p class="today-line"><span class="open-pill" id="openPill2"><span class="dot" aria-hidden="true"></span><span id="openText2"></span></span><span class="sep" aria-hidden="true">·</span><span>2714 Telegraph Ave</span></p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="tel:+15105550114">Book a chair</a>
+        <a class="btn btn-ghost" href="#board">See the board</a>
+      </div>
+    </div>
+
+    <div class="builder" id="builder" aria-label="Build your cut">
+      <span class="builder-tag">Build your cut</span>
+      <h2>Pick it like a regular</h2>
+      <p class="sub">Guard number, sides, finish. The way you'd actually order it in the chair.</p>
+      <fieldset>
+        <legend>Length on top</legend>
+        <div class="opt-row" role="group" aria-label="Guard length on top">
+          <button type="button" data-group="guard" data-val="#1" aria-pressed="false">#1</button>
+          <button type="button" data-group="guard" data-val="#2" aria-pressed="true">#2</button>
+          <button type="button" data-group="guard" data-val="#3" aria-pressed="false">#3</button>
+          <button type="button" data-group="guard" data-val="#4" aria-pressed="false">#4</button>
+          <button type="button" data-group="guard" data-val="#5" aria-pressed="false">#5</button>
+          <button type="button" data-group="guard" data-val="#6" aria-pressed="false">#6</button>
+          <button type="button" data-group="guard" data-val="#7" aria-pressed="false">#7</button>
+          <button type="button" data-group="guard" data-val="#8" aria-pressed="false">#8</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Sides</legend>
+        <div class="opt-row" role="group" aria-label="Cut on the sides">
+          <button type="button" data-group="sides" data-val="Skin fade" data-price="42" data-mins="50" aria-pressed="true">Skin fade</button>
+          <button type="button" data-group="sides" data-val="Taper" data-price="38" data-mins="45" aria-pressed="false">Taper</button>
+          <button type="button" data-group="sides" data-val="Scissor cut" data-price="45" data-mins="55" aria-pressed="false">Scissor cut</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Finish</legend>
+        <div class="opt-row" role="group" aria-label="Finish">
+          <button type="button" data-group="finish" data-val="razor line" aria-pressed="true">Razor line</button>
+          <button type="button" data-group="finish" data-val="natural" aria-pressed="false">Natural</button>
+        </div>
+      </fieldset>
+      <div class="builder-result">
+        <p class="builder-summary" id="cutSummary" aria-live="polite">Skin fade · #2 on top · razor line</p>
+        <p class="builder-price"><b id="cutPrice">$42</b> · <span id="cutMins">50 min</span> · length doesn't change the price</p>
+        <a class="btn btn-primary" id="cutBook" href="tel:+15105550114">Book this exact cut</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="board-wrap" id="board">
+    <div class="board-inner">
+      <p class="kicker">Prices on the wall</p>
+      <h2>The board</h2>
+      <p class="board-sub">Same prices in the shop as on this page. No surprises at the register.</p>
+      <div class="board">
+        <a class="service" href="tel:+15105550114">
+          <span class="service-top"><span class="service-name">Signature Cut</span><span class="service-dots" aria-hidden="true"></span></span>
+          <span class="service-price">$38</span>
+          <span class="service-detail"><b>45 min.</b> Consultation, cut, hot-towel finish, style-out.</span>
+        </a>
+        <a class="service" href="tel:+15105550114">
+          <span class="service-top"><span class="service-name">Skin Fade</span><span class="service-dots" aria-hidden="true"></span></span>
+          <span class="service-price">$42</span>
+          <span class="service-detail"><b>50 min.</b> Blended to the skin, razor-lined.</span>
+        </a>
+        <a class="service" href="tel:+15105550114">
+          <span class="service-top"><span class="service-name">Beard Sculpt</span><span class="service-dots" aria-hidden="true"></span></span>
+          <span class="service-price">$24</span>
+          <span class="service-detail"><b>25 min.</b> Shape, line-up, hot towel, oils. Add to any cut for $18.</span>
+        </a>
+        <a class="service" href="tel:+15105550114">
+          <span class="service-top"><span class="service-name">The Full Works</span><span class="service-dots" aria-hidden="true"></span></span>
+          <span class="service-price">$55</span>
+          <span class="service-detail"><b>75 min.</b> Cut, shave, facial, hot towels throughout.</span>
+        </a>
+        <a class="service" href="tel:+15105550114">
+          <span class="service-top"><span class="service-name">Junior Cut · 12 &amp; under</span><span class="service-dots" aria-hidden="true"></span></span>
+          <span class="service-price">$28</span>
+          <span class="service-detail"><b>30 min.</b> Patient chairs. First-timers get the full talk-through.</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <section class="shop" id="shop" aria-labelledby="shop-h">
+    <p class="kicker">The shop</p>
+    <h2 id="shop-h">Four chairs, two barbers</h2>
+    <div class="shop-grid">
+      <div>
+        <div class="roster">
+          <h3>On the chairs</h3>
+          <div class="barber"><b>Marcus Thompson</b><span>Master barber · 14 yrs</span></div>
+          <div class="barber"><b>Devonté Riley</b><span>Fades &amp; designs</span></div>
+        </div>
+        <table class="hours">
+          <caption>Hours</caption>
+          <tbody>
+            <tr data-days="2,3,4,5"><th>Tuesday – Friday</th><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-days="6"><th>Saturday</th><td>8:00 AM – 5:00 PM</td></tr>
+            <tr data-days="0,1" class="closed-day"><th>Sunday – Monday</th><td>Closed</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="shop-info">
+        <h3>Find us</h3>
+        <p>2714 Telegraph Ave, Oakland, CA 94612<br>
+        Telegraph &amp; 27th: street parking on Telegraph, lot behind the shop.<br>
+        <a href="tel:+15105550114">(510) 555-0114</a></p>
+        <h3>House rules</h3>
+        <ul class="rules">
+          <li>Running late? Your chair holds for <b>15 minutes</b>, then it goes to the walk-in board.</li>
+          <li>Walk-ins welcome. Put your name on the board and grab a coffee next door.</li>
+          <li>Cash and card accepted.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="band-inner">
+      <div>
+        <h2>Your chair's <em>open.</em></h2>
+        <p>Call or text. A human picks up during shop hours. Evenings and Mondays, leave a message; first callback goes out at 9 AM Tuesday.</p>
+      </div>
+      <div>
+        <a class="btn btn-primary" href="tel:+15105550114">(510) 555-0114</a>
+        <p class="band-side" style="margin-top:20px">Walk-in? <a href="#shop">Check today's hours</a> first, Saturdays fill by noon.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site">
+  <a class="wordmark" href="#top">CROWN <span>CUTS</span></a>
+  <span>2714 Telegraph Ave, Oakland CA · <span id="year">2026</span></span>
+</footer>
+<footer class="site" style="padding-top:0">
+  <p class="mock-note">Concept mock built as a design experiment. Not a real business. Address and phone are fictional.</p>
+</footer>
+
+<a class="mobile-call" href="tel:+15105550114">Call to book · (510) 555-0114</a>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- cut builder ---- */
+  var state = { guard:"#2", sides:"Skin fade", price:42, mins:50, finish:"razor line" };
+  var summaryEl = document.getElementById("cutSummary");
+  var priceEl = document.getElementById("cutPrice");
+  var minsEl = document.getElementById("cutMins");
+  function render(){
+    summaryEl.textContent = state.sides + " · " + state.guard + " on top · " + state.finish;
+    priceEl.textContent = "$" + state.price;
+    minsEl.textContent = state.mins + " min";
+  }
+  document.querySelectorAll(".opt-row button").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var group = btn.getAttribute("data-group");
+      document.querySelectorAll('.opt-row button[data-group="' + group + '"]').forEach(function(b){
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+      if (group === "guard") state.guard = btn.getAttribute("data-val");
+      if (group === "sides") {
+        state.sides = btn.getAttribute("data-val");
+        state.price = parseInt(btn.getAttribute("data-price"), 10);
+        state.mins = parseInt(btn.getAttribute("data-mins"), 10);
+      }
+      if (group === "finish") state.finish = btn.getAttribute("data-val");
+      render();
+    });
+  });
+  render();
+
+  /* ---- open-now pill, computed in the SHOP's timezone ---- */
+  // Hours: Tue(2)–Fri(5) 9–19, Sat(6) 8–17, America/Los_Angeles.
+  function shopNow(){
+    try {
+      var fmt = new Intl.DateTimeFormat("en-US", {
+        timeZone:"America/Los_Angeles", weekday:"short",
+        hour:"numeric", minute:"numeric", hour12:false
+      });
+      var parts = {};
+      fmt.formatToParts(new Date()).forEach(function(p){ parts[p.type] = p.value; });
+      var dayMap = {Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
+      return { day: dayMap[parts.weekday], h: parseInt(parts.hour,10) + parseInt(parts.minute,10)/60 };
+    } catch(e){ return null; }
+  }
+  var s = shopNow(), open = false, label = "Hours unavailable";
+  if (s) {
+    open = (s.day >= 2 && s.day <= 5 && s.h >= 9 && s.h < 19) || (s.day === 6 && s.h >= 8 && s.h < 17);
+    label = open ? "Open now: walk-ins welcome" : "Currently closed";
+  }
+  [["openPill","openText"],["openPill2","openText2"]].forEach(function(ids){
+    var pill = document.getElementById(ids[0]), txt = document.getElementById(ids[1]);
+    if (pill && txt) { txt.textContent = label; if (!open) pill.classList.add("closed"); }
+  });
+
+  /* ---- highlight today's hours row (shop timezone) ---- */
+  if (s) {
+    document.querySelectorAll(".hours tr[data-days]").forEach(function(tr){
+      var days = tr.getAttribute("data-days").split(",").map(Number);
+      if (days.indexOf(s.day) !== -1) tr.classList.add("today");
+    });
+  }
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

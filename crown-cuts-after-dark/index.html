@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CROWN CUTS · After Dark · Oakland Barbershop</title>
+<meta name="description" content="Crown Cuts After Dark. Skin fades, razor line-ups, hot towel shaves. Oakland, CA. Concept mock.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B0A09; --smoke:#161311; --card:#12100E;
+  --bone:#F5EFE6; --dim:#A89F92;
+  --red:#FF3B30; --red-deep:#B3121F; --amber:#FFB347;
+  --line:rgba(245,239,230,.14);
+  --p:0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--bone);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--red);color:#fff}
+img{display:block;max-width:100%}
+a{color:inherit}
+
+/* ---------- film grain ---------- */
+.grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:90;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 8s steps(10) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,3%)}}
+
+/* ---------- dust canvas ---------- */
+#dust{position:fixed;inset:0;z-index:1;pointer-events:none}
+
+/* ---------- HUD ---------- */
+.hud{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;justify-content:space-between;align-items:center;
+  padding:14px 22px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;
+  mix-blend-mode:difference;color:#fff}
+.hud .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3dff6e;margin-right:8px;animation:pulse 1.6s infinite}
+.hud .dot.closed{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.scroll-hint{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:80;text-align:center;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--dim);transition:opacity .5s}
+.scroll-hint .line{width:1px;height:44px;background:linear-gradient(var(--red),transparent);margin:10px auto 0;animation:drop 1.8s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- pinned cinematic hero ---------- */
+.hero-pin{height:230vh;position:relative;z-index:2}
+.hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;
+  transform:scale(calc(1.22 - .22*var(--p)));
+  filter:brightness(calc(.42 + .33*var(--p))) saturate(calc(.85 + .25*var(--p)))}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,9,.55),transparent 30%,transparent 62%,var(--ink) 98%)}
+.hero-glow{position:absolute;inset:0;opacity:var(--p);mix-blend-mode:screen;
+  background:
+    radial-gradient(60% 42% at 50% 88%, rgba(255,59,48,.34), transparent 70%),
+    radial-gradient(34% 26% at 18% 20%, rgba(255,179,71,.16), transparent 70%)}
+.hero-copy{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 6vw 12vh}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;color:var(--amber);margin-bottom:18px}
+.hero-title{font-family:'Anton',sans-serif;font-size:clamp(64px,15vw,210px);line-height:.88;letter-spacing:.01em;
+  transform:translateY(calc(-46px*var(--p)));text-shadow:0 0 calc(60px*var(--p)) rgba(255,59,48,.55)}
+.hero-title .stroke{color:transparent;-webkit-text-stroke:2px var(--bone)}
+.hero-sub{max-width:520px;margin-top:22px;color:var(--dim);font-size:16px;line-height:1.65;opacity:calc(.35 + .65*var(--p))}
+.hero-lights{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;color:var(--red);margin-top:18px;opacity:var(--p)}
+.hero-hudrow{position:absolute;top:76px;right:26px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;
+  color:var(--bone);text-align:right;opacity:.85}
+.hero-hudrow b{color:var(--red)}
+
+/* ---------- marquee ---------- */
+.marquee{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:var(--red-deep);overflow:hidden;padding:16px 0;transform:rotate(-1.2deg) scale(1.02)}
+.marquee-track{display:flex;gap:0;width:max-content;animation:mq 26s linear infinite}
+.marquee span{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:.06em;color:#fff;white-space:nowrap;padding:0 26px}
+.marquee span i{font-style:normal;color:var(--ink);padding:0 26px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+section{position:relative;z-index:2}
+.wrap{max-width:1180px;margin:0 auto;padding:110px 6vw}
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.32em;color:var(--red);margin-bottom:16px}
+.sec-title{font-family:'Anton',sans-serif;font-size:clamp(40px,6.4vw,84px);line-height:.95;margin-bottom:14px}
+.sec-sub{color:var(--dim);max-width:560px;line-height:1.7;font-size:16px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.on{opacity:1;transform:none}
+
+/* ---------- service cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  transition:transform .45s cubic-bezier(.2,.7,.2,1),border-color .45s,box-shadow .45s;cursor:default}
+.card:hover{transform:translateY(-10px);border-color:rgba(255,59,48,.55);box-shadow:0 24px 60px -18px rgba(255,59,48,.35)}
+.card .ph{height:190px;overflow:hidden;position:relative}
+.card .ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(.35) contrast(1.08);transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .8s}
+.card:hover .ph img{transform:scale(1.08);filter:grayscale(0) contrast(1.05)}
+.card .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(11,10,9,.75))}
+.card .body{padding:22px}
+.card .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.card h3{font-family:'Anton',sans-serif;font-size:24px;letter-spacing:.03em}
+.card .price{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);font-size:18px}
+.card p{color:var(--dim);font-size:14px;line-height:1.65}
+.card .meta{display:flex;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--dim)}
+.card .meta b{color:var(--red)}
+.card .sweep{position:absolute;top:0;left:-80%;width:60%;height:100%;z-index:3;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.14),transparent);transform:skewX(-18deg)}
+.card:hover .sweep{animation:sweep .9s ease}
+@keyframes sweep{to{left:130%}}
+
+/* ---------- shop section ---------- */
+.shop{background:var(--smoke);border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden}
+.shop-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
+.shop-img{position:relative;border-radius:16px;overflow:hidden;transform:rotate(1.4deg)}
+.shop-img img{width:100%;height:520px;object-fit:cover;filter:contrast(1.05)}
+.shop-img::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px var(--line);border-radius:16px}
+.chip{position:absolute;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;background:rgba(11,10,9,.82);
+  border:1px solid var(--line);color:var(--bone);padding:10px 16px;border-radius:100px;backdrop-filter:blur(6px);
+  animation:floaty 5s ease-in-out infinite;white-space:nowrap}
+.chip.c1{top:26px;left:-18px}
+.chip.c2{bottom:60px;right:-14px;animation-delay:-1.6s}
+.chip.c3{bottom:18px;left:34px;animation-delay:-3.2s}
+.chip b{color:var(--red)}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.shop-copy p{color:var(--dim);line-height:1.75;margin:18px 0;font-size:16px}
+.stat-row{display:flex;gap:34px;margin-top:30px}
+.stat b{display:block;font-family:'Anton',sans-serif;font-size:38px;color:var(--bone)}
+.stat b em{font-style:normal;color:var(--red)}
+.stat span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--dim)}
+
+/* ---------- barbers ---------- */
+.barbers-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:56px}
+.barber{display:flex;gap:22px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;
+  transition:transform .4s,border-color .4s}
+.barber:hover{transform:translateY(-6px);border-color:rgba(255,179,71,.5)}
+.avatar{width:84px;height:84px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  font-family:'Anton',sans-serif;font-size:30px;color:var(--ink);
+  background:conic-gradient(from 40deg,var(--amber),var(--red),var(--amber));animation:spin 9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.barber h3{font-size:20px;margin-bottom:4px}
+.barber .role{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--red);margin-bottom:8px}
+.barber p{color:var(--dim);font-size:14px;line-height:1.6}
+
+/* ---------- booking ---------- */
+.book{background:radial-gradient(80% 90% at 50% 110%,rgba(255,59,48,.22),transparent 65%),var(--ink);
+  text-align:center;border-top:1px solid var(--line)}
+.book .sec-title{font-size:clamp(52px,9vw,130px)}
+.btn{display:inline-block;margin-top:30px;background:var(--red);color:#fff;font-weight:700;font-size:17px;letter-spacing:.06em;
+  padding:20px 54px;border-radius:100px;text-decoration:none;border:none;cursor:pointer;
+  box-shadow:0 12px 44px -8px rgba(255,59,48,.6);transition:transform .3s,box-shadow .3s;will-change:transform}
+.btn:hover{transform:scale(1.05);box-shadow:0 18px 60px -8px rgba(255,59,48,.75)}
+.btn.ghost{background:transparent;border:1px solid var(--line);box-shadow:none;color:var(--bone);margin-left:12px}
+.hours{display:flex;justify-content:center;gap:0;margin:44px auto 0;max-width:640px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.hours div{flex:1;padding:16px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em}
+.hours div+div{border-left:1px solid var(--line)}
+.hours b{display:block;color:var(--amber);margin-bottom:6px;font-size:11px;letter-spacing:.2em}
+.hours .today{background:rgba(255,59,48,.12)}
+.hours .today b{color:var(--red)}
+
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:34px 6vw;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--dim)}
+
+/* sticky mobile bar */
+.mbar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:85;background:rgba(11,10,9,.92);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.mbar a{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:15px;padding:14px;border-radius:12px}
+.mbar .call{background:var(--red);color:#fff;margin-right:10px}
+.mbar .book2{border:1px solid var(--line);color:var(--bone)}
+
+@media(max-width:900px){
+  .cards{grid-template-columns:1fr}
+  .shop-grid{grid-template-columns:1fr}
+  .barbers-grid{grid-template-columns:1fr}
+  .hud .hide-m{display:none}
+  .mbar{display:flex}
+  body{padding-bottom:76px}
+  .hero-hudrow{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+  .hero-pin{height:auto}.hero-sticky{position:relative;height:92vh}
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<canvas id="dust"></canvas>
+
+<div class="hud">
+  <div><span class="dot" id="openDot"></span><span id="openWord">OPEN NOW</span><span class="hide-m"> · OAKLAND, CA</span></div>
+  <div class="hide-m">CROWN CUTS · AFTER DARK</div>
+  <div><span id="clock">--:--</span> PT</div>
+</div>
+<div class="scroll-hint" id="scrollHint">SCROLL<div class="line"></div></div>
+
+<!-- PINNED CINEMATIC HERO -->
+<div class="hero-pin" id="heroPin">
+  <div class="hero-sticky" id="heroSticky">
+    <div class="hero-bg"><img src="https://cdn.shopify.com/s/files/1/0130/7233/4948/files/1m1yaf-male-barber-cutting-hair-dark-moody-dramatic-lighting.jpg" alt="Barber giving a scissor cut in a dark Oakland shop"></div>
+    <div class="hero-shade"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-hudrow">LIGHTING <b id="lightPct">12%</b><br>CLIPPERS <b>ARMED</b><br>CHAIR <b>02 / 04</b></div>
+    <div class="hero-copy">
+      <div class="kicker">OAKLAND, CA · EST. 2019 · WALK-INS WELCOME</div>
+      <h1 class="hero-title">CROWN<br><span class="stroke">AFTER DARK</span></h1>
+      <p class="hero-sub">Skin fades, razor line-ups, hot towel shaves. The shop stays lit late and the clippers stay sharp. Scroll to turn the lights on.</p>
+      <div class="hero-lights">▸ KEEP SCROLLING · THE SHOP WAKES UP</div>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee"><div class="marquee-track" id="mq">
+  <span>SKIN FADE <i>·</i></span><span>RAZOR LINE-UP <i>·</i></span><span>HOT TOWEL SHAVE <i>·</i></span><span>TAPER <i>·</i></span><span>BEARD SCULPT <i>·</i></span><span>FOIL FINISH <i>·</i></span><span>KIDS CUTS <i>·</i></span>
+</div></div>
+
+<!-- MENU -->
+<section><div class="wrap">
+  <div class="sec-label rv">01 · THE MENU</div>
+  <h2 class="sec-title rv">PICK YOUR<br>POISON</h2>
+  <p class="sec-sub rv">Real cuts, real prices. Every service ends with a razor line-up and a hot lather neck shave, because leaving the shop half finished is not an option.</p>
+  <div class="cards">
+    <div class="card rv"><div class="sweep"></div>
+      <div class="ph"><img src="https://i.pinimg.com/originals/6a/04/ef/6a04efda918a0568614034b5420522fd.jpg" alt="Barber blending a fade" loading="lazy"></div>
+      <div class="body"><div class="row"><h3>Skin Fade</h3><span class="price">$45</span></div>
+      <p>Zero at the scalp, blended clean through the crown. Foil shaver finish with a straight razor line-up.</p>
+      <div class="meta"><span><b>45</b> MIN</span><span>GUARD <b>#0–#2</b></span></div></div>
+    </div>
+    <div class="card rv"><div class="sweep"></div>
+      <div class="ph"><img src="https://framerusercontent.com/images/qThehC479vmM4SisuwGXLRcasA.jpg?width=1600&height=1067" alt="Barber at work in the chair" loading="lazy"></div>
+      <div class="body"><div class="row"><h3>Taper</h3><span class="price">$35</span></div>
+      <p>Neckline and temples tapered tight, weight kept on top. The cleanest grow-out in the game.</p>
+      <div class="meta"><span><b>30</b> MIN</span><span>NECKLINE <b>TAPERED</b></span></div></div>
+    </div>
+    <div class="card rv"><div class="sweep"></div>
+      <div class="ph"><img src="https://framerusercontent.com/images/ztdaXuWRTP8rLFm1jsGMhvr8A6Q.jpg?scale-down-to=1024&width=6016&height=4016" alt="Straight razor detail work" loading="lazy"></div>
+      <div class="body"><div class="row"><h3>Line-Up</h3><span class="price">$20</span></div>
+      <p>Straight razor edge-up. Hairline, arches, beard. Crisper than a fresh pair out the box.</p>
+      <div class="meta"><span><b>15</b> MIN</span><span>TOOL <b>RAZOR</b></span></div></div>
+    </div>
+    <div class="card rv"><div class="sweep"></div>
+      <div class="ph"><img src="https://cdn.shopify.com/s/files/1/0130/7233/4948/files/1m1yaf-male-barber-cutting-hair-dark-moody-dramatic-lighting.jpg" alt="Full cut in progress" loading="lazy"></div>
+      <div class="body"><div class="row"><h3>Cut + Beard</h3><span class="price">$65</span></div>
+      <p>Full cut plus beard architecture. Hot lather on the cheeks, trimmer on the neck, oils to finish.</p>
+      <div class="meta"><span><b>60</b> MIN</span><span>COMBO <b>SAVE $15</b></span></div></div>
+    </div>
+    <div class="card rv"><div class="sweep"></div>
+      <div class="ph"><img src="https://images.squarespace-cdn.com/content/v1/5c75e47794d71a0acd1e2b00/2512989d-af0f-40c5-9d47-a23f9af10591/4W6A8595+copy.jpg?format=2500w" alt="Hot towel shave preparation" loading="lazy"></div>
+      <div class="body"><div class="row"><h3>Hot Towel Shave</h3><span class="price">$50</span></div>
+      <p>Steam towels, pre-shave oil, hot lather, straight razor passes. Cold towel to close the pores.</p>
+      <div class="meta"><span><b>45</b> MIN</span><span>TOWELS <b>STEAMED</b></span></div></div>
+    </div>
+    <div class="card rv"><div class="sweep"></div>
+      <div class="ph"><img src="https://i.pinimg.com/originals/c4/37/b2/c437b25c1f964353825e16e5cf0dfa66.jpg" alt="Razor finish detail" loading="lazy"></div>
+      <div class="body"><div class="row"><h3>The After Dark</h3><span class="price">$95</span></div>
+      <p>Skin fade, hot towel shave, facial, shoulder massage. Ninety minutes. Walk out a new person.</p>
+      <div class="meta"><span><b>90</b> MIN</span><span>STATUS <b>FLAGSHIP</b></span></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- SHOP -->
+<section class="shop"><div class="wrap">
+  <div class="shop-grid">
+    <div class="shop-img rv">
+      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663365880729/6Da72QpRKh4FmNdUKK6j5j/barber-3d-interior-main-LskLBbSddZ8mivNSu35j2D.webp" alt="Crown Cuts shop floor with leather chairs" loading="lazy">
+      <div class="chip c1"><b>●</b> CHAIR 02 OPEN</div>
+      <div class="chip c2">TELEGRAPH AVE · OAKLAND</div>
+      <div class="chip c3"><b>★</b> 4.9 · 800+ CUTS</div>
+    </div>
+    <div class="shop-copy">
+      <div class="sec-label rv">02 · THE SHOP</div>
+      <h2 class="sec-title rv">NOT YOUR<br>AVERAGE<br>CHAIR</h2>
+      <p class="rv">Four chairs, zero rushed cuts. The playlist stays loud, the towels stay steamed, and every neckline gets finished with a hot lather shave, blocked or tapered, your call.</p>
+      <p class="rv">Bring a photo or just bring yourself. Tell us the guard number and the vibe. We speak fluent fade.</p>
+      <div class="stat-row rv">
+        <div class="stat"><b>12<em>k</em></b><span>CUTS DONE</span></div>
+        <div class="stat"><b>4.9<em>★</em></b><span>AVG RATING</span></div>
+        <div class="stat"><b>02<em>+</em></b><span>MASTER BARBERS</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- BARBERS -->
+<section><div class="wrap">
+  <div class="sec-label rv">03 · THE HANDS</div>
+  <h2 class="sec-title rv">TRUST THE<br>CHAIR</h2>
+  <div class="barbers-grid">
+    <div class="barber rv">
+      <div class="avatar">MT</div>
+      <div><h3>Marcus Thompson</h3><div class="role">SKIN FADES · DESIGNS</div>
+      <p>Twelve years behind the chair. If your fade is not blurry, Marcus is not finished.</p></div>
+    </div>
+    <div class="barber rv">
+      <div class="avatar">DR</div>
+      <div><h3>Devonté Riley</h3><div class="role">RAZOR WORK · BEARD SCULPT</div>
+      <p>Straight razor surgeon. Beards leave his chair looking drawn on, in the good way.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- BOOKING -->
+<section class="book"><div class="wrap">
+  <div class="sec-label rv">04 · LAST CALL</div>
+  <h2 class="sec-title rv">BOOK<br>THE CHAIR</h2>
+  <p class="sec-sub rv" style="margin:0 auto;text-align:center">Call or text. A human picks up. Walk-ins welcome until 6, but the chair goes to whoever books first.</p>
+  <div class="rv">
+    <a class="btn magnetic" href="tel:+15105550147">CALL (510) 555-0147</a>
+    <a class="btn ghost magnetic" href="sms:+15105550147">TEXT THE SHOP</a>
+  </div>
+  <div class="hours rv" id="hoursRow">
+    <div data-d="0"><b>SUN</b>CLOSED</div>
+    <div data-d="1"><b>MON</b>CLOSED</div>
+    <div data-d="2"><b>TUE</b>9–7</div>
+    <div data-d="3"><b>WED</b>9–7</div>
+    <div data-d="4"><b>THU</b>9–7</div>
+    <div data-d="5"><b>FRI</b>9–7</div>
+    <div data-d="6"><b>SAT</b>9–7</div>
+  </div>
+</div></section>
+
+<footer>
+  <span>CROWN CUTS · 2743 TELEGRAPH AVE, OAKLAND CA</span>
+  <span>CONCEPT MOCK · NOT A REAL SHOP · PHOTOS VIA GOOGLE IMAGE SEARCH</span>
+</footer>
+
+<div class="mbar">
+  <a class="call" href="tel:+15105550147">CALL NOW</a>
+  <a class="book2" href="sms:+15105550147">TEXT US</a>
+</div>
+
+<script>
+// ---------- scroll-scrubbed hero ----------
+const pin = document.getElementById('heroPin');
+const hint = document.getElementById('scrollHint');
+const lightPct = document.getElementById('lightPct');
+function scrub(){
+  const r = pin.getBoundingClientRect();
+  const total = r.height - innerHeight;
+  let p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1;
+  document.documentElement.style.setProperty('--p', p.toFixed(3));
+  lightPct.textContent = Math.round(12 + 88*p) + '%';
+  hint.style.opacity = p > .04 ? 0 : 1;
+}
+let ticking = false;
+addEventListener('scroll', () => { if(!ticking){ requestAnimationFrame(()=>{ scrub(); ticking=false; }); ticking=true; } }, {passive:true});
+scrub();
+
+// ---------- marquee duplicate ----------
+const mq = document.getElementById('mq');
+mq.innerHTML += mq.innerHTML;
+
+// ---------- reveal ----------
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+// ---------- dust particles ----------
+const cv = document.getElementById('dust'), cx = cv.getContext('2d');
+let W, H, parts = [];
+function sizeCv(){ W = cv.width = innerWidth; H = cv.height = innerHeight; }
+sizeCv(); addEventListener('resize', sizeCv);
+for(let i=0;i<70;i++) parts.push({x:Math.random()*innerWidth, y:Math.random()*innerHeight, r:Math.random()*2+.4, s:Math.random()*.5+.12, o:Math.random()*.5+.1, hue:Math.random()<.7?'255,59,48':'255,179,71', tw:Math.random()*6.28});
+(function loop(t){
+  cx.clearRect(0,0,W,H);
+  for(const p of parts){
+    p.y -= p.s; p.x += Math.sin(t/1600 + p.tw)*.18;
+    if(p.y < -8){ p.y = H+8; p.x = Math.random()*W; }
+    const a = p.o * (0.6 + 0.4*Math.sin(t/700 + p.tw));
+    cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, 6.29);
+    cx.fillStyle = `rgba(${p.hue},${a.toFixed(2)})`; cx.fill();
+  }
+  requestAnimationFrame(loop);
+})(0);
+
+// ---------- magnetic buttons ----------
+if(matchMedia('(pointer:fine)').matches){
+  document.querySelectorAll('.magnetic').forEach(b=>{
+    b.addEventListener('mousemove', e=>{
+      const r = b.getBoundingClientRect();
+      b.style.transform = `translate(${(e.clientX-r.left-r.width/2)*.12}px, ${(e.clientY-r.top-r.height/2)*.18}px) scale(1.04)`;
+    });
+    b.addEventListener('mouseleave', ()=> b.style.transform = '');
+  });
+}
+
+// ---------- live clock + open state (America/Los_Angeles) ----------
+function tick(){
+  try{
+    const now = new Date(new Date().toLocaleString('en-US',{timeZone:'America/Los_Angeles'}));
+    const hh = now.getHours(), mm = String(now.getMinutes()).padStart(2,'0');
+    let h12 = hh % 12 || 12; const ap = hh < 12 ? 'AM' : 'PM';
+    document.getElementById('clock').textContent = h12 + ':' + mm + ' ' + ap;
+    const day = now.getDay(), open = day>=2 && day<=6 && hh>=9 && hh<19;
+    document.getElementById('openWord').textContent = open ? 'OPEN NOW' : 'CLOSED';
+    document.getElementById('openDot').classList.toggle('closed', !open);
+    document.querySelectorAll('#hoursRow div').forEach(d=> d.classList.toggle('today', +d.dataset.d === day));
+  }catch(e){}
+}
+tick(); setInterval(tick, 30000);
+</script>
+</body>
+</html>

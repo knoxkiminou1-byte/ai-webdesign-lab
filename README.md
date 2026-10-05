@@ -12,7 +12,7 @@ All shops, people, addresses, and phone numbers are fictional concept mocks. Pho
 | `crown-cuts-v2/` | Crown Cuts with a real cut-builder, price board, sign-painter type | Grok + Gemini critique of v1 |
 | `crown-cuts-after-dark/` | Cinematic scroll-scrubbed night shop. Scrolling "turns the lights on": pinned hero, film grain, floating dust, neon glow, marquee, live open/closed clock | Cinematic AI websites video (scroll-scrubbed heroes, palette-sampled accents) |
 | `first-chair/` | Scrolling IS the appointment: 01 Walk In, 02 Consult, 03 The Cut, 04 Detail, 05 Finish. Fixed progress rail, sticky chapters, parallax | Scrollcraft video (scroll-correlated journeys, emotional direction) |
-| `velvet-blade/` | Flagship $95 service as an Apple-style product launch: massive type, gold accents, sticky feature sections, spec grid, compare table | Apple-style page rebuild video (visualize first, reference-quality polish) |
+| `velvet-blade/` | Flagship $95 service as a product launch: massive type, gold accents, sticky ritual sections, spec grid, interactive add-on builder | Apple-style page rebuild video (visualize first, reference-quality polish) |
 
 ## Taste rules applied
 
@@ -27,4 +27,4 @@ Build it, screenshot it, critique it with Grok + Gemini (+ ChatGPT), revise, shi
 
 ## Assets
 
-`assets/` holds local mirrors of every photo used across the three new sites, in case a hotlink breaks. The HTML files reference the original remote URLs so the pages work the moment you open them.
+`assets/` holds local copies of every photo used across the three new sites (17 images, each unique to its site). The HTML files reference these local files via `../assets/`, so each page works offline the moment you open it. `assets/IMAGE_SOURCES.md` records the original source URL of every image; licenses are unverified, these are concept mocks only.

@@ -103,10 +103,18 @@ section{position:relative;z-index:2}
 .card .meta{display:flex;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
   font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--dim)}
 .card .meta b{color:var(--red)}
-.card .sweep{position:absolute;top:0;left:-80%;width:60%;height:100%;z-index:3;pointer-events:none;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.14),transparent);transform:skewX(-18deg)}
-.card:hover .sweep{animation:sweep .9s ease}
-@keyframes sweep{to{left:130%}}
+
+/* ---------- flagship banner ---------- */
+.flagship{margin-top:22px;border-radius:18px;padding:56px 6vw;position:relative;overflow:hidden;
+  border:1px solid rgba(255,59,48,.45);
+  background:radial-gradient(90% 130% at 50% 120%,rgba(255,59,48,.20),transparent 65%),var(--card)}
+.flagship::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.flag-copy{max-width:640px}
+.flagship h3{font-family:'Anton',sans-serif;font-size:clamp(44px,7vw,96px);line-height:.95;margin:14px 0 16px}
+.flagship h3::after{content:" $95";color:var(--amber);font-size:.42em;vertical-align:middle;letter-spacing:.02em}
+.flagship p{color:var(--dim);line-height:1.7;font-size:16px;max-width:520px}
+.flagship .btn{margin-top:26px}
 
 /* ---------- shop section ---------- */
 .shop{background:var(--smoke);border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden}
@@ -128,23 +136,28 @@ section{position:relative;z-index:2}
 .stat b em{font-style:normal;color:var(--red)}
 .stat span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--dim)}
 
-/* ---------- barbers ---------- */
-.barbers-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:56px}
-.barber{display:flex;gap:22px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;
-  transition:transform .4s,border-color .4s}
-.barber:hover{transform:translateY(-6px);border-color:rgba(255,179,71,.5)}
-.avatar{width:84px;height:84px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
-  font-family:'Anton',sans-serif;font-size:30px;color:var(--ink);
-  background:conic-gradient(from 40deg,var(--amber),var(--red),var(--amber));animation:spin 9s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.barber h3{font-size:20px;margin-bottom:4px}
-.barber .role{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--red);margin-bottom:8px}
-.barber p{color:var(--dim);font-size:14px;line-height:1.6}
+/* ---------- arsenal ---------- */
+.arsenal-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:56px;align-items:center}
+.arsenal-img{border-radius:16px;overflow:hidden;border:1px solid var(--line);transform:rotate(-1.2deg)}
+.arsenal-img img{width:100%;height:420px;object-fit:cover;filter:contrast(1.06)}
+.tool-list{display:flex;flex-direction:column}
+.tool{padding:22px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:baseline}
+.tool:last-child{border-bottom:1px solid var(--line)}
+.tool b{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--red)}
+.tool span{color:var(--dim);font-size:14.5px;line-height:1.65}
 
 /* ---------- booking ---------- */
 .book{background:radial-gradient(80% 90% at 50% 110%,rgba(255,59,48,.22),transparent 65%),var(--ink);
   text-align:center;border-top:1px solid var(--line)}
 .book .sec-title{font-size:clamp(52px,9vw,130px)}
+.book .hours{margin-top:64px}
+.book-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:center;text-align:left}
+.book-img{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);transform:rotate(1.2deg)}
+.book-img img{width:100%;height:460px;object-fit:cover;filter:saturate(1.05)}
+.book-img .chip{position:absolute;top:18px;left:18px;animation:float 5s ease-in-out infinite}
+.book-copy .sec-title{font-size:clamp(52px,7vw,110px)}
+.book-copy .sec-sub{text-align:left;margin:0 0 8px}
+.book-copy .btn{margin-top:22px}
 .btn{display:inline-block;margin-top:30px;background:var(--red);color:#fff;font-weight:700;font-size:17px;letter-spacing:.06em;
   padding:20px 54px;border-radius:100px;text-decoration:none;border:none;cursor:pointer;
   box-shadow:0 12px 44px -8px rgba(255,59,48,.6);transition:transform .3s,box-shadow .3s;will-change:transform}
@@ -168,9 +181,11 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:34px
 .mbar .book2{border:1px solid var(--line);color:var(--bone)}
 
 @media(max-width:900px){
+  .book-grid{grid-template-columns:1fr}
+  .book-img img{height:300px}
   .cards{grid-template-columns:1fr}
   .shop-grid{grid-template-columns:1fr}
-  .barbers-grid{grid-template-columns:1fr}
+  .arsenal-grid{grid-template-columns:1fr}
   .hud .hide-m{display:none}
   .mbar{display:flex}
   body{padding-bottom:76px}
@@ -197,7 +212,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:34px
 <!-- PINNED CINEMATIC HERO -->
 <div class="hero-pin" id="heroPin">
   <div class="hero-sticky" id="heroSticky">
-    <div class="hero-bg"><img src="https://cdn.shopify.com/s/files/1/0130/7233/4948/files/1m1yaf-male-barber-cutting-hair-dark-moody-dramatic-lighting.jpg" alt="Barber giving a scissor cut in a dark Oakland shop"></div>
+    <div class="hero-bg"><img src="../assets/ad-hero.jpg" alt="Barber giving a scissor cut in a dark Oakland shop"></div>
     <div class="hero-shade"></div>
     <div class="hero-glow"></div>
     <div class="hero-hudrow">LIGHTING <b id="lightPct">12%</b><br>CLIPPERS <b>ARMED</b><br>CHAIR <b>02 / 04</b></div>
@@ -221,41 +236,43 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:34px
   <h2 class="sec-title rv">PICK YOUR<br>POISON</h2>
   <p class="sec-sub rv">Real cuts, real prices. Every service ends with a razor line-up and a hot lather neck shave, because leaving the shop half finished is not an option.</p>
   <div class="cards">
-    <div class="card rv"><div class="sweep"></div>
-      <div class="ph"><img src="https://i.pinimg.com/originals/6a/04/ef/6a04efda918a0568614034b5420522fd.jpg" alt="Barber blending a fade" loading="lazy"></div>
+    <div class="card rv">
+      <div class="ph"><img src="../assets/ad-skinfade.jpg" alt="Barber blending a fade" loading="lazy"></div>
       <div class="body"><div class="row"><h3>Skin Fade</h3><span class="price">$45</span></div>
       <p>Zero at the scalp, blended clean through the crown. Foil shaver finish with a straight razor line-up.</p>
       <div class="meta"><span><b>45</b> MIN</span><span>GUARD <b>#0–#2</b></span></div></div>
     </div>
-    <div class="card rv"><div class="sweep"></div>
-      <div class="ph"><img src="https://framerusercontent.com/images/qThehC479vmM4SisuwGXLRcasA.jpg?width=1600&height=1067" alt="Barber at work in the chair" loading="lazy"></div>
+    <div class="card rv">
+      <div class="ph"><img src="../assets/ad-taper.jpg" alt="Barber at work in the chair" loading="lazy"></div>
       <div class="body"><div class="row"><h3>Taper</h3><span class="price">$35</span></div>
       <p>Neckline and temples tapered tight, weight kept on top. The cleanest grow-out in the game.</p>
       <div class="meta"><span><b>30</b> MIN</span><span>NECKLINE <b>TAPERED</b></span></div></div>
     </div>
-    <div class="card rv"><div class="sweep"></div>
-      <div class="ph"><img src="https://framerusercontent.com/images/ztdaXuWRTP8rLFm1jsGMhvr8A6Q.jpg?scale-down-to=1024&width=6016&height=4016" alt="Straight razor detail work" loading="lazy"></div>
+    <div class="card rv">
+      <div class="ph"><img src="../assets/ad-lineup.jpg" alt="Straight razor line-up detail" loading="lazy"></div>
       <div class="body"><div class="row"><h3>Line-Up</h3><span class="price">$20</span></div>
       <p>Straight razor edge-up. Hairline, arches, beard. Crisper than a fresh pair out the box.</p>
       <div class="meta"><span><b>15</b> MIN</span><span>TOOL <b>RAZOR</b></span></div></div>
     </div>
-    <div class="card rv"><div class="sweep"></div>
-      <div class="ph"><img src="https://cdn.shopify.com/s/files/1/0130/7233/4948/files/1m1yaf-male-barber-cutting-hair-dark-moody-dramatic-lighting.jpg" alt="Full cut in progress" loading="lazy"></div>
+    <div class="card rv">
+      <div class="ph"><img src="../assets/ad-cutbeard.webp" alt="Skin fade being finished" loading="lazy"></div>
       <div class="body"><div class="row"><h3>Cut + Beard</h3><span class="price">$65</span></div>
       <p>Full cut plus beard architecture. Hot lather on the cheeks, trimmer on the neck, oils to finish.</p>
       <div class="meta"><span><b>60</b> MIN</span><span>COMBO <b>SAVE $15</b></span></div></div>
     </div>
-    <div class="card rv"><div class="sweep"></div>
-      <div class="ph"><img src="https://images.squarespace-cdn.com/content/v1/5c75e47794d71a0acd1e2b00/2512989d-af0f-40c5-9d47-a23f9af10591/4W6A8595+copy.jpg?format=2500w" alt="Hot towel shave preparation" loading="lazy"></div>
+    <div class="card rv">
+      <div class="ph"><img src="../assets/ad-hottowel.jpg" alt="Hot towel shave preparation" loading="lazy"></div>
       <div class="body"><div class="row"><h3>Hot Towel Shave</h3><span class="price">$50</span></div>
       <p>Steam towels, pre-shave oil, hot lather, straight razor passes. Cold towel to close the pores.</p>
       <div class="meta"><span><b>45</b> MIN</span><span>TOWELS <b>STEAMED</b></span></div></div>
     </div>
-    <div class="card rv"><div class="sweep"></div>
-      <div class="ph"><img src="https://i.pinimg.com/originals/c4/37/b2/c437b25c1f964353825e16e5cf0dfa66.jpg" alt="Razor finish detail" loading="lazy"></div>
-      <div class="body"><div class="row"><h3>The After Dark</h3><span class="price">$95</span></div>
-      <p>Skin fade, hot towel shave, facial, shoulder massage. Ninety minutes. Walk out a new person.</p>
-      <div class="meta"><span><b>90</b> MIN</span><span>STATUS <b>FLAGSHIP</b></span></div></div>
+  </div>
+  <div class="flagship rv">
+    <div class="flag-copy">
+      <div class="sec-label">FLAGSHIP · 90 MINUTES · $95</div>
+      <h3>THE AFTER DARK</h3>
+      <p>Skin fade, hot towel shave, facial, shoulder massage. The full ninety minutes. Walk out a new person.</p>
+      <a class="btn magnetic" href="tel:+15105550147">BOOK THE AFTER DARK</a>
     </div>
   </div>
 </div></section>
@@ -264,51 +281,53 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:34px
 <section class="shop"><div class="wrap">
   <div class="shop-grid">
     <div class="shop-img rv">
-      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663365880729/6Da72QpRKh4FmNdUKK6j5j/barber-3d-interior-main-LskLBbSddZ8mivNSu35j2D.webp" alt="Crown Cuts shop floor with leather chairs" loading="lazy">
-      <div class="chip c1"><b>●</b> CHAIR 02 OPEN</div>
+      <img src="../assets/ad-shop.png" alt="Empty barber chair under warm mirror lights" loading="lazy">
+      <div class="chip c1"><b>●</b> WALK-INS WELCOME</div>
       <div class="chip c2">TELEGRAPH AVE · OAKLAND</div>
-      <div class="chip c3"><b>★</b> 4.9 · 800+ CUTS</div>
     </div>
     <div class="shop-copy">
       <div class="sec-label rv">02 · THE SHOP</div>
       <h2 class="sec-title rv">NOT YOUR<br>AVERAGE<br>CHAIR</h2>
       <p class="rv">Four chairs, zero rushed cuts. The playlist stays loud, the towels stay steamed, and every neckline gets finished with a hot lather shave, blocked or tapered, your call.</p>
       <p class="rv">Bring a photo or just bring yourself. Tell us the guard number and the vibe. We speak fluent fade.</p>
-      <div class="stat-row rv">
-        <div class="stat"><b>12<em>k</em></b><span>CUTS DONE</span></div>
-        <div class="stat"><b>4.9<em>★</em></b><span>AVG RATING</span></div>
-        <div class="stat"><b>02<em>+</em></b><span>MASTER BARBERS</span></div>
-      </div>
     </div>
   </div>
 </div></section>
 
-<!-- BARBERS -->
+<!-- ARSENAL -->
 <section><div class="wrap">
-  <div class="sec-label rv">03 · THE HANDS</div>
-  <h2 class="sec-title rv">TRUST THE<br>CHAIR</h2>
-  <div class="barbers-grid">
-    <div class="barber rv">
-      <div class="avatar">MT</div>
-      <div><h3>Marcus Thompson</h3><div class="role">SKIN FADES · DESIGNS</div>
-      <p>Twelve years behind the chair. If your fade is not blurry, Marcus is not finished.</p></div>
+  <div class="sec-label rv">03 · THE ARSENAL</div>
+  <h2 class="sec-title rv">SHARP<br>OBJECTS</h2>
+  <p class="sec-sub rv">No big bios. Just the tools, kept scary sharp. Every blade gets stropped or swapped between clients, no exceptions.</p>
+  <div class="arsenal-grid">
+    <div class="arsenal-img rv">
+      <img src="../assets/ad-arsenal.jpg" alt="Clippers, shears, straight razor and brushes laid out on black" loading="lazy">
     </div>
-    <div class="barber rv">
-      <div class="avatar">DR</div>
-      <div><h3>Devonté Riley</h3><div class="role">RAZOR WORK · BEARD SCULPT</div>
-      <p>Straight razor surgeon. Beards leave his chair looking drawn on, in the good way.</p></div>
+    <div class="tool-list rv">
+      <div class="tool"><b>CLIPPERS</b><span>Wahl Seniors, zero-gapped. The workhorse behind every skin fade.</span></div>
+      <div class="tool"><b>STRAIGHT RAZOR</b><span>Honed and stropped daily. One fresh blade per client.</span></div>
+      <div class="tool"><b>FOIL SHAVER</b><span>Erases the baseline to skin. No shadow, no stubble.</span></div>
+      <div class="tool"><b>HOT LATHER</b><span>Steamed towels and badger brush. The neckline finish.</span></div>
     </div>
   </div>
 </div></section>
 
 <!-- BOOKING -->
 <section class="book"><div class="wrap">
-  <div class="sec-label rv">04 · LAST CALL</div>
-  <h2 class="sec-title rv">BOOK<br>THE CHAIR</h2>
-  <p class="sec-sub rv" style="margin:0 auto;text-align:center">Call or text. A human picks up. Walk-ins welcome until 6, but the chair goes to whoever books first.</p>
-  <div class="rv">
-    <a class="btn magnetic" href="tel:+15105550147">CALL (510) 555-0147</a>
-    <a class="btn ghost magnetic" href="sms:+15105550147">TEXT THE SHOP</a>
+  <div class="book-grid">
+    <div class="book-img rv">
+      <img src="../assets/ad-pole.jpg" alt="Barber pole glowing outside the shop at night" loading="lazy">
+      <div class="chip c1"><b>●</b> OPEN LATE</div>
+    </div>
+    <div class="book-copy">
+      <div class="sec-label rv">04 · LAST CALL</div>
+      <h2 class="sec-title rv">THE LATE<br>CHAIR</h2>
+      <p class="sec-sub rv">The shop runs late. Last booking hits the chair at 6:30 PM and the last cut walks out when it walks out. Call or text, a human picks up. Walk-ins welcome until 6, but the booked chair wins.</p>
+      <div class="rv">
+        <a class="btn magnetic" href="tel:+15105550147">CALL (510) 555-0147</a>
+        <a class="btn ghost magnetic" href="sms:+15105550147">TEXT THE SHOP</a>
+      </div>
+    </div>
   </div>
   <div class="hours rv" id="hoursRow">
     <div data-d="0"><b>SUN</b>CLOSED</div>
@@ -358,11 +377,13 @@ document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
 // ---------- dust particles ----------
 const cv = document.getElementById('dust'), cx = cv.getContext('2d');
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let W, H, parts = [];
 function sizeCv(){ W = cv.width = innerWidth; H = cv.height = innerHeight; }
 sizeCv(); addEventListener('resize', sizeCv);
 for(let i=0;i<70;i++) parts.push({x:Math.random()*innerWidth, y:Math.random()*innerHeight, r:Math.random()*2+.4, s:Math.random()*.5+.12, o:Math.random()*.5+.1, hue:Math.random()<.7?'255,59,48':'255,179,71', tw:Math.random()*6.28});
 (function loop(t){
+  if(RM) return;
   cx.clearRect(0,0,W,H);
   for(const p of parts){
     p.y -= p.s; p.x += Math.sin(t/1600 + p.tw)*.18;

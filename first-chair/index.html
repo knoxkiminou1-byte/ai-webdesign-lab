@@ -12,7 +12,7 @@
 :root{
   --ink:#06080C; --panel:#0B0F16; --card:#0D121B;
   --ice:#EAF6FF; --dim:#8B98AB;
-  --cy:#22D3EE; --cy-deep:#0E7490;
+  --cy:#3D8BFF; --cy-deep:#2E5BA8;
   --line:rgba(234,246,255,.12);
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -23,8 +23,8 @@ a{color:inherit}
 
 /* floating orbs */
 .orb{position:fixed;border-radius:50%;filter:blur(90px);z-index:0;pointer-events:none;opacity:.5;animation:drift 14s ease-in-out infinite}
-.orb.o1{width:420px;height:420px;background:rgba(34,211,238,.16);top:-120px;right:-100px}
-.orb.o2{width:340px;height:340px;background:rgba(148,184,220,.10);bottom:10%;left:-140px;animation-delay:-6s}
+.orb.o1{width:420px;height:420px;background:rgba(255,179,71,.12);top:-120px;right:-100px}
+.orb.o2{width:340px;height:340px;background:rgba(61,139,255,.12);bottom:10%;left:-140px;animation-delay:-6s}
 @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-46px,38px)}}
 
 /* ---------- progress rail ---------- */
@@ -37,8 +37,12 @@ a{color:inherit}
 .node.active .pip{border-color:var(--cy);background:var(--cy);box-shadow:0 0 16px var(--cy)}
 .node.active .lbl{color:var(--ice)}
 .node.done .pip{border-color:var(--cy);background:var(--cy-deep)}
-.topbar{display:none;position:fixed;top:0;left:0;right:0;height:3px;background:var(--line);z-index:60}
+.topbar{display:none;position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(6,8,12,.88);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar .bar{height:3px;background:var(--line)}
 .topbar i{display:block;height:100%;width:0;background:var(--cy);box-shadow:0 0 10px var(--cy)}
+.topbar span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.26em;color:var(--ice);padding:10px 16px 12px}
+.topbar span b{color:var(--cy)}
 
 /* ---------- hero ---------- */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw 0 190px;position:relative;z-index:2}
@@ -57,7 +61,8 @@ a{color:inherit}
 @keyframes slide{0%{transform:scaleX(0);transform-origin:left}50%{transform:scaleX(1);transform-origin:left}51%{transform-origin:right}100%{transform:scaleX(0);transform-origin:right}}
 
 /* ---------- chapters ---------- */
-.chapter{position:relative;z-index:2;min-height:150vh}
+.chapter{position:relative;z-index:2;min-height:135vh}
+.chapter.short{min-height:115vh}
 .ch-sticky{position:sticky;top:0;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:6vw;padding:12vh 8vw 12vh 190px;overflow:hidden}
 .ch-img{position:relative;border-radius:18px;overflow:hidden;height:62vh;min-height:380px}
 .ch-img img{width:100%;height:120%;object-fit:cover;will-change:transform}
@@ -65,13 +70,17 @@ a{color:inherit}
 .ch-num{position:absolute;top:18px;left:22px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.24em;
   background:rgba(6,8,12,.7);border:1px solid var(--line);padding:8px 14px;border-radius:100px;backdrop-filter:blur(6px);z-index:2}
 .ch-num b{color:var(--cy)}
+.ch-type{position:relative;border-radius:18px;min-height:62vh;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--line);background:radial-gradient(80% 80% at 50% 50%,rgba(61,139,255,.12),transparent 70%),var(--card)}
+.bignod{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(72px,10vw,150px);line-height:.95;letter-spacing:-.02em;text-align:center}
+.bignod::after{content:"";display:block;width:72px;height:3px;background:var(--cy);margin:26px auto 0}
 .ch-copy .step{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.32em;color:var(--cy);margin-bottom:16px}
 .ch-copy h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(38px,5.4vw,72px);line-height:1;letter-spacing:-.02em;margin-bottom:20px}
 .ch-copy p{color:var(--dim);line-height:1.75;font-size:16px;max-width:460px;margin-bottom:14px}
 .ch-copy p b{color:var(--ice);font-weight:600}
 .tagrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;border:1px solid var(--line);border-radius:100px;padding:9px 16px;color:var(--dim)}
-.tag.hot{border-color:rgba(34,211,238,.5);color:var(--cy)}
+.tag.hot{border-color:rgba(61,139,255,.5);color:var(--cy)}
 .flip .ch-img{order:2}
 .rv{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
 .rv.on{opacity:1;transform:none}
@@ -87,7 +96,7 @@ a{color:inherit}
 
 /* ---------- finale ---------- */
 .finale{position:relative;z-index:2;text-align:center;padding:150px 8vw 120px;border-top:1px solid var(--line);
-  background:radial-gradient(70% 60% at 50% 100%,rgba(34,211,238,.14),transparent 70%)}
+  background:radial-gradient(70% 60% at 50% 100%,rgba(61,139,255,.14),transparent 70%)}
 .finale h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(48px,8.5vw,120px);letter-spacing:-.02em;line-height:1}
 .finale h2 span{color:var(--cy)}
 .finale p{color:var(--dim);margin:22px auto 0;max-width:480px;line-height:1.7}
@@ -114,7 +123,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
 <body>
 
 <div class="orb o1"></div><div class="orb o2"></div>
-<div class="topbar"><i id="topFill"></i></div>
+<div class="topbar"><div class="bar"><i id="topFill"></i></div><span id="stopLabel"><b>01</b> · WALK IN</span></div>
 
 <nav class="rail" id="rail">
   <div class="track"></div><div class="fill" id="railFill"></div>
@@ -137,43 +146,44 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
 </header>
 
 <!-- 01 WALK IN -->
-<div class="chapter" id="walkin"><div class="ch-sticky">
+<div class="chapter short" id="walkin"><div class="ch-sticky">
   <div class="ch-img rv"><span class="ch-num"><b>01</b> / 05</span>
-    <img data-plx src="https://d2xsxph8kpxj0f.cloudfront.net/310519663365880729/6Da72QpRKh4FmNdUKK6j5j/barber-3d-interior-main-LskLBbSddZ8mivNSu35j2D.webp" alt="First Chair shop floor" loading="lazy"></div>
+    <img data-plx src="../assets/fc-walkin.png" alt="Empty barber chair under warm lights" loading="lazy"></div>
   <div class="ch-copy rv">
     <div class="step">STOP 01 · WALK IN</div>
     <h2>The door is open.</h2>
     <p>No appointment? No problem. <b>Walk-ins are welcome until 6 PM</b>, and the waitlist runs on a screen you can actually read.</p>
     <p>Cape on, shoulders back. The shop smells like hot lather and cedar, the playlist is already arguing with itself, and your chair is getting wiped down.</p>
-    <div class="tagrow"><span class="tag hot">WALK-INS TILL 6</span><span class="tag">2743 TELEGRAPH AVE</span><span class="tag">FREE PARKING OUT BACK</span></div>
+    <div class="tagrow"><span class="tag hot">WALK-INS TILL 6</span><span class="tag">CUTS FROM $35</span><span class="tag">1814 BROADWAY</span><span class="tag">(510) 555-0188</span></div>
   </div>
 </div></div>
 
 <!-- 02 CONSULT -->
 <div class="chapter flip" id="consult"><div class="ch-sticky">
   <div class="ch-img rv"><span class="ch-num"><b>02</b> / 05</span>
-    <img data-plx src="https://framerusercontent.com/images/qThehC479vmM4SisuwGXLRcasA.jpg?width=1600&height=1067" alt="Barber consulting with client" loading="lazy"></div>
+    <img data-plx src="../assets/fc-consult.webp" alt="Barber consulting with client at the mirror" loading="lazy"></div>
   <div class="ch-copy rv">
     <div class="step">STOP 02 · CONSULT</div>
     <h2>Say the number.</h2>
     <p>Every cut starts with three questions: <b>how short at the shortest point, where the blend sits, and what the top does.</b> Bring a photo or just point at the wall.</p>
-    <p>We speak fluent fade. Guard numbers, tapers, necklines, all of it. Pick your guard:</p>
+    <p>Guard numbers, tapers, necklines, all of it gets decided before a single clipper touches you. Pick your guard:</p>
     <div class="guards">
       <div class="guard"><b>#1</b><span>3MM · TIGHT</span><div class="bar"><i style="width:12%"></i></div></div>
       <div class="guard"><b>#2</b><span>6MM · CLEAN</span><div class="bar"><i style="width:25%"></i></div></div>
       <div class="guard"><b>#4</b><span>13MM · SAFE</span><div class="bar"><i style="width:50%"></i></div></div>
       <div class="guard"><b>#8</b><span>25MM · LONG</span><div class="bar"><i style="width:100%"></i></div></div>
     </div>
+    <div class="tagrow"><span class="tag hot">CONSULT FREE</span><span class="tag">EVERY CUT STARTS HERE</span></div>
   </div>
 </div></div>
 
 <!-- 03 THE CUT -->
 <div class="chapter" id="cut"><div class="ch-sticky">
   <div class="ch-img rv"><span class="ch-num"><b>03</b> / 05</span>
-    <img data-plx src="https://cdn.shopify.com/s/files/1/0130/7233/4948/files/1m1yaf-male-barber-cutting-hair-dark-moody-dramatic-lighting.jpg" alt="Clippers blending a fade" loading="lazy"></div>
+    <img data-plx src="../assets/fc-cut.jpg" alt="Trimmer cleaning up the neckline" loading="lazy"></div>
   <div class="ch-copy rv">
     <div class="step">STOP 03 · THE CUT</div>
-    <h2>Zero to hero.</h2>
+    <h2>Set the shape.</h2>
     <p><b>Clippers set the shape, shears refine the top, foil shavers erase the bottom.</b> The blend gets checked in three mirrors because one mirror lies.</p>
     <p>Skin fade, taper, scissor cut, your call. The crown gets managed, the weight line gets melted, and nobody gets rushed.</p>
     <div class="tagrow"><span class="tag hot">SKIN FADE $45</span><span class="tag hot">TAPER $35</span><span class="tag">SCISSOR CUT $40</span></div>
@@ -183,7 +193,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
 <!-- 04 DETAIL -->
 <div class="chapter flip" id="detail"><div class="ch-sticky">
   <div class="ch-img rv"><span class="ch-num"><b>04</b> / 05</span>
-    <img data-plx src="https://framerusercontent.com/images/ztdaXuWRTP8rLFm1jsGMhvr8A6Q.jpg?scale-down-to=1024&width=6016&height=4016" alt="Straight razor line-up" loading="lazy"></div>
+    <img data-plx src="../assets/fc-detail.jpg" alt="Straight razor on the neck" loading="lazy"></div>
   <div class="ch-copy rv">
     <div class="step">STOP 04 · DETAIL WORK</div>
     <h2>Sharp enough to sign.</h2>
@@ -194,27 +204,27 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:30px
 </div></div>
 
 <!-- 05 FINISH -->
-<div class="chapter" id="finish"><div class="ch-sticky">
-  <div class="ch-img rv"><span class="ch-num"><b>05</b> / 05</span>
-    <img data-plx src="https://i.pinimg.com/originals/6a/04/ef/6a04efda918a0568614034b5420522fd.jpg" alt="Final check in the mirror" loading="lazy"></div>
+<div class="chapter short" id="finish"><div class="ch-sticky">
+  <div class="ch-type rv"><span class="ch-num"><b>05</b> / 05</span>
+    <div class="bignod">THE<br>NOD.</div></div>
   <div class="ch-copy rv">
     <div class="step">STOP 05 · FINISH</div>
     <h2>The mirror check.</h2>
     <p>Hand mirror, full 360. <b>You point at anything, we fix it on the spot.</b> Neck dusted, style product worked in, aftercare explained in ten seconds.</p>
     <p>Then the nod. You know the nod. See you in two to three weeks, that is when the blend starts asking for us.</p>
-    <div class="tagrow"><span class="tag">TUE–SAT · 9–7</span><span class="tag">(510) 555-0188</span></div>
+    <div class="tagrow"><span class="tag hot">CASH + CARD</span><span class="tag">TUE–SAT · 9–7</span><span class="tag">(510) 555-0188</span></div>
   </div>
 </div></div>
 
 <div class="finale">
   <h2 class="rv">YOUR TURN<br><span>IN THE CHAIR.</span></h2>
-  <p class="rv">Call or text and the journey starts at the door. First timers: mention this page and the line-up is on us.</p>
+  <p class="rv">Call or text and the journey starts at the door. The consult is always free, the cut earns the rest.</p>
   <div class="rv" style="margin-top:34px"><a class="btn" href="tel:+15105550188">CALL (510) 555-0188</a></div>
   <div class="mirror rv">▸ <b>05 / 05</b> · JOURNEY COMPLETE · THE CHAIR IS YOURS</div>
 </div>
 
 <footer>
-  <span>FIRST CHAIR · 2743 TELEGRAPH AVE, OAKLAND CA</span>
+  <span>FIRST CHAIR · 1814 BROADWAY, OAKLAND CA</span>
   <span>CONCEPT MOCK · NOT A REAL SHOP · PHOTOS VIA GOOGLE IMAGE SEARCH</span>
 </footer>
 
@@ -225,6 +235,8 @@ const nodes = document.querySelectorAll('.node');
 const railFill = document.getElementById('railFill');
 const topFill = document.getElementById('topFill');
 const rail = document.getElementById('rail');
+const stopLabel = document.getElementById('stopLabel');
+const stopNames = ['<b>01</b> · WALK IN','<b>02</b> · CONSULT','<b>03</b> · THE CUT','<b>04</b> · DETAIL','<b>05</b> · FINISH'];
 
 function update(){
   const vh = innerHeight;
@@ -244,6 +256,7 @@ function update(){
     n.classList.toggle('active', i === activeIdx);
     n.classList.toggle('done', i < activeIdx);
   });
+  if(stopLabel) stopLabel.innerHTML = stopNames[activeIdx];
   railFill.style.height = (railH * (activeIdx/(chapters.length-1))) + 'px';
   // parallax images
   document.querySelectorAll('[data-plx]').forEach(img=>{
